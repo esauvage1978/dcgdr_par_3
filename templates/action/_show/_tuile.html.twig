@@ -1,0 +1,49 @@
+{% import "macros/taux.html.twig" as tx %}
+{% import "macros/widgets.html.twig" as wdg %}
+
+<section id="anchor_date" class="bg-white">
+    <div class="card-body">
+        <div class="info-box bg-p-light  mt-3" data-toggle="tooltip" data-html="true"
+             title="{{ item.stateContent}}">
+            <div class="info-box-content">
+                <span class="info-box-text text-center text-muted">Etat</span>
+                <span class="info-box-number text-center  text-lg mb-0">
+                </span>
+            </div>
+        </div>
+        <div class="info-box bg-p-light  ">
+            <div class="info-box-content">
+                <span class="info-box-text text-center text-muted">Taux</span>
+                <span class="info-box-number text-center  text-lg mb-0">
+                    {{ tx.showBar(item.taux1,item.taux2 ) }}
+                </span>
+            </div>
+        </div>
+
+        <div class="info-box bg-p-light">
+            <div class="info-box-content">
+                <span class="info-box-text text-center text-muted">Jalon</span>
+                <span class="info-box-number text-center  text-lg mb-0">
+            {% if item.showAt %}
+                {{ wdg.showXShortDate(item.showAt) }}
+            {% else %}
+                --/--/----
+            {% endif %}
+        </span>
+            </div>
+        </div>
+
+        <div class="info-box bg-p-light">
+            <div class="info-box-content">
+                <span class="info-box-text text-center text-muted"><small>Expérimentation</small></span>
+                <span class="info-box-number text-center   mb-0">
+                        {% if item.isExperimental %}
+                            Oui
+                        {% else %}
+                            Non
+                        {% endif %}
+                     </span>
+            </div>
+        </div>
+    </div>
+</section>

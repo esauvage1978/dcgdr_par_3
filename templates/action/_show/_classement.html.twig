@@ -1,0 +1,72 @@
+<!-- classement -->
+<h3 id="anchor_classement" class="text-p-dark2">
+	<small>
+		<i class="fas fa-stream"></i>
+	</small>
+	Classement
+	{%  if item.category.isEnable ==false or
+item.category.thematique.isEnable ==false or
+item.category.thematique.pole.isEnable ==false or
+        item.category.thematique.pole.axe.isEnable ==false  %}
+		<span class="badge badge-danger text-sm float-right">L'action n'est pas visible</span>
+	{% endif %}
+	{%  if item.category.thematique.pole.axe.isArchiving ==true  %}
+		<span class="badge badge-danger text-sm float-right">L'action est archivée</span>
+	{% endif %}
+</h3>
+<article class="card-body bg-light mt-5">
+	<div class="row">
+
+		<div class="col-12 d-flex justify-content-between">
+
+			<a class="text-p-dark" href="{{ path('axe_show',{'id': item.category.thematique.pole.axe.id}) }}">
+				<i class="fas fa-long-arrow-alt-right"></i>
+				{{ item.category.thematique.pole.axe.name }}
+			</a>
+			<div class="pt-2">
+				<small class=" {{ item.category.thematique.pole.axe.isEnable ? 'text-muted':'text-danger'}}">Plan d'actions</small>
+			</div>
+		</div>
+
+		<div class="col-12  d-flex justify-content-between ">
+
+<a class="text-p-dark" href="{{ path('pole_show',{'id': item.category.thematique.pole.id}) }}">
+
+				<i class="fas fa-long-arrow-alt-right"></i>
+				{{ item.category.thematique.pole.name }}
+			</a>
+			<div class="pt-2">
+				<small class="{{ item.category.thematique.pole.isEnable ? 'text-muted':'text-danger'}}">Pôle</small>
+			</div>
+		</div>
+
+		<div class="col-12  d-flex justify-content-between">
+
+<a class="text-p-dark " href="{{ path('thematique_show',{'id': item.category.thematique.id}) }}">
+
+				<i class="fas fa-long-arrow-alt-right"></i>
+				{{ item.category.thematique.ref }}
+				-
+				{{ item.category.thematique.name }}
+			</a>
+			<div class="pt-2">
+				<small class="{{ item.category.thematique.isEnable ? 'text-muted':'text-danger'}}">thématique</small>
+			</div>
+		</div>
+
+		<div class="col-12   d-flex justify-content-between">
+
+<a class="text-p-dark" href="{{ path('category_show',{'id': item.category.id}) }}">
+
+				<i class="fas fa-long-arrow-alt-right"></i>
+				{{ item.category.ref }}
+				-
+				{{ item.category.name }}
+			</a>
+			<div class="pt-2">
+				<small class="{{ item.category.isEnable ? 'text-muted':'text-danger'}}">Catégorie</small>
+			</div>
+		</div>
+
+	</div>
+</article>

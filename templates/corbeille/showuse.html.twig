@@ -1,0 +1,81 @@
+{% extends 'corbeille/layout.html.twig' %}
+
+
+{% block page_subtitle %}Consultation
+{% endblock %}
+
+{% block breadcrumb %}
+	{% import "default/actions.html.twig" as actions %}
+	{{ actions.admin(
+         'show',
+         is_granted('ROLE_GESTIONNAIRE'),
+         item,
+         domaine
+     ) }}
+{% endblock %}
+
+{% block page_content %}
+
+	<div class="row justify-content-center">
+		<div class="jumbotron col-12 text-center">
+			<h3>
+				<a href="{{ path('corbeille_show',{'id':corbeille.id}) }}">
+					{{ corbeille.name }}
+				</a>
+			</h3>
+		</div>
+		<div class="col-12">
+			{% set datas = corbeille.actionReaders %}
+			{% set nbr = datas | length %}
+
+			{% embed 'widgets/card-widget.html.twig' with {
+                'collapsed':true,
+                'collapsible':true
+            } %}
+				{% import "macros/action.html.twig" as act %}
+				{% block card_title %}
+					Validation d'actions ({{ nbr }})
+				{% endblock %}
+				{% block card_body %}
+					{{ act.vignettes(datas) }}
+				{% endblock %}
+			{% endembed %}
+
+
+			{% set datas = corbeille.actionWriters %}
+			{% set nbr = datas | length %}
+
+			{% embed 'widgets/card-widget.html.twig' with {
+                'collapsed':true,
+                'collapsible':true
+            } %}
+				{% import "macros/action.html.twig" as act %}
+				{% block card_title %}
+					Validation d'actions ({{ nbr }})
+				{% endblock %}
+				{% block card_body %}
+					{{ act.vignettes(datas) }}
+				{% endblock %}
+			{% endembed %}
+
+			{% set datas = corbeille.actionValiders %}
+			{% set nbr = datas | length %}
+
+			{% embed 'widgets/card-widget.html.twig' with {
+                'collapsed':true,
+                'collapsible':true
+            } %}
+				{% import "macros/action.html.twig" as act %}
+				{% block card_title %}
+					Validation d'actions ({{ nbr }})
+				{% endblock %}
+				{% block card_body %}
+					{{ act.vignettes(datas) }}
+				{% endblock %}
+			{% endembed %}
+
+
+		</div>
+	</div>
+
+{% endblock %}

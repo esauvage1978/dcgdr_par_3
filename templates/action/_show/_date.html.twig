@@ -1,0 +1,40 @@
+{% import "macros/widgets.html.twig" as wdg %}
+
+<section id="anchor_date" class="bg-white">
+	<h5 class="text-p-dark2 p-1  text-center ">
+		Date de déploiement
+	</h5>
+	<div class="card-body">
+		<div class="row">
+			<div class="col-12">
+				<article class="info-box bg-p-light mt-3">
+					<div class="info-box-content">
+						<span class="info-box-text text-center text-muted">Du</span>
+						<span class="info-box-number text-center mb-0">
+							{% if item.regionstartat %}
+								{{ wdg.showXShortDate(item.regionStartat) }}
+							{% else %}
+								--/--/----
+							{% endif %}
+						</span>
+					</div>
+				</article>
+			</div>
+
+			<div class="col-12">
+				<article class="info-box  bg-p-light ">
+					<div class="info-box-content">
+						<span class="info-box-text text-center text-muted">Au</span>
+						<span class="info-box-number text-center mb-0">
+							{% if item.regionendat %}
+								{{ wdg.showXShortDate(item.regionendat) }}
+							{% else %}
+								--/--/----
+							{% endif %}
+						</span>
+					</div>
+				</article>
+			</div>
+		</div>
+	</div>
+</section>

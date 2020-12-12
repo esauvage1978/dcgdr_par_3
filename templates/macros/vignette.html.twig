@@ -1,0 +1,41 @@
+{% macro vignette(item,route,showFullName) %}
+    {% set showFull = '' %}
+
+
+	<a href="{{ path(route, {'id': item.id}) }}" class="card  m-0  hvr-grow-shadow">
+		<div class="card-body text-center align-middle p-1 text-p-light bg-p-dark">
+
+			<span class="{% if item.isEnable is same as(false) %}text-warning text-bold{% endif %}">
+				{% if showFullName is defined %}
+					{% if showFullName is same as (true) %}
+						{% set showFull = 'yes' %}
+					{% endif %}
+				{% endif %}
+
+				{{ showFull == 'yes'?item.fullName: item.name }}
+			</span>
+		</div>
+	</a>
+{% endmacro %}
+
+{% macro vignettes(items,route,showFullName) %}
+	{% import _self as pl %}
+	<div class="{{ row_lst }} ">
+		{% for item in items %}
+			{{ pl.vignette(item, route,showFullName) }}
+		{% endfor %}
+	</div>
+{% endmacro %}
+
+{% macro vignettesEnable(items,route,showFullName) %}
+	{% import _self as pl %}
+	<div class="{{ row_lst }} ">
+		{% for item in items %}
+			{% if item.isEnable %}
+				{{ pl.vignette(item, route,showFullName) }}
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endmacro %}
+
+

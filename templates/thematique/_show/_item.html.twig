@@ -1,0 +1,76 @@
+{% if item is defined %}
+
+	<div class="row justify-content-center">
+		<div class="{{ col_1_2 }}">
+			{% embed 'widgets/card-widget.html.twig' %}
+				{% block card_class %}
+					card-primary card-outline
+				{% endblock %}
+				{% block card_body_class %}
+					box-profile
+				{% endblock %}
+				{% block card_body %}
+					<div class="text-center display-2">
+						<strong>{{ item.fullName }}</strong>
+					</div>
+<h2 class="profile-username text-center">
+<a href="{{ path('axe_show',{id:item.pole.axe.id}) }} " class="text-p-dark">{{ item.pole.axe.name }}</a>
+</h2>
+<h2 class="profile-username text-center">
+	<a href="{{ path('pole_show',{id:item.pole.id}) }} " class="text-p-dark">{{ item.pole.name }}</a>
+</h2>
+
+
+
+
+
+					<div class="float-right">
+						{% if item.isEnable %}
+							<span class="badge badge-success">Visible</span>
+						{% else %}
+							<span class="badge badge-danger">Masquée</span>
+
+						{% endif %}
+
+
+
+					</div>
+				{% endblock %}
+
+			{% endembed %}
+
+			{% if item.content %}
+				{% embed 'widgets/card-widget.html.twig' %}
+					{% block card_body %}
+						{{ item.content |raw }}
+					{% endblock %}
+				{% endembed %}
+			{% endif %}
+
+
+			{% if item.content %}
+				{% embed 'widgets/card-widget.html.twig' %}
+{% import "macros/taux.html.twig" as tx %}
+
+					{% block card_body %}
+{{ tx.showBar(item.taux1,item.taux2,"" ) }}
+
+					{% endblock %}
+				{% endembed %}
+			{% endif %}
+
+			{% embed 'widgets/card-widget.html.twig' %}
+				{% block card_title %}Catégories
+				{% endblock %}
+				{% block card_body %}
+					{% import "macros/category.html.twig" as ca %}
+					{{ ca.vignettes(item.categories) }}
+				{% endblock %}
+			{% endembed %}
+
+
+		</div>
+	</div>
+
+
+{% endif %}

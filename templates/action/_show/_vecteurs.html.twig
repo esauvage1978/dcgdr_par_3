@@ -1,0 +1,13 @@
+{% import "macros/vecteur.html.twig" as vct %}
+
+<article class="bg-white {{ item.vecteurs.count==0?'d-none':'' }}">
+
+    <h5 class="text-p-dark2 p-1 pt-3 text-center ">
+        Vecteurs
+    </h5>
+    <div class="card-body">
+{{ vct.vignettes(item.vecteurs) }}
+
+
+    </div>
+</article>

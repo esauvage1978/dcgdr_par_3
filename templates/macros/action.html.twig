@@ -1,0 +1,48 @@
+{% macro vignettes(items, col)%}
+	{% import _self as act %}
+	<div class="row">
+		{% for item in items %}
+			<div class="col-{{ col?col:'6'}}">
+				{{ act.vignette(item) }}
+			</div>
+		{% endfor %}
+	</div>
+{% endmacro %}
+
+{% macro vignette(item) %}
+<div class="info-box  bg-p-light h-100  hvr-grow-shadow">
+
+		<span class="info-box-icon bg-p-dark text-p-light elevation-1">
+			<i class="fas fa-bolt"></i>
+		</span>
+
+		<div class="info-box-content">
+			<span>
+				{% if item | actionCanRead %}
+					<a href="{{ path('action_show', {'id': item.id}) }}" class="text-p-dark">
+						{{ item.name }}
+					</a>
+				{% else %}
+					{{ item.name }}
+				{% endif %}
+			</span>
+			<span class="info-box-number">
+				{{ item.category.thematique.ref }}-{{ item.category.ref }}-{{ item.ref }}
+			</span>
+			<small>
+				{{ item.category.thematique.pole.axe.name }}
+				<span class="  float-right"></span>
+				{%  if item.category.isEnable ==false or
+                    item.category.thematique.isEnable ==false or
+                    item.category.thematique.pole.isEnable ==false or
+                    item.category.thematique.pole.axe.isEnable ==false  %}
+					<span class="badge badge-danger text-xs float-right">L'action n'est pas visible</span>
+				{% endif %}
+				{%  if item.category.thematique.pole.axe.isArchiving ==true  %}
+					<span class="badge badge-danger text-xs float-right">L'action est archivée</span>
+				{% endif %}
+
+			</small>
+		</div>
+	</div>
+{% endmacro %}

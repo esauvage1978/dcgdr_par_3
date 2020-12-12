@@ -1,0 +1,6 @@
+
+
+{% macro vignettes(items,showRef) %}
+	{% import 'macros/vignette.html.twig' as v %}
+    {{ v.vignettes(items,'organisme_show',showRef) }}
+{% endmacro %}

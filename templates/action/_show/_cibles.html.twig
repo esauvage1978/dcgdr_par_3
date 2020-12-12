@@ -1,0 +1,10 @@
+{% import "macros/cible.html.twig" as cbl %}
+
+<article class="bg-white {{ item.cibles.count==0?'d-none':'' }}">
+    <h5 class="text-p-dark2 p-1 pt-3 text-center ">
+        Cibles
+    </h5>
+    <div class="card-body">
+        {{ cbl.vignettes(item.cibles) }}
+    </div>
+</article>

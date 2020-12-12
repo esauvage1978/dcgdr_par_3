@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+
+{% set domaine = 'action' %}
+
+{% set domaineTitle = 'Action' %}
+{% set tableName = domaine %}
+{% set route_add = domaine ~ '_add' %}
+{% set route_show = domaine ~ '_show' %}
+{% set route_edit = domaine ~ '_edit' %}
+{% set route_del = domaine ~ '_del' %}
+{% set route_list = domaine ~ '_list' %}
+
+{% block title %}{{ app_name }} - {{domaineTitle}}{% endblock %}
+{% block page_title %}
+<i class="fa fa-bolt"></i>
+	{{domaineTitle}}
+{% endblock %}
+

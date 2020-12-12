@@ -1,0 +1,5 @@
+{% macro vignettes(items,showRef) %}
+	{% import 'macros/vignette.html.twig' as v %}
+	{{ v.vignettesEnable(items,'cible_show',showRef) }}
+{% endmacro %}
+

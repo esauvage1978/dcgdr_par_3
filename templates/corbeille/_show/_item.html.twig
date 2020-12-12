@@ -1,0 +1,115 @@
+{% if item is defined %}
+
+	<div class="row justify-content-center">
+		<div class="{{ col_1_2 }}">
+			{% embed 'widgets/card-widget.html.twig' %}
+ 
+
+				{% block card_class %}
+					card-primary card-outline
+				{% endblock %}
+				{% block card_body_class %}
+					box-profile
+				{% endblock %}
+				{% block card_body %}
+					<h3 class="profile-username text-center ">{{ item.name }}</h3>
+
+					<p class="text-lg text-center">
+						<a href="{{ path('organisme_show',{id:item.organisme.id}) }}" class="text-p-dark">
+							{{ item.organisme.fullName }}
+						</a>
+					</p>
+
+					<div class="float-right">
+						{% if item.isEnable %}
+							<span class="badge badge-success">Visible</span>
+						{% else %}
+							<span class="badge badge-danger">Masquée</span>
+						{% endif %}
+					</div>
+				{% endblock %}
+{% block card_footer %}
+	
+{% endblock %}
+
+			{% endembed %}
+
+			{% if item.content %}
+				{% embed 'widgets/card-widget.html.twig' %}
+					{% block card_body %}
+						{{ item.content |raw }}
+					{% endblock %}
+				{% endembed %}
+			{% endif %}
+
+			{% embed 'widgets/card-widget.html.twig' %}
+				{% block card_title %}Habilitations
+				{% endblock %}
+				{% block card_body_class %}p-0
+				{% endblock %}
+				{% block card_body %}
+					<div class="list-group list-group-flush dropright">
+						<div class="list-group-item list-group-item-action">
+							{% if item.isUseByDefault %}
+								<span class="text-success">
+									<i class="fas fa-check"></i>
+									Ajouté par défaut lors des déploiements</span>
+							{% else %}
+								<span class="text-danger">
+									<i class="fas fa-times"></i>
+									Ajouté par défaut lors des déploiements</span>
+							{% endif %}
+						</div>
+
+						<div class="list-group-item list-group-item-action">
+							{% if item.isShowRead %}
+								<span class="text-success">
+									<i class="fas fa-check"></i>
+									Utilisable pour la consultation</span>
+							{% else %}
+								<span class="text-danger">
+									<i class="fas fa-times"></i>
+									Utilisable pour la consultation</span>
+
+							{% endif %}
+						</div>
+						<div class="list-group-item list-group-item-action">
+							{% if item.isShowWrite %}
+								<span class="text-success">
+									<i class="fas fa-check"></i>
+									Utilisable pour le pilotage</span>
+							{% else %}
+								<span class="text-danger">
+									<i class="fas fa-times"></i>
+									Utilisable pour le pilotage</span>
+							{% endif %}
+						</div>
+						<div class="list-group-item list-group-item-action">
+							{% if item.isShowValidate %}
+								<span class="text-success">
+									<i class="fas fa-check"></i>
+									Utilisable pour la validation</span>
+							{% else %}
+								<span class="text-danger">
+									<i class="fas fa-times"></i>
+									Utilisable pour la validation</span>
+							{% endif %}
+						</div>
+
+					</div>
+				{% endblock %}
+			{% endembed %}
+			{% embed 'widgets/card-widget.html.twig' %}
+				{% block card_title %}Utilisateurs
+				{% endblock %}
+				{% block card_body %}
+					{% import "macros/user.html.twig" as usr %}
+					{{ usr.vignettes(item.users) }}
+				{% endblock %}
+			{% endembed %}
+
+
+		</div>
+	</div>
+
+{% endif %}

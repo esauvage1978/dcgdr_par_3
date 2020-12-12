@@ -1,0 +1,126 @@
+{% extends 'axe/layout.html.twig' %}
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/taux.html.twig" as tx %}
+
+{% set columns = {
+    'Nom ': {'class': 'alwaysVisible', 'orderBy': true},
+    'Description': {'class': 'alwaysVisible', 'orderBy': true},
+'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+
+    '<i class="fa fa-file-archive" data-toggle="tooltip" data-placement="top" title="Archive"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
+    '<i class="fas fa-parking" data-toggle="tooltip" data-placement="top" title="Nombre de pôle"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
+    '<i class="fab fa-tumblr" data-toggle="tooltip" data-placement="top" title="Nombre de thématiques"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
+    '<i class="far fa-copyright"  data-toggle="tooltip" data-placement="top" title="Nombre de catégorie"></i>': {'class': 'alwaysVisible text-center', 'orderBy': true},
+	'<i class="fa fa-bolt" data-toggle="tooltip" data-placement="top" title="Nombre d\'actions"></i>': {'class': 'alwaysVisible text-center', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+{% import '@AdminLTE/Macros/buttons.html.twig'  as btn %}
+{% block page_subtitle %}Liste
+{% endblock %}
+
+
+{% block breadcrumb %}
+	{% import "default/actions.html.twig" as actions %}
+	{{ actions.admin(
+        'list',
+        is_granted('ROLE_GESTIONNAIRE'),
+        null,
+        domaine
+    ) }}
+{% endblock %}
+
+
+{% block page_content %}
+
+
+	{% import "@AdminLTE/Macros/default.html.twig" as macro %}
+
+	{{ tables.datatable_header(tableName, columns,  {'striped': true}) }}
+	{% for item in items %}
+		<tr>
+			<td class="align-middle text-lg">
+				<a href="{{ path(route_show,{id:item.id}) }}" class="text-{{ item.isEnable ? 'p-dark' : 'danger text-bold' }}">
+					{{ item.name }}
+				</a>
+			</td>
+			<td class="align-middle text-xs">{{ item.content | raw }}</td>
+			<td class="align-middle text-center text-xs">{{ tx.showBar(item.taux1,item.taux2 ) }}</td>
+
+
+			<td class="align-middle text-center">
+				<div class="p-2 {{ not item.isArchiving ? 'badge badge-light text-light' : 'badge badge-warning text-warning' }}">
+					{{ not item.isArchiving ? '1' : '0' }}
+				</div>
+			</td>
+
+			<td class="align-middle text-center">
+				{% set nbr = item.poles.count %}
+				<div class="p-2 {{ nbr==0 ? 'badge badge-light text-light' :'badge badge-success ' }}">
+					{{ nbr }}
+				</div>
+			</td>
+			<td class="align-middle text-center">
+				{% if nbr>0 %}
+					{% set nbr = 0 %}
+					{% for pole in item.poles %}
+						{% set nbr = nbr + pole.thematiques.count %}
+					{% endfor %}
+				{% endif %}
+
+				<div class="p-2 {{ nbr==0 ? 'badge badge-light text-light' :'badge badge-success ' }}">
+					{{ nbr }}
+				</div>
+			</td>
+			<td class="align-middle text-center">
+				{% if nbr>0 %}
+					{% set nbr = 0 %}
+					{% for pole in item.poles %}
+						{% for thematique in pole.thematiques %}
+							{% set nbr = nbr + thematique.categories.count %}
+						{% endfor %}
+					{% endfor %}
+				{% endif %}
+
+				<div class="p-2 {{ nbr==0 ? 'badge badge-light text-light' :'badge badge-success ' }}">
+					{{ nbr }}
+				</div>
+			</td>
+			<td class="align-middle text-center">
+				{% if nbr>0 %}
+					{% set nbr = 0 %}
+					{% for pole in item.poles %}
+						{% for thematique in pole.thematiques %}
+							{% for category in thematique.categories %}
+								{% set nbr = nbr + category.actions.count %}
+							{% endfor %}
+						{% endfor %}
+					{% endfor %}
+				{% endif %}
+
+				<div class="p-2 {{ nbr==0 ? 'badge badge-light text-light' :'badge badge-success ' }}">
+					{{ nbr }}
+				</div>
+			</td>
+			<td class=" d-flex  justify-content-end ">
+				{% if is_granted('ROLE_GESTIONNAIRE') %}
+					{{ btn.link_button(
+                        'Modifier',
+                        path(route_edit,{id:item.id}),
+                        'fa fa-edit',
+                        'p-dark',
+                        'p-dark btn-sm'
+                    ) }}
+				{% endif %}
+			</td>
+		</tr>
+	{% else %}
+		{{ tables.datatable_data_else(columns) }}
+	{% endfor %}
+	{{ tables.datatable_footer(tableName,1) }}
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ tables.datatable_javascript(tableName,1,columns) }}
+{% endblock %}

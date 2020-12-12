@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/backpack.html.twig" as bkp %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/workflow.html.twig" as wkf %}
+
+
+{% set columns = {
+    '#': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
+'Total': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
+
+'Modifiable': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
+
+'Modifiable
+<br/>
+propriétaire': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
+
+} %}
+
+
+{% block title %}
+	{{ app_name }}
+	- Tableau de bord
+{% endblock %}
+{% block page_title %}
+	<i class="fas fa-dashboard"></i>
+	Tableau de bord
+{% endblock %}
+
+{% block page_content %}
+
+
+	<div class="row justify-content-center mt-2">
+		<div class="col-sm-12 col-lg-6 ">
+
+			{{ tables.datatable_header('dsb', columns,  {'striped': true}) }}
+
+			<tr>
+				{{ wkf.state_table_td('draft') }}
+
+				{% for  item in draft %}
+					<td class="align-middle text-center text-lg">
+						<a class=" hvr-float-shadow " href="{{ path(item.route) }}">
+							<span class=''>
+								{{ item.data}}
+							</span>
+						</a>
+					</td>
+
+				{% endfor %}
+
+			</tr>
+
+
+			{{ tables.datatable_footer('dsb',1) }}
+
+		</div>
+		<div class="col-sm-12 col-lg-6 d-flex justify-content-center">
+			<img src="{{ asset('img/dashboard.svg')}}" alt"choix des abonnements" style="width:80%"/>
+		</div>
+	</div>
+	{% set columns = {
+    '#': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
+	'Total': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
+
+	} %}
+
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% macro showBar(taux1,taux2, taille) %}
+	{% import _self as tx %}
+
+	{% if taux1 == 0 %}
+		{% set color='danger' %}
+	{% elseif taux1 < 50 %}
+		{% set color='warning' %}
+	{% elseif taux1 < 65 %}
+		{% set color='info' %}
+	{% elseif taux1 < 80 %}
+		{% set color='primary' %}
+	{% else %}
+		{% set color='success' %}
+	{% endif %}
+
+	<div class="progress {{ taille|default(" progress-sm")}}" style="height:15px">
+
+
+		<div class="progress-bar bg-{{ color }}" role="progressbar" aria-volumenow="{{ taux1 }}" aria-volumemin="0" aria-volumemax="100" style=";width: {{ taux1 }}%"></div>
+	</div>
+
+	{{ tx.showBar_label(taux1,taux2,color)}}
+
+
+{% endmacro %}
+
+{% macro showBar_label(taux1,taux2, color) %}
+
+	<span class="badge-{{ color }} badge">{{ taux1 }}
+		%</span>
+
+	{% if (taux2 - taux1) == 1 %}
+		<span class="text-muted text-xs">
+			+ 1 point
+		</span>
+	{% elseif (taux2 - taux1) > 1 %}
+		<span class="text-muted text-xs">
+			+
+			{{taux2 - taux1}}
+			points
+		</span>
+	{% endif %}
+
+{% endmacro %}

@@ -1,0 +1,80 @@
+{% import "macros/taux.html.twig" as tx %}
+{% import '@AdminLTE/Macros/buttons.html.twig'  as btn %}
+
+<article id="anchor_indicateur_{{ indicator.id }}" class=" mt-4 ml-4">
+
+	<div class="card-header bg-p-light">
+		<h4 class="card-title text-p-dark2 text-lg">
+			{{ indicator.name }}
+		</h4>
+
+		<small class="float-right">
+			<span class="mr-2">
+				{{ indicator.indicatorType | indicatorGetNameOfIndicator }}
+			</span>
+			{% if indicator | indicatorCanUpdate  and indicator.action.state!='cotech' %}
+				{{ btn.link_button(
+                    'Modifier',
+                    path('indicator_edit',{id:indicator.id}),
+                    'fa fa-edit',
+                    'p-dark',
+                    'p-dark btn-sm'
+                ) }}
+			{% endif %}
+		</small>
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<div class="col-md-12 col-lg-2">
+				<div class="info-box bg-p-light">
+					<div class="info-box-content">
+						<span class="info-box-text text-center text-muted">Taux</span>
+						<span class="info-box-number text-center  text-lg mb-0">
+                            {{ tx.showBar(indicator.taux1,indicator.taux2 ) }}
+						</span>
+					</div>
+				</div>
+
+				<div class="info-box bg-p-light">
+					<div class="info-box-content">
+						<span class="info-box-text text-center text-muted">Organisme</span>
+						<span class="info-box-number text-center  text-lg mb-0">
+							{{ indicator.indicatorValues | sumEnable }}
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 col-lg-10">
+
+				{% if indicator.content and indicator.content != '<br>' %}
+					<div class="row mb-3">
+						<div class="col-12 bg-light p-5">
+							{{ indicator.content | raw }}
+						</div>
+					</div>
+				{% endif %}
+				<div class="row">
+					{% set nbr= indicator | organismeDeployed %}
+
+					{% if nbr==0 %}
+						<article class="card-body">
+							<div class="p-3 col-12  bg-danger">
+								Aucun déploiement pour cet indicateur
+							</div>
+						</article>
+					{% else %}
+						<table class="table table-striped table-condensed " style="width:100%">
+							{% for indicatorValue in indicator.indicatorValues %}
+								{% if indicatorValue.isEnable==true and indicatorValue.Indicator.isEnable %}
+									{{ include('indicatorvalue/_show/_tr.html.twig') }}
+								{% endif %}
+							{% endfor %}
+						</table>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</article>

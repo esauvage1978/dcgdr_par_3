@@ -1,0 +1,69 @@
+{% if item is defined %}
+
+	<div class="row justify-content-center">
+		<div class="{{ col_1_2 }}">
+			{% embed 'widgets/card-widget.html.twig' %}
+				{% block card_class %}
+					card-primary card-outline
+				{% endblock %}
+				{% block card_body_class %}
+					box-profile
+				{% endblock %}
+				{% block card_body %}
+					<div class="text-center display-2">
+						<strong>{{ item.ref }}</strong>
+					</div>
+					<h2 class="profile-username text-center">{{ item.name }}</h2>
+
+
+					<div class="float-right">
+						{% if item.isEnable %}
+							<span class="badge badge-success">Visible</span>
+						{% else %}
+							<span class="badge badge-danger">Masquée</span>
+
+						{% endif %}
+
+						{% if item.isAlterable %}
+							<span class="badge badge-success">Administrable</span>
+
+						{% else %}
+							<span class="badge badge-danger">Non administrable</span>
+
+						{% endif %}
+
+					</div>
+				{% endblock %}
+
+			{% endembed %}
+
+			{% if item.content %}
+				{% embed 'widgets/card-widget.html.twig' %}
+					{% block card_body %}
+						{{ item.content |raw }}
+					{% endblock %}
+				{% endembed %}
+			{% endif %}
+
+			{% embed 'widgets/card-widget.html.twig' %}
+				{% block card_title %}Utilisateurs
+				{% endblock %}
+				{% block card_body %}
+					{% import "macros/user.html.twig" as usr %}
+					{{ usr.vignettes(item.users) }}
+				{% endblock %}
+			{% endembed %}
+
+			{% embed 'widgets/card-widget.html.twig' %}
+				{% block card_title %}Corbeilles
+				{% endblock %}
+				{% block card_body %}
+					{% import "macros/corbeille.html.twig" as cor %}
+					{{ cor.vignettes(item.corbeilles,true) }}
+				{% endblock %}
+			{% endembed %}
+		</div>
+	</div>
+
+
+{% endif %}
