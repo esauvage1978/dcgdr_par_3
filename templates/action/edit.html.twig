@@ -1,13 +1,14 @@
-{% extends 'category/layout.html.twig' %}
+{% extends 'action/layout.html.twig' %}
 
+{% import "macros/submit.html.twig" as sub %}
+{% import "macros/save.html.twig" as save %}
 
-
-
-{% block page_subtitle %}Modification{% endblock %}
+{% block page_subtitle %}Modification
+{% endblock %}
 
 {% block breadcrumb %}
-    {% import "default/actions.html.twig" as actions %}
-    {{ actions.admin(
+	{% import "default/actions.html.twig" as actions %}
+	{{ actions.admin(
         'edit',
         is_granted('ROLE_GESTIONNAIRE'),
         item,
@@ -16,28 +17,178 @@
 {% endblock %}
 
 {% block page_content %}
-    {{ include(domaine ~ '/_edit/_item.html.twig') }}
+	{{ form_start(form) }}
+	<div class="row justify-content-start pb-5">
+		{{ include('action/_show/_name.html.twig') }}
+
+		<div class="row col-12">
+			<div id="col1" class="col-sm-12  order-sm-second  col-md-12 order-sm-second col-lg-6 order-lg-second col-xl-2 order-xl-first ">
+
+				<div class="bg-white  card-body">
+
+					{% if item.stateCurrent in ['started','finalised'] %}
+						{{ include('action/_edit/_reference.html.twig') }}
+						{{ include('action/_edit/_experimentation.html.twig') }}
+					{% else %}
+						{{ include('action/_show/_experimentation.html.twig') }}
+					{% endif %}
+					{% if item.stateCurrent in ['started','cotech','codir','finalised', 'deployed','measured'] %}
+						{{ include(domaine ~ '/_edit/_jalon.html.twig') }}
+					{% endif %}
+					{% if item.stateCurrent in ['started','finalised','deployed','measured'] %}
+						{{ include('action/_edit/_date.html.twig') }}
+					{% else %}
+						{{ include('action/_show/_date.html.twig') }}
+					{% endif %}
+
+					{{ include(domaine ~ '/_show/_taux.html.twig') }}
+				</div>
+			</div>
+			<div id="col2" class="col-sm-12  order-sm-first  col-md-12 order-md-first col-lg-12  order-lg-first col-xl-7 order-xl-second  bg-white  p-5">
+				{% if item.stateCurrent in ['started','finalised'] %}
+					{{ include('action/_edit/_name.html.twig') }}
+					{{ include('action/_edit/_classement.html.twig') }}
+				{% else %}
+					{{ include('action/_show/_classement.html.twig') }}
+				{% endif %}
+
+				{% if item.stateCurrent in ['measured'] %}
+					{{ include('action/_edit/_measure.html.twig') }}
+				{% elseif item.stateCurrent in ['clotured'] %}
+					{{ include('action/_show/_measure.html.twig') }}
+				{% endif %}
+
+				{% if item.stateCurrent in ['started','finalised'] %}
+					{{ include('action/_edit/_cadrage.html.twig') }}
+				{% else %}
+					{{ include('action/_show/_cadrage.html.twig') }}
+				{% endif %}
+
+				{% if item.stateCurrent in ['started','cotech','codir','finalised','deployed'] %}
+					{{ include('action/_edit/_info_part.html.twig') }}
+				{% else %}
+					{{ include('action/_show/_info_part.html.twig') }}
+				{% endif %}
+
+				{{ save.btn()}}
+
+			</div>
+			<div id="col3" class="col-sm-12 col-md-12 col-lg-6 col-xl-3"></div>
+		</div>
+		<div class="row col-12 mt-5">
+			<div id="col4" class="col-sm-12 col-md-12 col-lg-6 col-xl-4 ">
+				<div class="bg-white  card-body h-100">
+
+					{% if item.stateCurrent in ['started','finalised'] %}
+						{{ include('action/_edit/_cibles.html.twig') }}
+						{{ include('action/_edit/_vecteurs.html.twig') }}
+					{% else %}
+						{{ include('action/_show/_cibles.html.twig') }}
+						{{ include('action/_show/_vecteurs.html.twig') }}
+					{% endif %}
+				</div>
+			</div>
+			<div id="col5" class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+				<div class="bg-white  card-body h-100">
+					{% if item.stateCurrent in ['started','finalised'] %}
+						{{ include('action/_edit/_intervenant.html.twig') }}
+					{% else %}
+						{{ include('action/_show/_intervenant.html.twig') }}
+					{% endif %}
+				</div>
+			</div>
+			<div id="col6" class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
+				<div class="bg-white  card-body h-100">
+					{% if item.stateCurrent in ['started','finalised'] %}
+						{{ include('action/_edit/_actionFile.html.twig') }}
+					{% else %}
+						{{ include('action/_show/_actionFile.html.twig') }}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="col-12 bg-white  p-5 mt-5">
+			{% if item.stateCurrent in ['started','finalised'] %}
+				{{ include('action/_edit/_organisme.html.twig') }}
+			{% else %}
+				{{ include('action/_show/_organisme.html.twig') }}
+			{% endif %}
+
+		</div>
+		<div class="col-12 bg-white  p-5 mt-5"></div>
+
+		<div class="d-none">{{ sub.btn() }}</div>
+
+
+	</div>
+	{{form_rest(form)}}
+
+	{{ form_end(form) }}
+
 {% endblock %}
 
 {%  block javascripts %}
-{{ parent() }}
+	{{ parent() }}
 	<!-- Select2 -->
 	<script src="{{ absolute_url( asset('js/fillCombobox/fillCombobox.js')) }}"></script>
+	<script src="{{ absolute_url( asset('js/findAction.js')) }}"></script>
+	<script src="{{ absolute_url( asset('/vendor/axios/dist/axios.min.js')) }}"></script>
+	<script src="{{ absolute_url( asset('/js/es_widget.js')) }}"></script>
+
+
 	<script type="text/javascript">
 		$(function () {
-fillCombobox('#cmb_axe', "{{ path('ajax_fill_combobox_axes') }}", true, {{ item.thematique.pole.axe.id }});
+
+fillCombobox('#cmb_axe', "{{ path('ajax_combo_axes_isenable') }}", true, {{ item.category.thematique.pole.axe.id }}, 'all');
+});
 
 $('#cmb_axe').change(function () {
-fillComboboxChained('#cmb_axe', '#cmb_pole', "{{ path('ajax_fill_combobox_poles') }}", true, false, {{ item.thematique.pole.id }});
+fillComboboxChained('#cmb_axe', '#cmb_pole', "{{ path('ajax_combo_poles_isenable') }}", {{ item.category.thematique.pole.axe.id }}, false, {{ item.category.thematique.pole.id }});
+
+
 });
 
 $('#cmb_pole').change(function () {
-fillComboboxChained('#cmb_pole', '#cmb_thematique', "{{ path('ajax_fill_combobox_thematiques') }}", true, true, {{ item.thematique.id }});
+fillComboboxChained('#cmb_pole', '#cmb_thematique', "{{ path('ajax_combo_thematiques_isenable') }}", true, false, {{ item.category.thematique.id }});
+
+
 });
 
 $('#cmb_thematique').change(function () {
-$('#category_thematique').val($('#cmb_thematique').val());
+fillComboboxChained('#cmb_thematique', '#cmb_category', "{{ path('ajax_combo_categorys_isenable') }}", true, false, {{ item.category.id }});
+
+
 });
+
+
+$('#cmb_category').change(function () {
+
+var id = getVal($('#cmb_category'));
+if (null !== id) {
+getActionsData(id)
+$('#action_edit_category').val($('#cmb_category').val());
+
+
+} else {
+let showData = $('#showdata');
+showData.fadeOut();
+
+}
 });
+
+function getActionsData(id) {
+
+var url = '/ajax/actionsforcategory/' + id;
+let showData = $('#showdata');
+showData.fadeOut();
+
+axios.get(url).then(function (response) {
+showData.fadeIn(300);
+html(showData, response.data.value);
+}).catch(function (error) {
+console.log(error);
+});
+}
 	</script>
+
 {% endblock %}

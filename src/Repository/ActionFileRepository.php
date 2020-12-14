@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ActionFileRepository extends ServiceEntityRepository
 {
+    const ALIAS = 'af';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ActionFile::class);

@@ -14,37 +14,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ActionLinkRepository extends ServiceEntityRepository
 {
+    const ALIAS = 'al';
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ActionLink::class);
     }
 
-    // /**
-    //  * @return ActionLink[] Returns an array of ActionLink objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ActionLink
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

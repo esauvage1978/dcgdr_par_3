@@ -25,14 +25,18 @@
 	<script src="{{ absolute_url( asset('js/fillCombobox/fillCombobox.js')) }}"></script>
 	<script type="text/javascript">
 		$(function () {
-fillCombobox('#cmb_axe', "{{ path('ajax_fill_combobox_axes') }}", true, {{ item.thematique.pole.axe.id }});
+fillCombobox('#cmb_axe', "{{ path('ajax_combo_axes') }}", true,{{ item.thematique.pole.axe.id }});
+
 
 $('#cmb_axe').change(function () {
-fillComboboxChained('#cmb_axe', '#cmb_pole', "{{ path('ajax_fill_combobox_poles') }}", true, false, {{ item.thematique.pole.id }});
+fillComboboxChained('#cmb_axe', '#cmb_pole', "{{ path('ajax_combo_poles') }}", true, false,{{ item.thematique.pole.id }});
+
 });
 
 $('#cmb_pole').change(function () {
-fillComboboxChained('#cmb_pole', '#cmb_thematique', "{{ path('ajax_fill_combobox_thematiques') }}", true, true, {{ item.thematique.id }});
+fillComboboxChained('#cmb_pole', '#cmb_thematique', "{{ path('ajax_combo_thematiques') }}", true, false,
+{{ item.thematique.id }});
+
 });
 
 $('#cmb_thematique').change(function () {

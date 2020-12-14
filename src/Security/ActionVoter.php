@@ -86,7 +86,7 @@ class ActionVoter extends Voter
             return true;
         }
 
-        if (in_array($action->getState(), WorkflowData::STATES_ACTION_UPDATE_PILOTES)) {
+        if (in_array($action->getStateCurrent(), WorkflowData::STATES_ACTION_UPDATE_PILOTES)) {
             foreach ($action->getWriters() as $corbeille) {
                 if (in_array($user, $corbeille->getUsers()->toArray())) {
                     return true;
@@ -94,7 +94,7 @@ class ActionVoter extends Voter
             }
         }
 
-        if (in_array($action->getState(), WorkflowData::STATES_ACTION_UPDATE_VALIDER)) {
+        if (in_array($action->getStateCurrent(), WorkflowData::STATES_ACTION_UPDATE_VALIDER)) {
             foreach ($action->getValiders() as $corbeille) {
                 if (in_array($user, $corbeille->getUsers()->toArray())) {
                     return true;

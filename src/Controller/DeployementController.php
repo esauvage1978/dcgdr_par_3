@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Action;
 use App\Entity\Deployement;
 use App\Security\DeployementVoter;
 use App\Form\Admin\DeployementType;
 use App\Manager\DeployementManager;
+use App\Repository\OrganismeRepository;
+use App\Repository\CadrageFileRepository;
 use App\Repository\DeployementRepository;
 use App\Repository\DeployementFileRepository;
-use App\Repository\CadrageFileRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
@@ -133,6 +135,20 @@ class DeployementController extends AbstractGController
 
         // rename the downloaded file
         return $this->file($file, $cadrageFile->getTitle() . '.' . $cadrageFile->getFileExtension());
+    }
+
+    /**
+     * @Route("/action/{id}/deployements", name="deployements_for_action", methods={"GET"})
+     *
+     * @IsGranted("ROLE_USER")
+     */
+    public function indexAction(Action $action, DeployementRepository $repository, OrganismeRepository $organismeRepository)
+    {
+        return $this->render(self::ENTITY . '/index.html.twig', [
+            self::ENTITYS => $repository->findAllForAction($action->getId()),
+            'organismes' => $organismeRepository->findAll(),
+            'action' => $action,
+        ]);
     }
 
 }

@@ -81,7 +81,7 @@ class IndicatorVoter extends Voter
             WorkflowData::STATE_FINALISED,
         ];
 
-        if (!in_array($indicator->getAction()->getState(),$states))
+        if (!in_array($indicator->getAction()->getStateCurrent(),$states))
         {
             return false;
         }

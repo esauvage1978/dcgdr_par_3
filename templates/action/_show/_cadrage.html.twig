@@ -1,3 +1,5 @@
+{% set nbrL=item.cadrageLinks | length %}
+{% set nbrF=item.cadrageFiles | length %}
 <h3 id="anchor_cadrage" class="text-p-dark2 pt-5">
     <small><i class="fas fa-crop-alt"></i></small> Cadrage
 </h3>
@@ -6,17 +8,15 @@
             <section  class="mt-4 p-3 col-12 bg-light">
                 {{ item.cadrage | raw }}
             </section>
-        {% elseif item.cadrageFiles.count == 0 and item.cadrageLinks.count == 0 %}
+        {% elseif nbrL == 0 and nbrF == 0 %}
             <section  class="mt-4 p-3 col-12 bg-light">
-                en cours de réditem
+                en cours de rédaction
             </section>
         {% endif %}
 
 
 
 <section  class="mt-4 p-3 col-12 ">
-{% set nbrL=item.cadrageLinks | length %}
-{% set nbrF=item.cadrageFiles | length %}
 {% if nbrL>0 or nbrF>0 %}
 	{% import "macros/file.html.twig" as file %}
 	<div class=" list-blk">

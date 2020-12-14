@@ -49,7 +49,7 @@ class IndicatorRepository extends ServiceEntityRepository
             . ' on ' . self::ALIAS . '.id=' . $alias_distante . '.' . $table_source . '_id '
             . ' set ' . self::ALIAS . '.taux1=' . $alias_distante . '.taux1, '
             . self::ALIAS . '.taux2=' . $alias_distante . '.taux2  '
-            . ' where ' . self::ALIAS . '.enable=true; ';
+            . ' where ' . self::ALIAS . '.isEnable=true; ';
 
         try {
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
@@ -76,11 +76,11 @@ class IndicatorRepository extends ServiceEntityRepository
             ->leftjoin(CategoryRepository::ALIAS . '.thematique', ThematiqueRepository::ALIAS)
             ->leftjoin(ThematiqueRepository::ALIAS . '.pole', PoleRepository::ALIAS)
             ->leftjoin(PoleRepository::ALIAS . '.axe', AxeRepository::ALIAS)
-            ->where(AxeRepository::ALIAS . '.enable=true')
-            ->andwhere(PoleRepository::ALIAS . '.enable=true')
-            ->andwhere(ThematiqueRepository::ALIAS . '.enable=true')
-            ->andwhere(CategoryRepository::ALIAS . '.enable=true')
-            ->andwhere(self::ALIAS . '.enable=true')
+            ->where(AxeRepository::ALIAS . '.isEnable=true')
+            ->andwhere(PoleRepository::ALIAS . '.isEnable=true')
+            ->andwhere(ThematiqueRepository::ALIAS . '.isEnable=true')
+            ->andwhere(CategoryRepository::ALIAS . '.isEnable=true')
+            ->andwhere(self::ALIAS . '.isEnable=true')
             ->andwhere(self::ALIAS . '.indicatorType=\'contributif\'')
             ->orderBy(AxeRepository::ALIAS . '.name', 'ASC')
             ->orderBy(PoleRepository::ALIAS . '.name', 'ASC')

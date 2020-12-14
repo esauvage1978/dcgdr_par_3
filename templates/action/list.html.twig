@@ -1,16 +1,20 @@
-{% extends 'category/layout.html.twig' %}
+{% extends 'action/layout.html.twig' %}
 
 
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/taux.html.twig" as tx %}
+{% import "macros/action.html.twig" as action %}
+{% import "macros/workflow.html.twig" as wrk %}
+
 
 {% set columns = {
-	'Nom ': {'class': 'all', 'orderBy': true},
-	'Réf': {'class': 'all', 'orderBy': true},
+	'Référence ': {'class': 'all', 'orderBy': true},
+	'Action ': {'class': 'all', 'orderBy': true},
 	'Classement ': {'class': 'desktop', 'orderBy': true},
-    'Description': {'class': 'alwaysVisible', 'orderBy': true},
+    'Fin de déploiement': {'class': 'alwaysVisible', 'orderBy': true},
+	'Jalon': {'class': 'alwaysVisible', 'orderBy': true},
+	'Etat': {'class': 'alwaysVisible', 'orderBy': true},
 	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
-	'<i class="fa fa-bolt" data-toggle="tooltip" data-placement="top" title="Nombre d\'actions"></i>': {'class': 'alwaysVisible text-center', 'orderBy': true},
     'actions': {'class': 'alwaysVisible', 'orderBy': false}
 } %}
 {% import '@AdminLTE/Macros/buttons.html.twig'  as btn %}
@@ -22,7 +26,7 @@
 	{% import "default/actions.html.twig" as actions %}
 	{{ actions.admin(
         'list',
-        is_granted('ROLE_GESTIONNAIRE'),
+        null,
         null,
         domaine
     ) }}
@@ -36,50 +40,60 @@
 
 	{{ tables.datatable_header(tableName, columns,  {'striped': true}) }}
 	{% for item in items %}
+
 		<tr>
 			<td class="align-middle text-lg">
-				<a href="{{ path(route_show,{id:item.id}) }}" class="text-{{ item.isEnable ? 'p-dark' : 'danger text-bold' }}">
+				{{ item.category.thematique.ref }}-{{ item.category.ref }}-{{ item.ref }}
+			</td>
+			<td class="align-middle text-lg ">
+				{% if item | actionCanRead %}
+					<a href="{{ path(route_show,{id:item.id}) }}" class="text-p-dark">
+						{{ item.name }}
+					</a>
+				{% else %}
 					{{ item.name }}
-				</a>
+				{% endif %}
 			</td>
-<td class="align-middle ">
-		{{ item.ref }}
-</td>
-
 			<td class="align-middle text-xs">
-<ul>
-	<li>
-<a href="{{ path('axe_show',{id:item.thematique.pole.axe.id}) }}" class="text-{{ item.thematique.pole.axe.isEnable ? 'p-dark' : 'danger text-bold' }}">
+<span class="text-{{ item.category.thematique.pole.axe.isEnable ? 'gray' : 'danger text-bold' }} clearfix">
 
+							{{ item.category.thematique.pole.axe.name }}
+						</span>
+						
+<span class="text-{{ item.category.thematique.pole.isEnable ? 'gray' : 'danger text-bold' }} clearfix">
 
-{{ item.thematique.pole.axe.name }}
-
-				</a></li>
-<li>
-<a href="{{ path('pole_show',{id:item.thematique.pole.id}) }}" class="text-{{ item.thematique.pole.isEnable ? 'p-dark' : 'danger text-bold' }}">
-
-
-{{ item.thematique.pole.name }}
-
-				</a>
-</li>
-<li>
-<a href="{{ path('thematique_show',{id:item.thematique.id}) }}" class="text-{{ item.thematique.isEnable ? 'p-dark' : 'danger text-bold' }}">{{ item.thematique.name }}</a></li></ul>
+							{{ item.category.thematique.pole.name }}
+						</span>
+						<span class="text-{{ item.category.thematique.isEnable ? 'gray' : 'danger text-bold' }} clearfix">
+							{{ item.category.thematique.name }}
+						</span>
+						<span class="text-{{ item.category.isEnable ? 'gray' : 'danger text-bold' }}">
+							{{ item.category.name }}
+						</span>
 
 			</td>
-			<td class="align-middle text-xs">{{ item.content | raw }}</td>
-			<td class="align-middle text-center text-xs">{{ tx.showBar(item.taux1,item.taux2 ) }}</td>
+			<td class="text-center  align-middle">
+				{{ action.ShowRegionEndAt(item.regionEndAt) }}
+			</td>
+
+			<td class="text-center  align-middle">
+				{{ action.ShowJalon(item.showAt) }}
+			</td>
+
 
 			<td class="align-middle text-center">
-				{% set nbr = item.actions.count %}
-				<div class="p-2 {{ nbr==0 ? 'badge badge-light text-light' :'badge badge-success ' }}">
-					{{ nbr }}
-				</div>
+{{  wrk.badge_state(item.stateCurrent)}}
+
+
 			</td>
+			<td class="align-middle text-center col-1 text-xs">{{ tx.showBar(item.taux1,item.taux2 ) }}</td>
 
 
-			<td class=" d-flex  justify-content-end ">
-				{% if is_granted('ROLE_GESTIONNAIRE') %}
+
+<td class="  align-middle">
+
+{% if item | actionCanUpdate %}
+
 					{{ btn.link_button(
                         'Modifier',
                         path(route_edit,{id:item.id}),

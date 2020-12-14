@@ -1,0 +1,59 @@
+framework:
+    workflows:
+        wkf_all:
+            type: "state_machine" # or 'state_machine'
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: "method"
+                property: "stateCurrent"
+            supports:
+                - App\Entity\Action
+            initial_marking: started
+            places:
+                - started
+                - cotech
+                - codir
+                - rejected
+                - finalised
+                - deployed
+                - measured
+                - clotured
+                - abandonned
+            transitions:
+                toCotech:
+                    from: started
+                    to: cotech
+                toCodir:
+                    from: cotech
+                    to: codir
+                toRejected:
+                    from: [cotech,codir]
+                    to: rejected
+                toFinalised:
+                    from: codir
+                    to: finalised
+                toDeploye:
+                    from: finalised
+                    to: deployed
+                unDeployed:
+                    from: deployed
+                    to: finalised
+                toMeasured:
+                    from: deployed
+                    to: measured
+                unMeasured:
+                    from: measured
+                    to: deployed
+                toClotured:
+                    from: measured
+                    to: clotured
+                unClotured:
+                    from: clotured
+                    to: measured
+                toAbandonned:
+                    from: [started, cotech, codir,rejected,  finalised, deployed, measured, clotured]
+                    to: abandonned
+                toStarted:
+                    from: [abandonned, cotech, codir, rejected, finalised]
+                    to: started

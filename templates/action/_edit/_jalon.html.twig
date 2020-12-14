@@ -1,0 +1,24 @@
+<article class="card-body js-createTip-wrapper">
+	<div class="createTip mt-3">
+
+		<div class="createTip__title">
+			Jalon
+		</div>
+        <p>
+            Le jalon est à utiliser pour planifier une intervention sur l'action.
+        </p>
+		<p>
+			A la date du
+			<em>jalon</em>
+			une notification par mail sera envoyée.<br/>
+			Les jalons en retard sont affichés sur la page d'accueil.
+		</p>
+	</div>
+
+	<h5 class="text-p-dark2 pl-1 pb-2 text-center ">
+		Jalon
+	</h5>
+    <div class="form-group row" data-toggle="tooltip" data-html="true">
+        {{ form_widget(form.showAt) }}
+    </div>
+</article>

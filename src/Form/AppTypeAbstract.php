@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Category;
 use App\Entity\MProcess;
 use App\Entity\Corbeille;
 use App\Entity\Organisme;
@@ -43,6 +44,23 @@ abstract class AppTypeAbstract extends AbstractType
             ]);
     }
 
+    public function buildFormCategory(FormBuilderInterface $builder, bool $addselect): FormBuilderInterface
+    {
+        return $builder
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                self::LABEL => 'Catégorie',
+                self::CHOICE_LABEL => 'fullname',
+                self::MULTIPLE => false,
+                self::ATTR => ['class' => $addselect ? 'select2' : ''],
+                self::REQUIRED => true,
+                self::QUERY_BUILDER => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
+            ]);
+    }
+    
     public function buildFormIsEnable(FormBuilderInterface $builder, $label=' '): void
     {
         $builder
@@ -132,4 +150,69 @@ abstract class AppTypeAbstract extends AbstractType
                 },
             ]);
     }
+
+
+    public function buildFormReaders(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        return $builder
+            ->add('readers', EntityType::class, [
+                'class' => Corbeille::class,
+                self::CHOICE_LABEL => 'fullname',
+                self::MULTIPLE => true,
+                self::ATTR => ['class' => 'select2'],
+                self::REQUIRED => false,
+                self::QUERY_BUILDER => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->select('c', 'o')
+                        ->leftJoin('c.organisme', 'o')
+                        ->where('o.isEnable = true')
+                        ->andWhere('c.isEnable = true')
+                        ->andWhere('c.isShowRead = true')
+                        ->orderBy('c.name', 'ASC');
+                },
+            ]);
+    }
+
+    public function buildFormWriters(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        return $builder
+            ->add('writers', EntityType::class, [
+                'class' => Corbeille::class,
+                self::CHOICE_LABEL => 'fullname',
+                self::MULTIPLE => true,
+                self::ATTR => ['class' => 'select2'],
+                self::REQUIRED => false,
+                self::QUERY_BUILDER => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->select('c', 'o')
+                        ->leftJoin('c.organisme', 'o')
+                        ->where('o.isEnable = true')
+                        ->andWhere('c.isEnable = true')
+                        ->andWhere('c.isShowWrite = true')
+                        ->orderBy('c.name', 'ASC');
+                },
+            ]);
+    }
+
+    public function buildFormValiders(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        return $builder
+            ->add('validers', EntityType::class, [
+                'class' => Corbeille::class,
+                self::CHOICE_LABEL => 'fullname',
+                self::MULTIPLE => true,
+                self::ATTR => ['class' => 'select2'],
+                self::REQUIRED => false,
+                self::QUERY_BUILDER => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->select('c', 'o')
+                        ->leftJoin('c.organisme', 'o')
+                        ->where('o.isEnable = true')
+                        ->andWhere('c.isEnable = true')
+                        ->andWhere('c.isShowValidate = true')
+                        ->orderBy('c.name', 'ASC');
+                },
+            ]);
+    }
+
 }

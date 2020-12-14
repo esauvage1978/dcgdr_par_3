@@ -1,0 +1,31 @@
+<section class="card-body js-createTip-wrapper">
+	<div class="createTip mt-5">
+
+		<div class="createTip__title">
+			Date de déploiement
+		</div>
+		<p>
+			Les dates de déploiement correspondent à la période pendant laquelle les organismes pourront renseinger les indicateurs.
+		</p>
+		<p>
+			L'action changera d'état automatiquement à l'entrée de la période et en sortie.
+		</p>
+	</div>
+
+
+	<h5 class="text-p-dark2   text-center ">
+		Date de déploiement
+	</h5>
+	<div class="form-group row ">
+		<label for="{{ form.regionstartat.vars.id }}">
+			Du
+		</label>
+		{{ form_widget(form.regionstartat) }}
+	</div>
+	<div class="form-group row ">
+		<label for="{{ form.regionendat.vars.id }}">
+			Au
+		</label>
+		{{ form_widget(form.regionendat) }}
+	</div>
+</section>

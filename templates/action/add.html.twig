@@ -1,12 +1,15 @@
-{% extends 'category/layout.html.twig' %}
+{% extends 'action/layout.html.twig' %}
+{% import "macros/submit.html.twig" as sub %}
+{% import "macros/save.html.twig" as save %}
 
 
-{% block page_subtitle %}Création{% endblock %}
+{% block page_subtitle %}Création
+{% endblock %}
 
 
 {% block breadcrumb %}
-    {% import "default/actions.html.twig" as actions %}
-    {{ actions.admin(
+	{% import "default/actions.html.twig" as actions %}
+	{{ actions.admin(
         'add',
         is_granted('ROLE_GESTIONNAIRE'),
         null,
@@ -16,5 +19,94 @@
 
 
 {% block page_content %}
-    {{ include(domaine ~ '/_edit/_item.html.twig') }}
+	<div class="row justify-content-center">
+		<div class="" style="width:960px">
+			{{ form_start(form) }}
+
+<div class="row">
+			<div style="width:630px">
+
+				{{ include(domaine ~ '/_edit/_classement.html.twig') }}
+				{{ include(domaine ~ '/_edit/_nameContent.html.twig') }}
+				{{ save.btn()}}
+
+				<p class="mt-5 mb-5"></p>
+				<p class="mt-5 mb-5"></p>
+			</div>
+            <div id="showdata" style="width:300px"></div>
+</div>
+<div class="d-none">{{ sub.btn() }}{{form_rest(form)}}</div>
+
+
+			{{ form_end(form) }}
+
+
+		</div>
+	</div>
+
 {% endblock %}
+
+{%  block javascripts %}
+	{{ parent() }}
+	<!-- Select2 -->
+	<script src="{{ absolute_url( asset('js/fillCombobox/fillCombobox.js')) }}"></script>
+<script src="{{ absolute_url( asset('js/findAction.js')) }}"></script>
+<script src="{{ absolute_url( asset('/vendor/axios/dist/axios.min.js')) }}"></script>
+<script src="{{ absolute_url( asset('/js/es_widget.js')) }}"></script>
+
+
+	<script type="text/javascript">
+$(function () {
+
+fillCombobox('#cmb_axe', "{{ path('ajax_combo_axes_isenable') }}", true,'','all');
+});
+
+$('#cmb_axe').change(function () {
+fillComboboxChained('#cmb_axe', '#cmb_pole', "{{ path('ajax_combo_poles_isenable') }}", true, false);
+
+});
+
+$('#cmb_pole').change(function () {
+fillComboboxChained('#cmb_pole', '#cmb_thematique', "{{ path('ajax_combo_thematiques_isenable') }}", true, false);
+
+});
+
+$('#cmb_thematique').change(function () {
+fillComboboxChained('#cmb_thematique', '#cmb_category', "{{ path('ajax_combo_categorys_isenable') }}", true,false);
+
+});
+
+
+$('#cmb_category').change(function () {
+
+var id = getVal($('#cmb_category'));
+if (null!==id) {
+getActionsData(id)
+$('#action_create_category').val($('#cmb_category').val());
+
+
+
+} else {
+let showData = $('#showdata');
+showData.fadeOut();
+
+}
+});
+
+function getActionsData(id) {
+
+var url = '/ajax/actionsforcategory/' + id;
+let showData = $('#showdata');
+showData.fadeOut();
+
+axios.get(url).then(function (response) {
+showData.fadeIn(300);
+html(showData, response.data.value);
+}).catch(function (error) {
+console.log(error);
+});
+}
+    </script>
+
+{% endblock %}
+

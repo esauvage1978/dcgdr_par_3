@@ -56,11 +56,11 @@ class AxeRepository extends ServiceEntityRepository
             ->leftJoin(PoleRepository::ALIAS.'.thematiques', ThematiqueRepository::ALIAS)
             ->leftJoin(ThematiqueRepository::ALIAS.'.categories', CategoryRepository::ALIAS)
             ->leftJoin(CategoryRepository::ALIAS.'.actions', ActionRepository::ALIAS)
-            ->where(self::ALIAS.'.enable=true')
+            ->where(self::ALIAS.'.isEnable=true')
             ->andwhere(self::ALIAS.'.archiving=false')
-            ->andwhere(PoleRepository::ALIAS.'.enable=true')
-            ->andwhere(ThematiqueRepository::ALIAS.'.enable=true')
-            ->andwhere(CategoryRepository::ALIAS.'.enable=true')
+            ->andwhere(PoleRepository::ALIAS.'.isEnable=true')
+            ->andwhere(ThematiqueRepository::ALIAS.'.isEnable=true')
+            ->andwhere(CategoryRepository::ALIAS.'.isEnable=true')
             ->orderBy(self::ALIAS.'.name', 'ASC')
             ->getQuery()
             ->getResult();
@@ -73,7 +73,7 @@ class AxeRepository extends ServiceEntityRepository
 
         if ('all' != $isEnable) {
             $builder = $builder
-                ->Where(self::ALIAS.'.enable = :val1')
+                ->Where(self::ALIAS.'.isEnable = :val1')
                 ->setParameter('val1', $isEnable);
         }
 
@@ -119,7 +119,7 @@ class AxeRepository extends ServiceEntityRepository
             .' on '.self::ALIAS.'.id='.$alias_distante.'.'.$table_source.'_id '
             .' set '.self::ALIAS.'.taux1='.$alias_distante.'.taux1, '
             .self::ALIAS.'.taux2='.$alias_distante.'.taux2 '
-            .' where '.self::ALIAS.'.enable=true; ';
+            .' where '.self::ALIAS.'.isEnable=true; ';
 
         try {
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);

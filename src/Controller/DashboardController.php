@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\MakeDashboard;
-use App\Service\BackpackCounter;
-use App\Repository\BackpackDtoRepository;
-use App\Service\BackpackMakerDto;
-use Symfony\Component\HttpFoundation\Response;
+use App\Service\MakeActionDashboard;
+use App\Service\ActionMakerDto;
+use App\Repository\ActionDtoRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,19 +17,19 @@ class DashboardController extends AbstractController
      * @Route("/dashboard", name="dashboard")
      * @IsGranted("ROLE_USER")
      */
-    public function index(BackpackDtoRepository $backpackDtoRepository)
+    public function index(ActionDtoRepository $actionDtoRepository)
     {
-        $md = new MakeDashboard($backpackDtoRepository, $this->getUser());
+        $md = new MakeActionDashboard($actionDtoRepository, $this->getUser());
 
-        $draft = [
-            $md->getData(ActionMakerDto::DRAFT),
+        $started = [
+            $md->getData(ActionMakerDto::STARTED),
         ];
 
 
         return $this->render(
             'dashboard/index.html.twig',
             [
-                'draft' => $draft,
+                'started' => $started,
             ]
         );
     }

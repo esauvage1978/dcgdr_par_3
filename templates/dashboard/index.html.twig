@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/backpack.html.twig" as bkp %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/workflow.html.twig" as wkf %}
+
 
 
 {% set columns = {
@@ -36,9 +36,10 @@ propriétaire': {'class': 'align-middle alwaysVisible text-center bg-def1 text-d
 			{{ tables.datatable_header('dsb', columns,  {'striped': true}) }}
 
 			<tr>
-				{{ wkf.state_table_td('draft') }}
+				{{ wkf.state_table_td('started') }}
 
-				{% for  item in draft %}
+				{% for  item in started %}
+
 					<td class="align-middle text-center text-lg">
 						<a class=" hvr-float-shadow " href="{{ path(item.route) }}">
 							<span class=''>
@@ -64,7 +65,6 @@ propriétaire': {'class': 'align-middle alwaysVisible text-center bg-def1 text-d
 	'Total': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
 
 	} %}
-
 
 
 {% endblock %}

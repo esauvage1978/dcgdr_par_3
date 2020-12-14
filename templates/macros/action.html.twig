@@ -10,7 +10,9 @@
 {% endmacro %}
 
 {% macro vignette(item) %}
-<div class="info-box  bg-p-light h-100  hvr-grow-shadow">
+	{% import "macros/workflow.html.twig" as wrk %}
+
+	<div class="info-box  bg-p-light h-100  hvr-grow-shadow">
 
 		<span class="info-box-icon bg-p-dark text-p-light elevation-1">
 			<i class="fas fa-bolt"></i>
@@ -31,7 +33,10 @@
 			</span>
 			<small>
 				{{ item.category.thematique.pole.axe.name }}
-				<span class="  float-right"></span>
+				<span class="  float-right">
+					{{  wrk.badge_state(item.stateCurrent)}}
+				</span>
+
 				{%  if item.category.isEnable ==false or
                     item.category.thematique.isEnable ==false or
                     item.category.thematique.pole.isEnable ==false or
@@ -45,4 +50,86 @@
 			</small>
 		</div>
 	</div>
+{% endmacro %}
+
+{% macro ShowRegionEndAt(regionendat) %}
+	{% import "macros/widgets.html.twig" as wdg %}
+
+	{% if regionendat %}
+		{% set difference = date("today").diff(date(regionendat)) %}
+		{% set leftDays = difference.days %}
+		{% if date("today") > date(regionendat) and leftDays > 0 %}
+			<span class="text-danger font-weight-bold">
+				-{{ leftDays }}
+				jours
+			</span>
+		{% elseif leftDays ==0 %}
+			<span class="text-warning font-weight-bold">
+				Aujourd'hui
+			</span>
+		{% elseif leftDays ==1 %}
+			<span class="text-warning font-weight-bold">
+				Demain
+			</span>
+		{% elseif leftDays <8 %}
+			<span class="text-warning font-weight-bold">
+				{{ leftDays }}
+				jours
+			</span>
+		{% else %}
+			<span class="text-success">
+				{{ leftDays }}
+				jours
+			</span>
+		{% endif %}
+		<br/>
+		<small class="text-muted">
+			{{ wdg.showXShortDate( regionendat) }}
+
+		</small>
+	{% else %}
+		--/--/----
+	{% endif %}
+
+{% endmacro %}
+
+{% macro showJalon(jalon) %}
+	{% import "macros/widgets.html.twig" as wdg %}
+
+	{% if jalon %}
+		{% set difference = date("today").diff(date(jalon)) %}
+		{% set leftDays = difference.days %}
+		{% if date("today") > date(jalon) and leftDays > 0 %}
+			<span class="text-danger font-weight-bold">
+				-{{ leftDays }}
+				jours
+			</span>
+		{% elseif leftDays ==0 %}
+			<span class="text-warning font-weight-bold">
+				Aujourd'hui
+			</span>
+		{% elseif leftDays ==1 %}
+			<span class="text-warning font-weight-bold">
+				Demain
+			</span>
+		{% elseif leftDays <8 %}
+			<span class="text-warning font-weight-bold">
+				{{ leftDays }}
+				jours
+			</span>
+		{% else %}
+			<span class="text-success">
+				{{ leftDays }}
+				jours
+			</span>
+		{% endif %}
+		<br/>
+		<small class="text-muted">
+			{{ wdg.showXShortDate( jalon) }}
+
+		</small>
+	{% else %}
+		--/--/----
+	{% endif %}
+
 {% endmacro %}

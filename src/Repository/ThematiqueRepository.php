@@ -55,8 +55,8 @@ class ThematiqueRepository extends ServiceEntityRepository
 
         if ('all' != $isEnable) {
             $builder = $builder
-                ->andWhere(self::ALIAS.'.enable = :val2')
-                ->andWhere(PoleRepository::ALIAS.'.enable = :val2')
+                ->andWhere(self::ALIAS.'.isEnable = :val2')
+                ->andWhere(PoleRepository::ALIAS.'.isEnable = :val2')
                 ->setParameter('val2', $isEnable);
         }
 
@@ -97,7 +97,7 @@ class ThematiqueRepository extends ServiceEntityRepository
             .' on '.self::ALIAS.'.id='.$alias_distante.'.'.$table_source.'_id '
             .' set '.self::ALIAS.'.taux1='.$alias_distante.'.taux1, '
             .self::ALIAS.'.taux2='.$alias_distante.'.taux2 '
-            .' where '.self::ALIAS.'.enable=true; ';
+            .' where '.self::ALIAS.'.isEnable=true; ';
 
         try {
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);

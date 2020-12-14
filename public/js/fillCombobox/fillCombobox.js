@@ -1,6 +1,6 @@
 
-function fillComboboxChained(selecteurSource, selecteurDestination, route, appelEnCascade, addReference, selectedId="") {
-        var id = $(selecteurSource).val();
+function fillComboboxChained(selecteurSource, selecteurDestination, route, appelEnCascade, addReference, selectedId = "") {
+    var id = $(selecteurSource).val();
     if (id == null) return;
 
     $(selecteurDestination).empty();
@@ -8,15 +8,15 @@ function fillComboboxChained(selecteurSource, selecteurDestination, route, appel
     $.ajax({
         method: "POST",
         url: route,
-        data: {'id': id, 'enable': 'all'},
+        data: { 'id': id, 'enable': 'all' },
         dataType: 'json',
         success: function (json) {
-            var selected='';
+            var selected = '';
             $.each(json, function (index, value) {
-                if(selectedId === value.id ) {
-                    selected='selected';
+                if (selectedId === value.id) {
+                    selected = 'selected';
                 } else {
-                    selected='';
+                    selected = '';
                 }
                 $(selecteurDestination).append('<option ' + selected + ' value="' + value.id + '">' +
                     (addReference ? value.ref + ' - ' : '')
@@ -29,24 +29,23 @@ function fillComboboxChained(selecteurSource, selecteurDestination, route, appel
     });
 }
 
-function fillCombobox(selecteur, route, appelEnCascade, selectedId="") {
+function fillCombobox(selecteur, route, appelEnCascade, selectedId = "", enable = 'all') {
 
     $(selecteur).empty();
     $.ajax({
         method: "POST",
         url: route,
-        data: {'enable': 'all', 'archiving': 'all'},
+        data: { 'enable': enable, 'archiving': enable },
         dataType: 'json',
         success: function (json) {
-            var selected='';
+            var selected = '';
             $.each(json, function (index, value) {
-                if(selectedId === value.id ) {
-                    selected='selected';
+                if (selectedId === value.id) {
+                    selected = 'selected';
                 } else {
-                    selected='';
+                    selected = '';
                 }
-                $(selecteur).append('<option ' + selected + ' value="' + value.id + '">'
-                    + value.name + '</option>');
+                $(selecteur).append('<option ' + selected + ' value="' + value.id + '">' + value.name + '</option>');
             });
             if (appelEnCascade) {
                 $(selecteur).change();

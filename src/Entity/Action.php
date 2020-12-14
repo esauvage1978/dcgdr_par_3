@@ -146,7 +146,7 @@ class Action implements EntityInterface
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $state;
+    private $stateCurrent;
 
     /**
      * @ORM\Column(type="datetime")
@@ -176,7 +176,7 @@ class Action implements EntityInterface
 
     public function __construct()
     {
-        $this->setState(WorkflowData::STATE_STARTED);
+        $this->setStateCurrent(WorkflowData::STATE_STARTED);
         $this->setStateAt(new \DateTime());
 
         $this->setTaux1('0');
@@ -689,14 +689,14 @@ class Action implements EntityInterface
         return $this;
     }
 
-    public function getState(): ?string
+    public function getStateCurrent(): ?string
     {
-        return $this->state;
+        return $this->stateCurrent;
     }
 
-    public function setState(string $state): self
+    public function setStateCurrent(string $stateCurrent): self
     {
-        $this->state = $state;
+        $this->stateCurrent = $stateCurrent;
 
         return $this;
     }

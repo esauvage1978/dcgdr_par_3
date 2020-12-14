@@ -1,0 +1,59 @@
+{% embed 'widgets/card-widget.html.twig' %}
+	{% block card_class %}flat
+	{% endblock %}
+	{% block card_body %}
+
+		<div class="form-group row m-2 js-createTip-wrapper">
+			<p>{{ form_label(form.ref) }}</p>
+			{{ form_widget(form.ref) }}
+			<div class="createTip  mt-4">
+
+				<div class="createTip__title">
+					Référence de l'action
+				</div>
+				<p>
+					Elle doit être unique pour le plan d'actions.
+				</p>
+
+			</div>
+		</div>
+
+
+		<div class="form-group row m-2 js-createTip-wrapper">
+			<p>{{ form_label(form.name) }}</p>
+			{{ form_widget(form.name) }}
+			<div class="createTip  mt-4">
+
+				<div class="createTip__title">
+					Nom de l'action
+				</div>
+				<p>
+					Il doit être concis et précis.
+				</p>
+
+			</div>
+		</div>
+
+		<div class="form-group row m-2 js-createTip-wrapper">
+
+
+			<p>{{ form_label(form.content) }}</p>
+			{{ form_widget(form.content) }}
+			<div class="createTip   mt-5">
+
+				<div class="createTip__title">
+				Informations complémentaires
+
+				</div>
+				<p>
+					La saisie n'est pas obligatoire.
+				</p>
+
+
+			</div>
+
+		</div>
+
+	{% endblock %}
+
+{% endembed %}

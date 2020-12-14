@@ -1,0 +1,92 @@
+<section class=" col-12 mt-5">
+
+
+	<h3 class="text-p-dark2">
+		<i class="fas fa-stream"></i>
+
+		Classement
+	</h3>
+
+	{% embed 'widgets/card-widget.html.twig' %}
+		{% block card_class %}flat
+		{% endblock %}
+		{% block card_body %}
+			<div class="form-group row m-2 js-createTip-wrapper">
+				<label for="cmb_axe" class="col-sm-3 col-form-label">
+					Plan d'actions
+				</label>
+				<div class="col">
+					<select name="cmb_axe" id="cmb_axe" class="form-control"></select>
+				</div>
+
+				<div class="createTip  ">
+
+					<div class="createTip__title">
+						Plan d'actions
+					</div>
+					<p>
+						Choisir dans la liste des plan d'actions actifs.
+					</p>
+
+				</div>
+			</div>
+			<div class="form-group row m-2 js-createTip-wrapper">
+				<label for="cmb_pole" class="col-sm-3 col-form-label">
+					Pôle
+				</label>
+				<div class="col">
+					<select name="cmb_pole" id="cmb_pole" class="form-control"></select>
+				</div>
+				<div class="createTip  ">
+					<div class="createTip__title">
+						Pôle
+					</div>
+					<p>
+						Choisir dans la liste des pôles actifs. Cette liste se complète automatiquement par rapport au plan d'actions sélectionné.
+
+					</p>
+				</div>
+			</div>
+
+			<div class="form-group row m-2 js-createTip-wrapper">
+				<label for="cmb_thematique" class="col-sm-3 col-form-label">
+					Thématique
+				</label>
+				<div class="col">
+					<select name="cmb_thematique" id="cmb_thematique" class="form-control "></select>
+				</div>
+				<div class="createTip  ">
+					<div class="createTip__title">
+						Thématique
+					</div>
+					<p>
+						Choisir dans la liste des thématiques actives. Cette liste se complète automatiquement par rapport au pôle sélectionné.
+					</p>
+				</div>
+			</div>
+
+			<div class="form-group row m-2 js-createTip-wrapper">
+				<label for="cmb_category" class="col-sm-3 col-form-label">
+					Catégorie
+				</label>
+				<div class="col">
+					<select name="cmb_category" id="cmb_category" class="form-control "></select>
+				</div>
+				<div class="createTip  ">
+					<div class="createTip__title">
+						Catégorie
+					</div>
+					<p>
+						Choisir dans la liste des catégories actives. Cette liste se complète automatiquement par rapport à la thématique sélectionnée.
+					</p>
+					<p>
+						La liste des actions pour cette catégorie s'affiche afin de vous aider à choisir la référence.
+					</p>
+				</div>
+			</div>
+
+
+		{% endblock %}
+
+	{% endembed %}
+</section>

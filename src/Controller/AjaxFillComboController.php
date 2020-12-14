@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Dto\AxeDto;
 use App\Repository\AxeRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\PoleRepository;
@@ -19,8 +20,10 @@ class AjaxFillComboController extends AbstractGController
      * @return Response
      * @IsGranted("ROLE_USER")
      */
-    public function AjaxGetAxes(Request $request, AxeRepository $axeRepository): Response
+    public function AjaxGetAxes(Request $request, AxeDtoRepository $axeDtoRepository): Response
     {
+        $dto = new AxeDto();
+
         if ($request->isXmlHttpRequest()) {
             return $this->json(
                 $axeRepository->findAllFillCombobox(

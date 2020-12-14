@@ -85,7 +85,7 @@ class DeployementVoter extends Voter
 
     public function canUpdate(Deployement $deploiement, User $user)
     {
-        if (!in_array($deploiement->getAction()->getState(), WorkflowData::STATES_DEPLOYEMENT_UPDATE)) {
+        if (!in_array($deploiement->getAction()->getStateCurrent(), WorkflowData::STATES_DEPLOYEMENT_UPDATE)) {
             return false;
         }
 
@@ -104,7 +104,7 @@ class DeployementVoter extends Voter
     public function canAppendRead(Deployement $deploiement, User $user)
     {
 
-        if (!in_array($deploiement->getAction()->getState(), WorkflowData::STATES_DEPLOYEMENT_READ)) {
+        if (!in_array($deploiement->getAction()->getStateCurrent(), WorkflowData::STATES_DEPLOYEMENT_READ)) {
             return false;
         }
 
@@ -128,11 +128,11 @@ class DeployementVoter extends Voter
 
     public function canAppendUpdate(Deployement $deploiement, User $user)
     {
-        if (!in_array($deploiement->getAction()->getState(), WorkflowData::STATES_DEPLOYEMENT_UPDATE)) {
+        if (!in_array($deploiement->getAction()->getStateCurrent(), WorkflowData::STATES_DEPLOYEMENT_UPDATE)) {
             return true;
         }
 
-        if (!in_array($deploiement->getAction()->getState(), WorkflowData::STATES_DEPLOYEMENT_APPEND)) {
+        if (!in_array($deploiement->getAction()->getStateCurrent(), WorkflowData::STATES_DEPLOYEMENT_APPEND)) {
             return false;
         }
 

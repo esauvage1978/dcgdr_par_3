@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Action;
 use App\Security\ActionVoter;
-use App\Form\Admin\ActionType;
 use App\Manager\ActionManager;
+use App\Form\Action\ActionEditType;
 use App\Repository\ActionRepository;
+use App\Form\Action\ActionCreateType;
+use App\Controller\AbstractGController;
 use App\Repository\ActionFileRepository;
 use App\Repository\CadrageFileRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,7 +48,7 @@ class ActionController extends AbstractGController
      */
     public function add(Request $request)
     {
-        return $this->editAction($request, new Action(), ActionType::class, false);
+        return $this->editAction($request, new Action(), ActionCreateType::class, false);
     }
 
     /**
@@ -75,7 +77,7 @@ class ActionController extends AbstractGController
      */
     public function edit(Request $request, Action $item)
     {
-        return $this->editAction($request, $item, ActionType::class);
+        return $this->editAction($request, $item, ActionEditType::class);
     }
 
     /**

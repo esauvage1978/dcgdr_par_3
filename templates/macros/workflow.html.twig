@@ -48,14 +48,6 @@
 			</div>
 			<div class="card-body">
 				<p>
-					{% if item.stateCurrent=="published" %}
-						<small class="text-xs">
-							Sera à réviser le
-							{{ widget.showLongDate(item | workflowDateGoToRevise )}}
-						</small>
-					{% endif %}
-				</p>
-				<p>
 					{% if item.stateContent  %}
 						{{ item.stateContent | raw }}
 					{% endif %}

@@ -41,6 +41,7 @@ class KnpMenuBuilderSubscriber implements EventSubscriberInterface
         if ($this->currentUser->isAuthenticatedRemember() && Role::isUser($this->currentUser->getUser())) {
             $this->addHome();
             $this->addDashboard();
+            $this->addAction();
             $this->addProfil();
             $this->addAdmin();
             $this->addDeconnexion();
@@ -52,6 +53,28 @@ class KnpMenuBuilderSubscriber implements EventSubscriberInterface
             $this->addHome();
             $this->addConnexion();
         }
+    }
+
+    private function addAction()
+    {
+        $this->menu->addChild(
+            'backpack',
+            [
+                'route' => 'home',
+                'label' => 'Action',
+                'childOptions' => $this->event->getChildOptions(),
+                'options' => ['branch_class' => 'treeview']
+            ]
+        )->setLabelAttribute('icon', 'nav-icon fas fa-bolt');
+
+        $this->menu->getChild('backpack')->addChild(
+            'backpack-add',
+            [
+                'route' => 'action_add',
+                'label' => 'Création',
+                'childOptions' => $this->event->getChildOptions()
+            ]
+        )->setLabelAttribute('icon', 'fas fa-plus-circle');
     }
 
     private function addDashboard(): void

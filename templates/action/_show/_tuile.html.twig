@@ -1,5 +1,8 @@
 {% import "macros/taux.html.twig" as tx %}
 {% import "macros/widgets.html.twig" as wdg %}
+{% import "macros/workflow.html.twig" as wrk %}
+
+
 
 <section id="anchor_date" class="bg-white">
     <div class="card-body">
@@ -8,6 +11,8 @@
             <div class="info-box-content">
                 <span class="info-box-text text-center text-muted">Etat</span>
                 <span class="info-box-number text-center  text-lg mb-0">
+{{  wrk.badge_state(item.stateCurrent)}}
+
                 </span>
             </div>
         </div>

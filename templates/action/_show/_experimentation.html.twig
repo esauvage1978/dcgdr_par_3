@@ -1,0 +1,18 @@
+<section class="bg-white">
+	<div class="card-body">
+		<div class="info-box bg-p-light">
+			<div class="info-box-content">
+				<span class="info-box-text text-center text-muted">
+					<small>Expérimentation</small>
+				</span>
+				<span class="info-box-number text-center   mb-0">
+					{% if item.isExperimental %}
+						Oui
+					{% else %}
+						Non
+					{% endif %}
+				</span>
+			</div>
+		</div>
+	</div>
+</section>
