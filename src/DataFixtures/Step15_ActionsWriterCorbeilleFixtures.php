@@ -43,7 +43,12 @@ class Step15_ActionsWriterCorbeilleFixtures extends Fixture implements FixtureGr
     /**
      * @var Corbeille|null
      */
-    private $validers;
+    private $COTECHvaliders;
+
+    /**
+     * @var Corbeille|null
+     */
+    private $CODIRvaliders;
 
     public function __construct(
         FixturesImportData $fixturesImportData,
@@ -55,8 +60,9 @@ class Step15_ActionsWriterCorbeilleFixtures extends Fixture implements FixtureGr
         $this->corbeilles = $corbeilleRepository->findAll();
         $this->actions = $actionRepository->findAll();
         $this->entityManagerInterface = $entityManagerI;
-        $this->writers = $corbeilleRepository->findOneBy(['id' => '32']);
-        $this->validers = $corbeilleRepository->findOneBy(['id' => '7']);
+        $this->writers = $corbeilleRepository->find(32);
+        $this->COTECHvaliders = $corbeilleRepository->findOneBy(['name' => 'COTECH DCGDR']);
+        $this->CODIRvaliders = $corbeilleRepository->find(7);
     }
 
     public function getInstance(string $id, $entitys)
@@ -88,7 +94,8 @@ class Step15_ActionsWriterCorbeilleFixtures extends Fixture implements FixtureGr
 
             foreach ($this->actions as $action) {
                 $action->addWriter($this->writers)
-                    ->addValider($this->validers);
+                    ->addCOTECHValider($this->COTECHvaliders)
+                    ->addCODIRValider($this->CODIRvaliders);
 
                 $manager->persist($action);
             }

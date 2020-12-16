@@ -16,6 +16,8 @@ class IndicatorData
 
     const SHORT_NAME ='short_name';
     const FULL_NAME = 'full_name';
+    const SHOW_INITIALVALUE='show_initial_value';
+    const SHOW_GOAL = 'show_goal';
 
     private static function getIndicators(): array
     {
@@ -24,46 +26,64 @@ class IndicatorData
             [
                 self::SHORT_NAME => 'Indicateur qualitatif (palier 10)',
                 self::FULL_NAME => 'Indicateur qualitatif : de 0% à 100% avec des paliers de 10',
+                self::SHOW_GOAL=>false,
+                self::SHOW_INITIALVALUE => true
             ],
             self::INDICATOR_QUALITATIF_PALIER_5 =>
             [
                 self::SHORT_NAME => 'Indicateur qualitatif (palier 5)',
                 self::FULL_NAME => 'Indicateur qualitatif : de 0% à 100% avec des paliers de 5',
+                self::SHOW_GOAL => false,
+                self::SHOW_INITIALVALUE => true
             ],
             self::INDICATOR_QUALITATIF_PALIER_25 =>
             [
                 self::SHORT_NAME => 'Indicateur qualitatif (palier 25)',
                 self::FULL_NAME => 'Indicateur qualitatif : de 0% à 100% avec des paliers de 25',
+                self::SHOW_GOAL => false,
+                self::SHOW_INITIALVALUE => true
             ],
             self::INDICATOR_QUANTITATIF =>
             [
                 self::SHORT_NAME => 'Indicateur quantitatif',
                 self::FULL_NAME => 'Indicateur quantitatif : ce type d\'indicateur permet la sur performance des organismes',
-            ],
+                self::SHOW_GOAL => true,
+                self::SHOW_INITIALVALUE => true
+        ],
             self::INDICATOR_QUANTITATIF_GOAL =>
             [
                 self::SHORT_NAME => 'Indicateur quantitatif (objectif figé)',
                 self::FULL_NAME => 'Indicateur quantitatif : L\'objectif est verrouillé. Ce type d\'indicateur permet la sur performance des organismes',
+                self::SHOW_GOAL => true,
+                self::SHOW_INITIALVALUE => true
             ],
             self::INDICATOR_CONTRIBUTIF =>
             [
                 self::SHORT_NAME => 'Indicateur contributif régional',
                 self::FULL_NAME => 'Indicateur contributif régional : Les organismes contribuent collectivement à l\'atteinte de l\'objectif',
-            ],
+                self::SHOW_GOAL => true,
+                self::SHOW_INITIALVALUE => false
+          ],
             self::INDICATOR_BINAIRE =>
             [
                 self::SHORT_NAME => 'Indicateur binaire',
                 self::FULL_NAME => 'Indicateur binaire : Oui/Non, le taux sera de 100% si un choix est effectué',
-            ],
+                self::SHOW_GOAL => false,
+                self::SHOW_INITIALVALUE => false
+           ],
             self::INDICATOR_BINAIRE_OUI =>
             [
                 self::SHORT_NAME => 'Indicateur binaire (oui)',
                 self::FULL_NAME => 'Indicateur binaire (oui) : Oui/Non, le taux sera de 100% si le choix "oui" est effectué',
+                self::SHOW_GOAL => false,
+                self::SHOW_INITIALVALUE => false
             ],
             self::INDICATOR_BINAIRE_NON =>
             [
                 self::SHORT_NAME => 'Indicateur binaire (non)',
                 self::FULL_NAME => 'Indicateur binaire (non) : Oui/Non, le taux sera de 100% si le choix "non" est effectué',
+                self::SHOW_GOAL => false,
+                self::SHOW_INITIALVALUE => false
             ],
         ];
     }
@@ -104,5 +124,15 @@ class IndicatorData
     public static function getFullNameOfIndicator(string $state)
     {
         return self::getIndicatorsValue($state, self::FULL_NAME);
+    }
+
+    public static function getShowGoalOfIndicator(string $state)
+    {
+        return self::getIndicatorsValue($state, self::SHOW_GOAL);
+    }
+
+    public static function getShowInitialeValueOfIndicator(string $state)
+    {
+        return self::getIndicatorsValue($state, self::SHOW_INITIALVALUE);
     }
 }

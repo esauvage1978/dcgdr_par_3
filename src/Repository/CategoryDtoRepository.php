@@ -21,7 +21,7 @@ class CategoryDtoRepository extends ServiceEntityRepository implements DtoReposi
      */
     private $dto;
 
-    const ALIAS = 'b';
+    const ALIAS = 'ca';
 
 
     public function __construct(ManagerRegistry $registry)

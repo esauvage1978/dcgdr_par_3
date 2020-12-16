@@ -58,6 +58,18 @@ class WorkflowData
                     self::TRANSITION_TO_ABANDONNED
                 ]
             ],
+            self::STATE_COTECH =>
+            [
+                self::NAME => ' 1. COTECH',
+                self::ICON => 'fab fa-firstdraft',
+                self::TITLE_MAIL => ' Une action est au COTECH',
+                self::BGCOLOR => '#5b0570',
+                self::FORECOLOR => '#ffffff',
+                self::TRANSITIONS => [
+                    self::TRANSITION_TO_CODIR,
+                    self::TRANSITION_TO_ABANDONNED
+                ]
+            ],
             self::STATE_ABANDONNED =>
             [
                 self::NAME => ' Abandonné',
@@ -76,6 +88,7 @@ class WorkflowData
     {
         $datas = [
             self::TRANSITION_TO_STARTED,
+            self::TRANSITION_TO_COTECH,
             self::TRANSITION_TO_ABANDONNED,
         ];
 
@@ -89,6 +102,7 @@ class WorkflowData
     {
         $datas = [
             self::STATE_STARTED,
+            self::STATE_COTECH,
             self::STATE_ABANDONNED,
         ];
 
@@ -164,6 +178,11 @@ class WorkflowData
                 $data['titre'] = 'Mettre à la validation hiérarchique';
                 $data['btn_label'] = 'A valider';
                 break;
+            case self::TRANSITION_TO_COTECH:
+                $data['state'] = self::STATE_COTECH;
+                $data['titre'] = 'Mettre à la validation du COTECH';
+                $data['btn_label'] = 'COTECH';
+                break;                
             case self::TRANSITION_TO_ABANDONNED:
                 $data['state'] = self::STATE_ABANDONNED;
                 $data['titre'] = 'Abandonner le porte-document';

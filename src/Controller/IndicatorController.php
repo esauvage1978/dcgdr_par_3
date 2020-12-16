@@ -2,21 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Action;
 use App\Entity\Indicator;
 use App\Security\IndicatorVoter;
-use App\Form\Admin\IndicatorType;
+use App\Form\Indicator\IndicatorType;
 use App\Manager\IndicatorManager;
+use App\Controller\AbstractGController;
 use App\Repository\IndicatorRepository;
-use App\Repository\IndicatorFileRepository;
-use App\Repository\CadrageFileRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * Class IndicatorController
  * @package App\Controller
- * @route("/indicator")
+ * @route("/")
  */
 class IndicatorController extends AbstractGController
 {
@@ -41,12 +40,28 @@ class IndicatorController extends AbstractGController
     }
 
     /**
-     * @Route("/add", name="indicator_add", methods={"GET","POST"})
+     * @Route("/action/{id}/indicator/add", name="indicator_add", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
-    public function add(Request $request)
+    public function add(Action $action, Request $request, IndicatorManager $manager)
     {
-        return $this->editAction($request, new Indicator(), IndicatorType::class, false);
+        $entity = new Indicator();
+        $entity->setAction($action);
+        $form = $this->createForm(IndicatorType::class, $entity);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->save($entity);
+            $this->addFlash(self::SUCCESS, self::MSG_CREATE);
+            return $this->redirectToRoute('indicator_edit', ['id' => $entity->getId()]);
+        }
+
+        return $this->render('indicator/add.html.twig', [
+            'item' => $entity,
+            'action' => $action,
+            self::FORM => $form->createView(),
+        ]);
     }
 
     /**
@@ -70,12 +85,24 @@ class IndicatorController extends AbstractGController
 
 
     /**
-     * @Route("/{id}/edit", name="indicator_edit", methods={"GET","POST"})
+     * @Route("/action/indicator/{id}/edit", name="indicator_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
-    public function edit(Request $request, Indicator $item)
+    public function edit(Request$request, IndicatorManager $manager, Indicator $item)
     {
-        return $this->editAction($request, $item, IndicatorType::class);
+        $form = $this->createForm(IndicatorType::class, $item);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->save($item);
+            $this->addFlash(self::SUCCESS, self::MSG_MODIFY);
+        }
+
+        return $this->render('indicator/edit.html.twig', [
+            'item' => $item,
+            self::FORM => $form->createView(),
+        ]);
     }
 
 }

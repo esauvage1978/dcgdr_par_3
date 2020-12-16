@@ -1,0 +1,52 @@
+{% import "macros/widgets.html.twig" as widgets %}
+
+<article class="card-body">
+
+	<h5 class="text-p-dark2 pl-1 pb-2 text-center ">
+		Sélection des indicateurs
+	</h5>
+
+	<div class="list-group">
+		{% for indicator in item.action.indicators %}
+			{% set present='no' %}
+
+			<!-- ajax_toogle_indicator_organisme -->
+			{% for indicatorValue in indicator.indicatorValues %}
+				{% if item == indicatorValue.deployement and  indicatorValue.isEnable==true %}
+					{% set present='yes' %}
+				{% endif %}
+			{% endfor %}
+
+			<a href="{{path('ajax_toogle_indicator_deployement',{indicator_id:indicator.id,deployement_id:item.id})}}" class="list-group-item list-group-item-action a-animate  d-flex justify-content-between align-items-center js-subscription">
+
+
+				<span class='text-p-dark js-title mr-5'>
+					<span class="js-title-icone {{ present == 'yes' ? 'text-success':'text-warning' }} ">
+						{{ widgets.icon('indicator') }}
+					</span>
+
+					{{ indicator.name }}
+				</span>
+				<span class='js-toggle'>
+					<span class=' text-muted mr-1'></span>
+					{% if present == 'yes' %}
+						<i class="fa fa-check text-success"></i>
+					{% else %}
+						<i class="fa fa-times text-warning"></i>
+					{% endif %}
+				</span>
+			</a>
+
+		{% else %}
+			<div class="list-group-item">En attente d'ajout d'indicateur</div>
+		{% endfor %}
+	</div>
+	<div class=" pt-5">
+		<a class="btn bg-p-dark text-p-light " href="{{ path('indicator_add', {'id': item.action.id}) }}">
+
+			<i class="fas fa-warehouse"></i>
+			Ajout d'un indicateur
+		</a>
+	</div>
+</div>
+

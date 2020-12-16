@@ -67,6 +67,17 @@ class Step4_CorbeilleFixtures extends Fixture implements  FixtureGroupInterface
             $this->checkAndPersist($instance);
         }
 
+        //création d'une corbeille COTECH
+        $organisme = $this->getInstance(2, $this->organismes);
+        $corbeille=new Corbeille();
+        $corbeille
+        ->setName('COTECH DCGDR')
+        ->setOrganisme($organisme)
+        ->setIsEnable(true)
+        ->setIsShowValidate(true);
+        $this->checkAndPersist($corbeille);
+
+        
         $this->entityManagerInterface->flush();
     }
 

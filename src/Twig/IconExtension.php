@@ -19,6 +19,7 @@ final class IconExtension extends AbstractExtension
     /** @var string[] */
     private static $icons = [
         'about' => 'fas fa-info-circle',
+        'action' => 'fas fa-bolt',
         'activity' => 'fas fa-tasks',
         'admin' => 'fas fa-wrench',
         'administrateur' => 'fa fa-user-astronaut',
@@ -57,6 +58,7 @@ final class IconExtension extends AbstractExtension
         'help' => 'far fa-question-circle',
         'history' => 'fas fa-history',
         'home' => 'fas fa-home',
+        'indicator' => 'fas fa-chart-line',
         'invoice' => 'fas fa-file-invoice-dollar',
         'invoice-template' => 'fas fa-file-signature',
         'left' => 'fas fa-chevron-left',
@@ -73,6 +75,7 @@ final class IconExtension extends AbstractExtension
         'ods' => 'fas fa-table',
         'off' => 'fas fa-toggle-off',
         'on' => 'fas fa-toggle-on',
+        'organisme' => 'fas fa-building',
         'password' => 'fas fa-key',
         'pin' => 'fas fa-thumbtack',
         'pdf' => 'fas fa-file-pdf',

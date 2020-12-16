@@ -81,10 +81,16 @@ class Corbeille implements EntityInterface
     private $actionWriters;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Action", mappedBy="validers")
-     * @ORM\JoinTable("actionvalider_corbeille")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Action", mappedBy="COTECHValiders")
+     * @ORM\JoinTable("actioncotechvalider_corbeille")
      */
-    private $actionValiders;
+    private $actionCOTECHValiders;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Action", mappedBy="CODIRValiders")
+     * @ORM\JoinTable("actioncodirvalider_corbeille")
+     */
+    private $actionCODIRValiders;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Deployement", mappedBy="writers")
@@ -104,7 +110,8 @@ class Corbeille implements EntityInterface
         $this->users = new ArrayCollection();
         $this->actionReaders = new ArrayCollection();
         $this->actionWriters = new ArrayCollection();
-        $this->actionValiders = new ArrayCollection();
+        $this->actionCOTECHValiders = new ArrayCollection();
+        $this->actionCODIRValiders = new ArrayCollection();
         $this->deployementWriters = new ArrayCollection();
         $this->deployementReaders = new ArrayCollection();
     }
@@ -313,26 +320,54 @@ class Corbeille implements EntityInterface
     /**
      * @return Collection|Action[]
      */
-    public function getActionValiders(): Collection
+    public function getActionCODIRValiders(): Collection
     {
-        return $this->actionValiders;
+        return $this->actionCODIRValiders;
     }
 
-    public function addActionValider(Action $actionValider): self
+    public function addActionCODIRValider(Action $actionCODIRValider): self
     {
-        if (!$this->actionValiders->contains($actionValider)) {
-            $this->actionValiders[] = $actionValider;
-            $actionValider->addValider($this);
+        if (!$this->actionCODIRValiders->contains($actionCODIRValider)) {
+            $this->actionCODIRValiders[] = $actionCODIRValider;
+            $actionCODIRValider->addCODIRValider($this);
         }
 
         return $this;
     }
 
-    public function removeActionValider(Action $actionValider): self
+    public function removeActionCODIRValider(Action $actionCODIRValider): self
     {
-        if ($this->actionValiders->contains($actionValider)) {
-            $this->actionValiders->removeElement($actionValider);
-            $actionValider->removeValider($this);
+        if ($this->actactionCODIRValidersionValiders->contains($actionCODIRValider)) {
+            $this->actionCODIRValiders->removeElement($actionCODIRValider);
+            $actionCODIRValider->removeCODIRValider($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Action[]
+     */
+    public function getActionCOTECHValiders(): Collection
+    {
+        return $this->actionCOTECHValiders;
+    }
+
+    public function addActionCOTECHValider(Action $actionCOTECHValider): self
+    {
+        if (!$this->actionCOTECHValiders->contains($actionCOTECHValider)) {
+            $this->actionCOTECHValiders[] = $actionCOTECHValider;
+            $actionCOTECHValider->addCOTECHValider($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActionCOTECHValider(Action $actionCOTECHValider): self
+    {
+        if ($this->actionCOTECHValiders->contains($actionCOTECHValider)) {
+            $this->actionCOTECHValiders->removeElement($actionCOTECHValider);
+            $actionCOTECHValider->removeCOTECHValider($this);
         }
 
         return $this;

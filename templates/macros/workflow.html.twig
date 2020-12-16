@@ -38,8 +38,6 @@
 				{{ wkf.badge_state(item.stateCurrent) }}
 				<span class="d-none">
 					{{item.stateCurrent}}
-					-
-					{{item.category.workflowName}}
 				</span>
 				<small class="text-muted">
 					depuis le
@@ -54,11 +52,11 @@
 				</p>
 			</div>
 			<div class="card-footer text-muted text-xs d-flex flex-row-reverse bd-highlight">
-				<a href="{{ path('workflow_backpack_history',{id:item.id}) }}" class="text-p-dark ml-2">
+				<a href="{{ path('workflow_action_history',{id:item.id}) }}" class="text-p-dark ml-2">
 					{{widget.icon('history')}}
 					Historique
 				</a>
-				<a href="{{ path('workflow_backpack_notification',{id:item.id}) }}" class="text-p-dark ml-2">
+				<a href="{{ path('workflow_action_notification',{id:item.id}) }}" class="text-p-dark ml-2">
 
 					{{widget.icon('mail-sent')}}
 					Notifications

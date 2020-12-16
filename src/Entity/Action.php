@@ -108,10 +108,16 @@ class Action implements EntityInterface
     private $writers;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Corbeille", inversedBy="actionValiders")
-     * @ORM\JoinTable("actionvalider_corbeille")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Corbeille", inversedBy="actionCOTECHValiders")
+     * @ORM\JoinTable("actioncotechvalider_corbeille")
      */
-    private $validers;
+    private $COTECHValiders;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Corbeille", inversedBy="actionCODIRValiders")
+     * @ORM\JoinTable("actioncodirvalider_corbeille")
+     */
+    private $CODIRValiders;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Deployement", mappedBy="action", orphanRemoval=true)
@@ -174,6 +180,11 @@ class Action implements EntityInterface
      */
     private $mailers;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ActionMailHistory::class, mappedBy="action", orphanRemoval=true)
+     */
+    private $actionMailHistories;
+
     public function __construct()
     {
         $this->setStateCurrent(WorkflowData::STATE_STARTED);
@@ -187,7 +198,8 @@ class Action implements EntityInterface
         $this->vecteurs = new ArrayCollection();
         $this->readers = new ArrayCollection();
         $this->writers = new ArrayCollection();
-        $this->validers = new ArrayCollection();
+        $this->COTECHValiders = new ArrayCollection();
+        $this->CODIRValiders = new ArrayCollection();
         $this->deployements = new ArrayCollection();
         $this->indicators = new ArrayCollection();
         $this->actionFiles = new ArrayCollection();
@@ -196,6 +208,7 @@ class Action implements EntityInterface
         $this->cadrageFiles = new ArrayCollection();
         $this->actionStates = new ArrayCollection();
         $this->mailers = new ArrayCollection();
+        $this->actionMailHistories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -478,24 +491,50 @@ class Action implements EntityInterface
     /**
      * @return Collection|Corbeille[]
      */
-    public function getValiders(): Collection
+    public function getCOTECHValiders(): Collection
     {
-        return $this->validers;
+        return $this->COTECHValiders;
     }
 
-    public function addValider(Corbeille $valider): self
+    public function addCOTECHValider(Corbeille $COTECHValider): self
     {
-        if (!$this->validers->contains($valider)) {
-            $this->validers[] = $valider;
+        if (!$this->COTECHValiders->contains($COTECHValider)) {
+            $this->COTECHValiders[] = $COTECHValider;
         }
 
         return $this;
     }
 
-    public function removeValider(Corbeille $valider): self
+    public function removeCOTECHValider(Corbeille $COTECHValider): self
     {
-        if ($this->validers->contains($valider)) {
-            $this->validers->removeElement($valider);
+        if ($this->COTECHValiders->contains($COTECHValider)) {
+            $this->COTECHValiders->removeElement($COTECHValider);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Corbeille[]
+     */
+    public function getCODIRValiders(): Collection
+    {
+        return $this->CODIRValiders;
+    }
+
+    public function addCODIRValider(Corbeille $CODIRValider): self
+    {
+        if (!$this->CODIRValiders->contains($CODIRValider)) {
+            $this->CODIRValiders[] = $CODIRValider;
+        }
+
+        return $this;
+    }
+
+    public function removeCODIRValider(Corbeille $CODIRValider): self
+    {
+        if ($this->CODIRValiders->contains($CODIRValider)) {
+            $this->CODIRValiders->removeElement($CODIRValider);
         }
 
         return $this;
@@ -800,4 +839,33 @@ class Action implements EntityInterface
     }
 
 
+    /**
+     * @return Collection|ActionMailHistory[]
+     */
+    public function getActionMailHistories(): Collection
+    {
+        return $this->actionMailHistories;
+    }
+
+    public function addActionMailHistory(ActionMailHistory $actionMailHistory): self
+    {
+        if (!$this->actionMailHistories->contains($actionMailHistory)) {
+            $this->actionMailHistories[] = $actionMailHistory;
+            $actionMailHistory->setAction($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActionMailHistory(ActionMailHistory $actionMailHistory): self
+    {
+        if ($this->actionMailHistories->removeElement($actionMailHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($actionMailHistory->getAction() === $this) {
+                $actionMailHistory->setAction(null);
+            }
+        }
+
+        return $this;
+    }
 }

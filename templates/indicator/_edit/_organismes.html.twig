@@ -1,0 +1,51 @@
+{% import "macros/widgets.html.twig" as widgets %}
+
+<article class="card-body">
+
+	<h5 class="text-p-dark2 pl-1 pb-2 text-center ">
+		Déploiement de l'indicateur
+	</h5>
+
+	<div class="list-group">
+		{% for deployement in item.action.deployements %}
+			{% set present='no' %}
+
+			<!-- ajax_toogle_indicator_organisme -->
+			{% for indicatorValue in deployement.indicatorValues %}
+				{% if item == indicatorValue.indicator and  indicatorValue.isEnable==true %}
+					{% set present='yes' %}
+				{% endif %}
+			{% endfor %}
+
+			<a href="{{path('ajax_toogle_indicator_deployement',{indicator_id:item.id,deployement_id:deployement.id})}}" class="list-group-item list-group-item-action a-animate  d-flex justify-content-between align-items-center js-subscription">
+
+
+				<span class='text-p-dark js-title mr-5'>
+					<span class="js-title-icone {{ present == 'yes' ? 'text-success':'text-warning' }} ">
+						{{ widgets.icon('organisme') }}
+					</span>
+
+					{{ deployement.organisme.fullname }}
+				</span>
+				<span class='js-toggle'>
+					<span class=' text-muted mr-1'></span>
+					{% if present == 'yes' %}
+						<i class="fa fa-check text-success"></i>
+					{% else %}
+						<i class="fa fa-times text-warning"></i>
+					{% endif %}
+				</span>
+			</a>
+
+		{% else %}
+			<div class="list-group-item">En attente d'ajout d'organisme</div>
+		{% endfor %}
+	</div>
+	<div class=" pt-5">
+		<a class="btn bg-p-dark text-p-light " href="{{ path('selection_organismes_for_action', {'id': item.action.id}) }}">
+
+			<i class="fas fa-warehouse"></i>
+			Sélection des organismes
+		</a>
+	</div>
+</div>

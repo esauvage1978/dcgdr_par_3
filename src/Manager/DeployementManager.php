@@ -3,9 +3,10 @@
 namespace App\Manager;
 
 use App\Entity\Action;
+use App\Entity\Corbeille;
+use App\Entity\Organisme;
 use App\Entity\Deployement;
 use App\Entity\EntityInterface;
-use App\Entity\Organisme;
 use App\Repository\CorbeilleRepository;
 use App\Repository\OrganismeRepository;
 use App\Validator\DeployementValidator;
@@ -38,15 +39,10 @@ class DeployementManager extends AbstractManager
     public function createDeployement(
         Deployement $deployement,
         Action $action,
-        OrganismeRepository $organismeRepository,
-        string $organismeid,
-        CorbeilleRepository $corbeilleRepository
+        Organisme $organisme,
+        array $corbeilles
     ){
         /** @var Organisme $organisme */
-        $organisme = $organismeRepository->findOneBy(['id' => $organismeid]);
-
-        $corbeilles = $corbeilleRepository->findBy(['organisme' => $organisme, 'isUseByDefault' => true]);
-
         $deployement
             ->setAction($action)
             ->setOrganisme($organisme);

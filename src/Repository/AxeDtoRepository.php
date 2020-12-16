@@ -21,7 +21,7 @@ class AxeDtoRepository extends ServiceEntityRepository implements DtoRepositoryI
      */
     private $dto;
 
-    const ALIAS = 'b';
+    const ALIAS = 'pa';
 
 
     public function __construct(ManagerRegistry $registry)

@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Dto\ActionDto;
 use App\Entity\Action;
+use App\Dto\CorbeilleDto;
+use App\Dto\OrganismeDto;
+use App\Dto\DeployementDto;
 use App\Entity\Deployement;
 use App\Security\DeployementVoter;
 use App\Form\Admin\DeployementType;
@@ -10,6 +14,10 @@ use App\Manager\DeployementManager;
 use App\Repository\OrganismeRepository;
 use App\Repository\CadrageFileRepository;
 use App\Repository\DeployementRepository;
+use App\Repository\CorbeilleDtoRepository;
+use App\Repository\OrganismeDtoRepository;
+use App\Repository\DeployementDtoRepository;
+use App\Form\Deployement\DeployementEditType;
 use App\Repository\DeployementFileRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\File;
@@ -43,12 +51,36 @@ class DeployementController extends AbstractGController
     }
 
     /**
-     * @Route("/add", name="deployement_add", methods={"GET","POST"})
+     * @Route("/action/{id}/deployements/add/{organismeid}", name="deployement_add", methods={"GET"})
+     *
      * @IsGranted("ROLE_USER")
      */
-    public function add(Request $request)
-    {
-        return $this->editAction($request, new Deployement(), DeployementType::class, false);
+    public function addDeployementAction(
+        Action $action,
+        string $organismeid,
+        OrganismeRepository $organismeRepository,
+        CorbeilleDtoRepository $corbeilleDtoRepository,
+        DeployementManager $deployementManager
+    ) {
+        $organisme=$organismeRepository->find($organismeid);
+
+        $orgDto = new organismeDto();
+        $orgDto->setId($organismeid);
+
+        $corDto=new CorbeilleDto();
+        $corDto->setOrganismeDto($orgDto);
+        $corDto->setIsUseByDefault(CorbeilleDto::TRUE);
+        $corDto->setVisible(CorbeilleDto::TRUE);
+
+        $corbeilles= $corbeilleDtoRepository->findAllForDto($corDto);
+
+        $deployement = $deployementManager->createDeployement(
+            new Deployement(),
+            $action,
+            $organisme,
+            $corbeilles
+        );
+        return $this->redirectToRoute('deployement_edit', ['id' => $deployement->getId()]);
     }
 
     /**
@@ -72,12 +104,33 @@ class DeployementController extends AbstractGController
 
 
     /**
-     * @Route("/{id}/edit", name="deployement_edit", methods={"GET","POST"})
+     * @Route("/deploiement/{id}/actionedit", name="deployement_edit", methods={"GET","POST"})
+     *
+     * @param string $message =self::MSG_MODIFY
+     *
      * @IsGranted("ROLE_USER")
+     *
+     * @return Response
      */
-    public function edit(Request $request, Deployement $item)
-    {
-        return $this->editAction($request, $item, DeployementType::class);
+    public function edit(
+        Request $request,
+        Deployement $entity,
+        DeployementManager $manager,
+        string $message = self::MSG_MODIFY
+    ) {
+        $form = $this->createForm(DeployementEditType::class, $entity);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->save($entity);
+            $this->addFlash(self::SUCCESS, $message);
+        }
+
+        return $this->render('deployement/edit.html.twig', [
+            'item' => $entity,
+            self::FORM => $form->createView(),
+        ]);
     }
 
 
@@ -138,15 +191,26 @@ class DeployementController extends AbstractGController
     }
 
     /**
-     * @Route("/action/{id}/deployements", name="deployements_for_action", methods={"GET"})
+     * @Route("/action/{id}/selection", name="selection_organismes_for_action", methods={"GET"})
      *
      * @IsGranted("ROLE_USER")
      */
-    public function indexAction(Action $action, DeployementRepository $repository, OrganismeRepository $organismeRepository)
+    public function selectionOrganismeForAction(Action $action, DeployementDtoRepository $repository, OrganismeDtoRepository $organismeRepository)
     {
-        return $this->render(self::ENTITY . '/index.html.twig', [
-            self::ENTITYS => $repository->findAllForAction($action->getId()),
-            'organismes' => $organismeRepository->findAll(),
+        $orgDto=new OrganismeDto();
+        $orgDto->setVisible(OrganismeDto::TRUE);
+
+        $actionDto = new ActionDto();
+        $actionDto->setid($action->getId());
+        $actionDto->setVisible(ActionDto::TRUE);
+
+
+        $depDto=new DeployementDto();
+        $depDto->setActionDto($actionDto);
+
+        return $this->render(self::DOMAINE . '/selection.html.twig', [
+            'deployements' => $repository->findAllForDto($depDto),
+            'organismes' => $organismeRepository->findAllForDto($orgDto),
             'action' => $action,
         ]);
     }

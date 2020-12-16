@@ -21,7 +21,7 @@ class ThematiqueDtoRepository extends ServiceEntityRepository implements DtoRepo
      */
     private $dto;
 
-    const ALIAS = 'b';
+    const ALIAS = 't';
 
 
     public function __construct(ManagerRegistry $registry)

@@ -1,0 +1,21 @@
+<article class="card-body js-createTip-wrapper">
+	<div class="createTip mt-3">
+
+		<div class="createTip__title">
+			Date de fin
+		</div>
+        <p>
+            La date de fin permet de clôturer le déploiement
+        </p>
+		<p>
+			L'intérêt de cette clôture réside dans le fait de conserver uniquement que les déploiements actifs.
+		</p>
+	</div>
+
+	<h5 class="text-p-dark2 pl-1 pb-2 text-center ">
+		Date de fin
+	</h5>
+    <div class="form-group row" data-toggle="tooltip" data-html="true">
+        {{ form_widget(form.endAt) }}
+    </div>
+</article>

@@ -72,6 +72,7 @@ class Indicator implements EntityInterface
 
     public function __construct()
     {
+        $this->setIsEnable(true);
         $this->setTaux1('0');
         $this->setTaux2('0');
         $this->indicatorValues = new ArrayCollection();

@@ -103,7 +103,7 @@ class Step10_ActionFixtures extends Fixture implements FixtureGroupInterface
             ->setRegionStartAt($this->convertDate($data['date_region_debut']))
             ->setRegionEndAt($this->convertDate($data['date_region_fin']))
             ->setCadrage('Rédaction en cours')
-            ->setState(WorkflowData::STATE_STARTED);
+            ->setStateCurrent(WorkflowData::STATE_STARTED);
 
         if ($data['id_etat'] == '4' && $data['date_region_fin'] === null) {
             $instance->setRegionEndAt($this->convertDate("31/12/2020"));

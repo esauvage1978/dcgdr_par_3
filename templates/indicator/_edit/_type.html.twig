@@ -1,0 +1,49 @@
+{% embed 'widgets/card-widget.html.twig' %}
+	{% block card_class %}flat
+	{% endblock %}
+	{% block card_body %}
+
+
+		<div class="form-group row m-2 js-createTip-wrapper">
+			<p>{{ form_label(form.indicatortype) }}</p>
+			{{ form_widget(form.indicatortype) }}
+			<div class="createTip  mt-4">
+				<div class="createTip__title">
+					Type de l'indicateur
+				</div>
+				<p>
+					En fonction du type d'indicateur, des champs serons accessible (objectif...)
+				</p>
+			</div>
+		</div>
+
+<div class="form-group row m-2 js-createTip-wrapper" id="div_indicator_goal">
+	<p>{{ form_label(form.goal) }}</p>
+	{{ form_widget(form.goal) }}
+	<div class="createTip  mt-4">
+		<div class="createTip__title">
+			Objectif
+		</div>
+		<p>
+			La valeur de l'objectif n'est ajoutée qu'à la première initialisation du déploiement
+		</p>
+	</div>
+</div>
+
+<div class="form-group row m-2 js-createTip-wrapper" id="div_indicator_value">
+	<p>{{ form_label(form.value) }}</p>
+	{{ form_widget(form.value) }}
+	<div class="createTip  mt-4">
+		<div class="createTip__title">
+			Valeur initiale
+		</div>
+		<p>
+			La valeur initiale n'est ajoutée qu'à la première initialisation du déploiement
+		</p>
+	</div>
+</div>
+
+
+	{% endblock %}
+
+{% endembed %}

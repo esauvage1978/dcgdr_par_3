@@ -1,0 +1,10 @@
+<div class="jumbotron col-12 text-center text-p-dark2 bg-p-light">
+	<div class="text-center display-2">
+		{{ item.organisme.fullName }}
+	</div>
+	<a href="{{ path('action_show',{id:item.action.id})}}" class="text-p-dark text-lg">
+		{{ item.action.category.thematique.ref }}-{{ item.action.category.ref }}-{{ item.action.ref }}
+	
+		{{ item.action.name }}
+	</a>
+</div>

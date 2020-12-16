@@ -1,0 +1,96 @@
+{% extends 'deployement/layout.html.twig' %}
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/taux.html.twig" as tx %}
+
+{% set columns = {
+    'Organisme ': {'class': 'alwaysVisible', 'orderBy': true},
+    'Nombre d\'indicateur associé': {'class': 'alwaysVisible', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+{% import '@AdminLTE/Macros/buttons.html.twig'  as btn %}
+
+{% block page_subtitle %}
+	 Sélection des organismes
+{% endblock %}
+
+
+{% block breadcrumb %}
+	{% import "deployement/_btn_actions.html.twig" as actions %}
+	{{ actions.show(
+        'selection',
+        is_granted('ROLE_USER'),
+        null,
+        domaine,
+		action
+    ) }}
+{% endblock %}
+
+
+{% block page_content %}
+
+
+	{% import "@AdminLTE/Macros/default.html.twig" as macro %}
+
+	{{ tables.datatable_header(tableName, columns,  {'striped': true}) }}
+	{% for organisme in organismes %}
+		{% set find=false %}
+		{% for deployement in deployements %}
+			{% if  deployement.organisme.id == organisme.id %}
+				{% set find=true %}
+
+				<tr>
+					<td class="align-middle text-lg">
+						<a href="#" class="text-{{ deployement.organisme.isEnable ? 'p-dark' : 'danger text-bold' }}">
+							{{ deployement.organisme.fullname }}
+						</a>
+					</td>
+					<td class="align-middle text-center">
+						{% set nbr= deployement | organismeIndicateurDeployed %}
+						<div class="p-2 {{ nbr==0 ? 'badge badge-light text-light' :'badge badge-success ' }}">
+							{{ nbr }}
+						</div>
+					</td>
+					<td class="align-middle text-center text-xs">
+						{{ tx.showBar(deployement.taux1,deployement.taux2 ) }}
+					</td>
+					<td class=" d-flex  justify-content-end ">
+							{{ btn.link_button(
+								'Modifier',
+								path(route_edit,{id:deployement.id}),
+								'fa fa-edit',
+								'p-dark',
+								'p-dark btn-sm'
+							) }}
+					</td>
+				</tr>
+			{% endif %}
+		{% endfor %}
+		{% if find==false %}
+			<tr>
+				<td class="align-middle text-lg">
+					<span class="text-{{ organisme.isEnable ? 'gray-dark' : 'danger text-bold' }}">
+						{{ organisme.fullname }}
+					</span>
+				</td>
+				<td></td>
+				<td></td>
+				<td class="d-flex justify-content-center align-items-center">
+					<a class="btn bg-p-dark2 text-p-light" href="{{ path('deployement_add', {'id': action.id, 'organismeid' : organisme.id}) }}">
+						<i class="fas fa-plus"></i>
+						Déployer pour cet organisme
+					</a>
+				</td>
+			</tr>
+		{% endif %}
+
+	{% else %}
+		{{ tables.datatable_data_else(columns) }}
+	{% endfor %}
+	{{ tables.datatable_footer(tableName,1) }}
+	
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{{ tables.datatable_javascript(tableName,1,columns) }}
+{% endblock %}

@@ -21,7 +21,7 @@ class PoleDtoRepository extends ServiceEntityRepository implements DtoRepository
      */
     private $dto;
 
-    const ALIAS = 'b';
+    const ALIAS = 'p';
 
 
     public function __construct(ManagerRegistry $registry)

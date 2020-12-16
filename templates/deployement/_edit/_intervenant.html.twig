@@ -1,0 +1,20 @@
+<!-- Intervenants -->
+<section >
+	<h5 class="text-p-dark2 p-1  text-center ">
+		Intervenants
+	</h5>
+	<div class="card-body">
+		<div class="form-group row">
+			<label for="{{ form.writers.vars.id }}">
+				Pilote
+			</label>
+			{{ form_widget(form.writers) }}
+		</div>
+		<div class="form-group row">
+			<label for="{{ form.readers.vars.id }}">
+				Consultant
+			</label>
+			{{ form_widget(form.readers) }}
+		</div>
+	</div>
+</section>
