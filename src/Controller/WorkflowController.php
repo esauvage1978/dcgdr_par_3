@@ -30,7 +30,7 @@ class WorkflowController extends AbstractGController
      *
      * @IsGranted("ROLE_USER")
      */
-    public function checkAction(Action $action, WorkflowActionManager $workflow): Response
+    public function checkAction(Action $action): Response
     {
         return $this->render('verif/workflow.html.twig', [
             'item' => $action,

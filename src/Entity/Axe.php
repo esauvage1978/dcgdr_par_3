@@ -50,6 +50,7 @@ class Axe implements EntityInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Pole", mappedBy="axe", orphanRemoval=true)
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     private $poles;
 

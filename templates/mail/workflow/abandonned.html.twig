@@ -1,0 +1,39 @@
+{% extends './mail/template.html.twig' %}
+
+{% block title %}
+Le porte document est abandonnée
+
+{% endblock %}
+{% block title_content %}
+Porte-document est abandonnée
+
+{% endblock %}
+
+{% block body %}
+	<p>
+le porte-document
+<strong>{{ action.ref }}
+	-
+{{ action.name }}</strong>
+
+est abandonnée. La personne qui l'a envoyé dans cet été a laissé le commentaire suivant
+
+	</p>
+	<p>
+		{{ action.stateContent | raw }}
+	</p>
+	<p>
+		Vous pouvez aller le consulter en cliquant sur le lien ou en saisissant l'adresse
+		<a style="color:#57a7fe;text-decoration: none" href="{{ url('action_show', {'id': action.id}) }}">cliquez-ici</a>
+
+		ou
+								            collez le lien suivant dans votre navigateur
+		<span style="color:#57a7fe;">
+			{{ url('action_show', {id: action.id}) }}
+		</span>
+	</p>
+<p>
+	{{ include('mail/_view/_action.html.twig') }}
+</p>
+
+{% endblock %}

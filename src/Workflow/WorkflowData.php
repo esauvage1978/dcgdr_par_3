@@ -21,7 +21,7 @@ class WorkflowData
     const TRANSITION_TO_CODIR = 'toCodir';
     const TRANSITION_TO_REJECTED = 'toRejected';
     const TRANSITION_TO_FINALISED = 'toFinalised';
-    const TRANSITION_TO_DEPLOYE = 'toDeploye';
+    const TRANSITION_TO_DEPLOYED = 'toDeployed';
     const TRANSITION_TO_MEASURED = 'toMeasured';
     const TRANSITION_TO_CLOTURED = 'toClotured';
     const TRANSITION_UN_DEPLOYED = 'unDeployed';
@@ -29,8 +29,9 @@ class WorkflowData
     const TRANSITION_UN_CLOTURED = 'unClotured';
     const TRANSITION_TO_ABANDONNED = 'toAbandonned';
 
-    const STATES_ACTION_UPDATE_PILOTES=['started','rejected','abandonned','deployed','measured','clotured'];
-    const STATES_ACTION_UPDATE_VALIDER=['cotech','codir'];
+    const STATES_ACTION_UPDATE_BY_PILOTES=['started','finalised','rejected','abandonned','deployed','measured','clotured'];
+    const STATES_ACTION_UPDATE_BY_COTECH=['cotech'];
+    const STATES_ACTION_UPDATE_BY_CODIR = ['codir'];
 
     const STATES_DEPLOYEMENT_UPDATE=['started','finalised'];
     const STATES_DEPLOYEMENT_READ=['deployed','measured','clotured','abandonned'];
@@ -42,6 +43,8 @@ class WorkflowData
     private const BGCOLOR = 'bgcolor';
     private const FORECOLOR = 'forecolor';
     private const TRANSITIONS = 'transitions';
+
+    
 
     private static function getStates(): array
     {
@@ -61,15 +64,90 @@ class WorkflowData
             self::STATE_COTECH =>
             [
                 self::NAME => ' 1. COTECH',
-                self::ICON => 'fab fa-firstdraft',
+                self::ICON => 'fas fa-stamp',
                 self::TITLE_MAIL => ' Une action est au COTECH',
                 self::BGCOLOR => '#5b0570',
                 self::FORECOLOR => '#ffffff',
                 self::TRANSITIONS => [
                     self::TRANSITION_TO_CODIR,
+                    self::TRANSITION_TO_REJECTED,
                     self::TRANSITION_TO_ABANDONNED
                 ]
             ],
+            self::STATE_CODIR =>
+            [
+                self::NAME => ' 3. CODIR',
+                self::ICON => 'fas fa-stamp',
+                self::TITLE_MAIL => ' Une action est au CODIR',
+                self::BGCOLOR => '#794A8D',
+                self::FORECOLOR => '#ffffff',
+                self::TRANSITIONS => [
+                    self::TRANSITION_TO_REJECTED,
+                    self::TRANSITION_TO_ABANDONNED
+                ]
+            ],
+            self::STATE_REJECTED =>
+            [
+                self::NAME => ' 2. A reprendre',
+                self::ICON => 'fas fa-recycle',
+                self::TITLE_MAIL => ' Une action est au CODIR',
+                self::BGCOLOR => '#5B2971',
+                self::FORECOLOR => '#ffffff',
+                self::TRANSITIONS => [
+                    self::TRANSITION_TO_STARTED,
+                    self::TRANSITION_TO_ABANDONNED
+                ]
+            ],
+            self::STATE_FINALISED =>
+            [
+                self::NAME => ' 4. Méthodologie',
+                self::ICON => 'far fa-edit',
+                self::TITLE_MAIL => ' Une action est en attente de rédaction de la méthodologie',
+                self::BGCOLOR => '#9974aa',
+                self::FORECOLOR => '#ffffff',
+                self::TRANSITIONS => [
+                    self::TRANSITION_TO_DEPLOYED,
+                    self::TRANSITION_TO_ABANDONNED
+                ]
+            ],
+            self::STATE_DEPLOYED =>
+            [
+                self::NAME => ' 5. Déployée',
+                self::ICON => 'fab fa-product-hunt',
+                self::TITLE_MAIL => ' Une action est déployée',
+                self::BGCOLOR => '#ff6584',
+                self::FORECOLOR => '#ffffff',
+                self::TRANSITIONS => [
+                    self::TRANSITION_TO_MEASURED,
+                    self::TRANSITION_UN_DEPLOYED,
+                    self::TRANSITION_TO_ABANDONNED
+                ]
+            ],
+            self::STATE_MEASURED =>
+            [
+                self::NAME => ' 6. A mesurer',
+                self::ICON => 'fas fa-crosshairs',
+                self::TITLE_MAIL => ' Une action est en attente de la mesure d\'efficacité',
+                self::BGCOLOR => '#E851BB',
+                self::FORECOLOR => '#ffffff',
+                self::TRANSITIONS => [
+                    self::TRANSITION_TO_CLOTURED,
+                    self::TRANSITION_UN_MEASURED,
+                    self::TRANSITION_TO_ABANDONNED
+                ]
+            ],
+            self::STATE_CLOTURED =>
+            [
+                self::NAME => ' 7. Clôturée',
+                self::ICON => 'fas fa-copyright',
+                self::TITLE_MAIL => ' Une action est clôturée',
+                self::BGCOLOR => '#ED59FF',
+                self::FORECOLOR => '#ffffff',
+                self::TRANSITIONS => [
+                    self::TRANSITION_UN_CLOTURED,
+                    self::TRANSITION_TO_ABANDONNED
+                ]
+            ],                                                                
             self::STATE_ABANDONNED =>
             [
                 self::NAME => ' Abandonné',
@@ -89,6 +167,15 @@ class WorkflowData
         $datas = [
             self::TRANSITION_TO_STARTED,
             self::TRANSITION_TO_COTECH,
+            self::TRANSITION_TO_CODIR,
+            self::TRANSITION_TO_REJECTED,
+            self::TRANSITION_TO_FINALISED,
+            self::TRANSITION_TO_DEPLOYED,
+            self::TRANSITION_TO_MEASURED,
+            self::TRANSITION_TO_CLOTURED,
+            self::TRANSITION_UN_CLOTURED,
+            self::TRANSITION_UN_DEPLOYED,
+            self::TRANSITION_UN_MEASURED,
             self::TRANSITION_TO_ABANDONNED,
         ];
 
@@ -103,7 +190,13 @@ class WorkflowData
         $datas = [
             self::STATE_STARTED,
             self::STATE_COTECH,
+            self::STATE_CODIR,
             self::STATE_ABANDONNED,
+            self::STATE_CLOTURED,
+            self::STATE_MEASURED,
+            self::STATE_FINALISED,
+            self::STATE_DEPLOYED,
+            self::STATE_REJECTED,
         ];
 
         if (in_array($data, $datas)) {
@@ -182,7 +275,17 @@ class WorkflowData
                 $data['state'] = self::STATE_COTECH;
                 $data['titre'] = 'Mettre à la validation du COTECH';
                 $data['btn_label'] = 'COTECH';
-                break;                
+                break;
+            case self::TRANSITION_TO_CODIR:
+                $data['state'] = self::STATE_CODIR;
+                $data['titre'] = 'Mettre à la validation du CODIR';
+                $data['btn_label'] = 'CODIR';
+                break;
+            case self::TRANSITION_TO_REJECTED:
+                $data['state'] = self::STATE_REJECTED;
+                $data['titre'] = 'Rejeter l\'action';
+                $data['btn_label'] = 'Rejeter';
+                break;                                   
             case self::TRANSITION_TO_ABANDONNED:
                 $data['state'] = self::STATE_ABANDONNED;
                 $data['titre'] = 'Abandonner le porte-document';

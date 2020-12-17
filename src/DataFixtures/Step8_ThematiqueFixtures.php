@@ -11,7 +11,7 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 
-class Step8_ThematiqueFixtures extends Fixture implements  FixtureGroupInterface
+class Step8_ThematiqueFixtures extends Fixture implements FixtureGroupInterface
 {
     const FILENAME = 'dcgdr_thematique';
     /**
@@ -41,8 +41,8 @@ class Step8_ThematiqueFixtures extends Fixture implements  FixtureGroupInterface
     ) {
         $this->fixturesImportData = $fixturesImportData;
         $this->validator = $validator;
-        $this->poles=$poleRepository->findAll();
-        $this->entityManagerInterface=$entityManagerI;
+        $this->poles = $poleRepository->findAll();
+        $this->entityManagerInterface = $entityManagerI;
     }
     public function getInstance(string $id, $entitys)
     {
@@ -54,16 +54,14 @@ class Step8_ThematiqueFixtures extends Fixture implements  FixtureGroupInterface
     }
     public function load(ObjectManager $manager)
     {
-        $data = $this->fixturesImportData->importToArray(self::FILENAME.'.json');
+        $data = $this->fixturesImportData->importToArray(self::FILENAME . '.json');
 
         for ($i = 0; $i < \count($data); ++$i) {
             $instance = $this->initialise(new Thematique(), $data[$i]);
 
-            $this->checkAndPersist( $instance);
-
-
+            $this->checkAndPersist($instance);
         }
-
+        $this->create_items_test();
         $this->entityManagerInterface->flush();
     }
 
@@ -76,7 +74,7 @@ class Step8_ThematiqueFixtures extends Fixture implements  FixtureGroupInterface
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
             $this->entityManagerInterface->persist($instance);
         } else {
-            var_dump('Validator : '.$this->validator->getErrors($instance));
+            var_dump('Validator : ' . $this->validator->getErrors($instance));
         }
     }
 
@@ -98,6 +96,49 @@ class Step8_ThematiqueFixtures extends Fixture implements  FixtureGroupInterface
     }
 
 
+    private function create_items_test()
+    {
+        $pole1 = $this->getInstance('16', $this->poles);
+        $pole2 = $this->getInstance('17', $this->poles);
+        $datas = [
+            [
+                'id' => '35',
+                'name' => 'TEST thematique Manu 1',
+                'ref' => 't1',
+                'pole' => $pole1,
+            ],
+            [
+                'id' => '36',
+                'name' => 'TEST thematique Manu 2',
+                'ref' => 't2',
+                'pole' => $pole2,
+            ],
+            [
+                'id' => '37',
+                'name' => 'TEST thematique Manu 3',
+                'ref' => 't3',
+                'pole' => $pole1,
+            ],
+            [
+                'id' => '38',
+                'name' => 'TEST thematique Manu 4',
+                'ref' => 't4',
+                'pole' => $pole2,
+            ],
+        ];
+
+        foreach ($datas as $data) {
+            //création d'une corbeille COTECH
+            $item = new Thematique();
+            $item
+                ->setId($data['id'])
+                ->setName($data['name'])
+                ->setIsEnable(true)
+                ->setPole($data['pole'])
+                ->setRef($data['ref']);
+            $this->checkAndPersist($item);
+        }
+    }
 
     public static function getGroups(): array
     {

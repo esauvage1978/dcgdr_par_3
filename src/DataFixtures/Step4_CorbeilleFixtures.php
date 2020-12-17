@@ -13,9 +13,9 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 
-class Step4_CorbeilleFixtures extends Fixture implements  FixtureGroupInterface
+class Step4_CorbeilleFixtures extends Fixture implements FixtureGroupInterface
 {
-    CONST FILENAME = 'dcgdr_corbeille';
+    const FILENAME = 'dcgdr_corbeille';
     /**
      * @var FixturesImportData
      */
@@ -44,7 +44,7 @@ class Step4_CorbeilleFixtures extends Fixture implements  FixtureGroupInterface
         $this->fixturesImportData = $fixturesImportData;
         $this->validator = $validator;
         $this->organismes = $organismeRepository->findAll();
-        $this->entityManagerInterface=$entityManagerI;
+        $this->entityManagerInterface = $entityManagerI;
     }
 
     public function getInstance(string $id, $entitys)
@@ -60,25 +60,69 @@ class Step4_CorbeilleFixtures extends Fixture implements  FixtureGroupInterface
     {
         $data = $this->fixturesImportData->importToArray(self::FILENAME . ".json");
 
-        for ($i = 0; $i < \count( $data ); $i++) {
+        for ($i = 0; $i < \count($data); $i++) {
 
             $instance = $this->initialise(new Corbeille(), $data[$i]);
 
             $this->checkAndPersist($instance);
         }
 
-        //création d'une corbeille COTECH
-        $organisme = $this->getInstance(2, $this->organismes);
-        $corbeille=new Corbeille();
-        $corbeille
-        ->setName('COTECH DCGDR')
-        ->setOrganisme($organisme)
-        ->setIsEnable(true)
-        ->setIsShowValidate(true);
-        $this->checkAndPersist($corbeille);
+        $this->create_corbeille_test();
 
-        
         $this->entityManagerInterface->flush();
+    }
+
+    private function create_corbeille_test()
+    {
+        $organismeDcgdr = $this->getInstance(2, $this->organismes);
+        $organismeFlandres = $this->getInstance(1, $this->organismes);
+        $datas = [
+            [
+                'id' => '114',
+                'name' => 'TEST COTECH DCGDR',
+                'organisme' => $organismeDcgdr,
+                'isDefault' => false,
+                'isWriter' => false,
+                'isValidate' => true,
+            ],
+            [
+                'id' => '115',
+                'name' => 'TEST CODIR DCGDR',
+                'organisme' => $organismeDcgdr,
+                'isDefault' => false,
+                'isWriter'=> false,
+                'isValidate' => true,
+            ],
+            [
+                'id' => '116',
+                'name' => 'TEST Action pilotage',
+                'organisme' => $organismeDcgdr,
+                'isDefault' => false,
+                'isWriter' => true,
+                'isValidate' => false,
+            ],
+            [
+                'id' => '117',
+                'name' => 'TEST déploiement pilotage',
+                'organisme' => $organismeFlandres,
+                'isDefault' => true,
+                'isWriter'=> true,
+                'isValidate' => false,
+            ],
+        ];
+        foreach ($datas as $data) {
+            //création d'une corbeille COTECH
+            $corbeille = new Corbeille();
+            $corbeille
+                ->setId($data['id'])
+                ->setName($data['name'])
+                ->setOrganisme($data['organisme'])
+                ->setIsEnable(true)
+                ->setIsUseByDefault($data['isDefault'])
+                ->setIsShowWrite($data['isWriter'])
+                ->setIsShowValidate($data['isValidate']);
+            $this->checkAndPersist($corbeille);
+        }
     }
 
 
@@ -102,7 +146,8 @@ class Step4_CorbeilleFixtures extends Fixture implements  FixtureGroupInterface
             ->setName(
                 strlen($data['nom']) > 3 ?
                     $data['nom'] :
-                    $data['nom'] . '_fixtures')
+                    $data['nom'] . '_fixtures'
+            )
             ->setIsEnable($data['afficher'])
             ->setContent($data['description'])
             ->setIsUseByDefault($data['pa_defaut'])

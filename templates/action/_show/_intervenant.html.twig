@@ -6,13 +6,12 @@
 	<h5 class="text-p-dark2 p-1  text-center ">
 		Intervenants
 	</h5>
-	{% if item.validers.count >0 %}
-
+	{% set datas = item.COTECHValiders %}
+	{% set nbr = datas.count %}
+	{% if nbr >0 %}
 		<article class="card-body ">
-			<h6>Valideur</h6>
+			<h6>COTECH</h6>
 			<div class="list-group list-group-flush  bg-light">
-				{% set datas = item.validers %}
-				{% set nbr = datas.count %}
 				{% if nbr>0 %}
 					{{ cbl.listing(datas) }}
 				{% else %}
@@ -21,13 +20,28 @@
 			</div>
 		</article>
 	{% endif %}
-	{% if item.writers.count >0 %}
 
+	{% set datas = item.CODIRValiders %}
+	{% set nbr = datas.count %}
+	{% if nbr >0 %}
+		<article class="card-body ">
+			<h6>CODIR</h6>
+			<div class="list-group list-group-flush  bg-light">
+				{% if nbr>0 %}
+					{{ cbl.listing(datas) }}
+				{% else %}
+					<div class="list-group-item">En attente d'ajout</div>
+				{% endif %}
+			</div>
+		</article>
+	{% endif %}
+
+	{% set datas = item.writers %}
+	{% set nbr = datas.count %}
+	{% if nbr >0 %}
 		<article class="card-body ">
 			<h6>Pilote</h6>
 			<div class="list-group list-group-flush  bg-light">
-				{% set datas = item.writers %}
-				{% set nbr = datas.count %}
 				{% if nbr>0 %}
 					{{ cbl.listing(datas) }}
 				{% else %}
@@ -36,6 +50,9 @@
 			</div>
 		</article>
 	{% endif %}
+
+	{% set datas = item.readers %}
+	{% set nbr = datas.count %}
 	{% if item.isShowall %}
 		<article class="card-body ">
 			<div class="mt-4 p-3 col-12 bg-light text-xs">
@@ -44,12 +61,10 @@
 				</span>
 			</div>
 		</article>
-	{% elseif item.readers.count >0 %}
+	{% elseif nbr >0 %}
 		<article class="card-body ">
 			<h5 class="card-title  p-2  bg-light ">Consultant</h5>
 			<div class="list-group list-group-flush">
-				{% set datas = item.readers %}
-				{% set nbr = datas.count %}
 				{% if nbr>0 %}
 					{{ cbl.listing(datas) }}
 				{% else %}

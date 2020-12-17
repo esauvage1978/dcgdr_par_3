@@ -33,7 +33,7 @@ framework:
                 toFinalised:
                     from: codir
                     to: finalised
-                toDeploye:
+                toDeployed:
                     from: finalised
                     to: deployed
                 unDeployed:

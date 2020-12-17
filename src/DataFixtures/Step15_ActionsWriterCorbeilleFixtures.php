@@ -61,8 +61,8 @@ class Step15_ActionsWriterCorbeilleFixtures extends Fixture implements FixtureGr
         $this->actions = $actionRepository->findAll();
         $this->entityManagerInterface = $entityManagerI;
         $this->writers = $corbeilleRepository->find(32);
-        $this->COTECHvaliders = $corbeilleRepository->findOneBy(['name' => 'COTECH DCGDR']);
-        $this->CODIRvaliders = $corbeilleRepository->find(7);
+        $this->COTECHvaliders = $corbeilleRepository->find(114);
+        $this->CODIRvaliders = $corbeilleRepository->find(115);
     }
 
     public function getInstance(string $id, $entitys)

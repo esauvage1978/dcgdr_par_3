@@ -53,7 +53,17 @@ class TransitionAbstract implements Transition
     public function checkAll()
     {
         $this->actionCheck->checkName();
-        $this->actionCheck->checkContentOrFile();
+        $this->actionCheck->checkReference();
+        $this->actionCheck->checkRegionStartAt();
+        $this->actionCheck->checkRegionEndAt();
+        $this->actionCheck->checkRegionStartAtBeforeRegionEnAt();
+        $this->actionCheck->checkCadrage();
+        $this->actionCheck->checkCorbeillePilotage();
+        $this->actionCheck->checkCorbeilleCOTECHValidation();
+        $this->actionCheck->checkCorbeilleCODIRValidation();
+        $this->actionCheck->checkIndicators();
+        $this->actionCheck->checkOrganismes();
+        $this->actionCheck->checkDeploiement();
     }
 
     public function intialiseActionForTransition(bool $automate=false)

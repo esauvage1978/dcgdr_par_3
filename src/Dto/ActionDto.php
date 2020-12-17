@@ -14,6 +14,23 @@ class ActionDto extends AbstractDto
     private $userDto;
 
     /**
+     * @var ?AxeDto
+     */
+    private $axeDto;
+
+    /**
+     * @var ?PoleDto
+     */
+    private $poleDto;
+    /**
+     * @var ?ThematiqueDto
+     */
+    private $thematiqueDto;
+    /**
+     * @var ?CategoryDto
+     */
+    private $categoryDto;
+    /**
      * @var ?string
      */
     private $stateCurrent;
@@ -21,8 +38,12 @@ class ActionDto extends AbstractDto
     /**
      * @var ?string
      */
-    private $isInProgress;
+    private $isWritable;
 
+    /**
+     * @var ?string
+     */
+    private $isReadable;
 
     /**
      * @return mixed
@@ -41,6 +62,70 @@ class ActionDto extends AbstractDto
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAxeDto()
+    {
+        return $this->axeDto;
+    }
+
+    /**
+     * @param mixed $axeDto
+     */
+    public function setAxeDto($axeDto)
+    {
+        $this->axeDto = $axeDto;
+        return $this;
+    }
+    /**
+     * @return mixed
+     */
+    public function getPoleDto()
+    {
+        return $this->poleDto;
+    }
+
+    /**
+     * @param mixed $poleDto
+     */
+    public function setPoleDto($poleDto)
+    {
+        $this->poleDto = $poleDto;
+        return $this;
+    }
+    /**
+     * @return mixed
+     */
+    public function getThematiqueDto()
+    {
+        return $this->thematiqueDto;
+    }
+
+    /**
+     * @param mixed $thematiqueDto
+     */
+    public function setThematiqueDto($thematiqueDto)
+    {
+        $this->thematiqueDto = $thematiqueDto;
+        return $this;
+    }
+    /**
+     * @return mixed
+     */
+    public function getCategoryDto()
+    {
+        return $this->categoryDto;
+    }
+
+    /**
+     * @param mixed $categoryDto
+     */
+    public function setCategoryDto($categoryDto)
+    {
+        $this->categoryDto = $categoryDto;
+        return $this;
+    }
 
 
     /**
@@ -62,34 +147,42 @@ class ActionDto extends AbstractDto
     }
 
     /**
-     * @param mixed $IsInProgress
+     * @param mixed $isWritable
      * @return ActionDto
      */
-    public function setIsInProgress($isInProgress)
+    public function setIsWritable($isWritable)
     {
-        $this->checkBool($isInProgress);
-        $this->isInProgress = $isInProgress;
+        $this->checkBool($isWritable);
+        $this->isWritable = $isWritable;
         return $this;
     }
 
-    /**
-     * @param mixed $isShow
-     * @return ActionDto
-     */
-    public function setIsShow($isShow)
-    {
-        $this->checkBool($isShow);
-        $this->isShow = $isShow;
-        return $this;
-    }
     /**
      * @return mixed
      */
-    public function getIsShow()
+    public function getIsWritable()
     {
-        return $this->isShow;
+        return $this->isWritable;
     }
 
+    /**
+     * @param mixed $isReadable
+     * @return ActionDto
+     */
+    public function setIsReadable($isReadable)
+    {
+        $this->checkBool($isReadable);
+        $this->isReadable = $isReadable;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsReadable()
+    {
+        return $this->isReadable;
+    }
 
     public function getData(): array
     {

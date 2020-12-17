@@ -17,8 +17,8 @@ class TransitionUnDeployed extends TransitionAbstract
     public function intialiseActionForTransition(bool $automate = false)
     {
         if (!$automate) {
-            $this->action->setContentState(
-                $this->action->getContentState() .
+            $this->action->setStateContent(
+                $this->action->getStateContent() .
                 "<br/> Ancienne date de début de déploiement : " . $this->action->getRegionStartAt()->format("d/m/Y") .
                 "<br/> Ancienne date de fin de déploiement : " . $this->action->getRegionEndAt()->format("d/m/Y")
             );

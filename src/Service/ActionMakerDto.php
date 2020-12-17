@@ -6,6 +6,7 @@ use App\Dto\ActionDto;
 use App\Dto\UserDto;
 use App\Entity\User;
 use App\Repository\ActionDtoRepository;
+use App\Security\CurrentUser;
 use App\Security\Role;
 use App\Workflow\WorkflowData;
 
@@ -16,48 +17,43 @@ class ActionMakerDto
     const HOME_NEWS_SUBSCRIPTION = 'news_subscription';
     const HOME_NEWS = 'news';
 
-    public const BACKPACK_IN_PROGRESS = 'backpack_in_progress';
-
     public const SEARCH = 'search';
 
     public const STARTED = 'started';
-    public const MY_DRAFT_UPDATABLE = 'mydraft_updatable';
-    public const DRAFT_UPDATABLE = 'draft_updatable';
+    public const STARTED_WRITABLE = 'started_writable';
+    public const STARTED_READABLE = 'started_readable';
 
     public const ABANDONNED = 'abandonned';
-    public const ABANDONNED_UPDATABLE = 'abandonned_updatable';
-    public const MY_ABANDONNED_UPDATABLE = 'myabandonned_updatable';
+    public const ABANDONNED_WRITABLE = 'abandonned_writable';
+    public const ABANDONNED_READABLE = 'abandonned_readable';
 
-    public const TO_RESUME = 'toResume';
-    public const TO_RESUME_UPDATABLE = 'toResume_updatable';
-    public const MY_TO_RESUME_UPDATABLE = 'mytoResume_updatable';
+    public const COTECH = 'cotech';
+    public const COTECH_WRITABLE = 'cotech_writable';
+    public const COTECH_READABLE = 'cotech_readable';
 
-    public const TO_VALIDATE = 'toValidate';
-    public const TO_VALIDATE_UPDATABLE = 'toValidate_updatable';
-    public const MY_TO_VALIDATE_UPDATABLE = 'mytoValidate_updatable';
+    public const CODIR = 'codir';
+    public const CODIR_WRITABLE = 'codir_writable';
+    public const CODIR_READABLE = 'codir_readable';
 
-    public const PUBLISHED = 'published';
-    public const PUBLISHED_UPDATABLE = 'published_updatable';
-    public const MY_PUBLISHED_UPDATABLE = 'mypublished_updatable';
+    public const REJECTED = 'rejected';
+    public const REJECTED_WRITABLE = 'rejected_writable';
+    public const REJECTED_READABLE = 'rejected_readable';
 
-    public const GO_TO_REVISE = 'goToRevise';
-    public const GO_TO_REVISE_SOON = 'goToReviseSoon';
+    public const FINALISED = 'finalised';
+    public const FINALISED_WRITABLE = 'finalised_writable';
+    public const FINALISED_READABLE = 'finalised_readable';
 
-    public const TO_REVISE = 'toRevise';
-    public const TO_REVISE_UPDATABLE = 'toRevise_updatable';
-    public const MY_TO_REVISE_UPDATABLE = 'mytoRevise_updatable';
+    public const DEPLOYED = 'deployed';
+    public const DEPLOYED_WRITABLE = 'deployed_writable';
+    public const DEPLOYED_READABLE = 'deployed_readable';
 
-    public const IN_REVIEW = 'inReview';
-    public const IN_REVIEW_UPDATABLE = 'inReview_updatable';
-    public const MY_IN_REVIEW_UPDATABLE = 'myinReview_updatable';
+    public const MEASURED = 'measured';
+    public const MEASURED_WRITABLE = 'measured_writable';
+    public const MEASURED_READABLE = 'measured_readable';
 
-    public const TO_CONTROL = 'toControl';
-
-    public const TO_CHECK = 'toCheck';
-
-    public const BACKPACK_SHOW = 'show';
-
-    const HIDE = 'hide';
+    public const CLOTURED = 'clotured';
+    public const CLOTURED_WRITABLE = 'clotured_writable';
+    public const CLOTURED_READABLE = 'clotured_readable';
 
     /**
      * @var User
@@ -69,9 +65,9 @@ class ActionMakerDto
      */
     private $gestionnaire;
 
-    public function __construct(?User $user)
+    public function __construct(CurrentUser $currentUser)
     {
-        $this->user = $user;
+        $this->user = $currentUser->getUser();
         $this->gestionnaire = Role::isGestionnaire($this->user);
     }
 
@@ -79,22 +75,205 @@ class ActionMakerDto
     public function get(string $type, ?string $param = null): ActionDto
     {
         $dto = new ActionDto();
-        $dto = $this->checkUser($dto);
         switch ($type) {
-            case self::STARTED:
+            case self::STARTED_WRITABLE:
+                $this->addUser($dto);
                 $dto
+                    ->setIsWritable(ActionDto::TRUE)
                     ->setStateCurrent(WorkflowData::STATE_STARTED)
                     ->setVisible(ActionDto::TRUE);
                 break;
+            case self::STARTED_READABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_STARTED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::STARTED:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_STARTED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::COTECH_WRITABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsWritable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_COTECH)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::COTECH_READABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_COTECH)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::COTECH:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_COTECH)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::CODIR_WRITABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsWritable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_CODIR)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::CODIR_READABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_CODIR)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::CODIR:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_CODIR)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::REJECTED_WRITABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsWritable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_REJECTED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::REJECTED_READABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_REJECTED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::REJECTED:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_REJECTED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::FINALISED_WRITABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsWritable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_FINALISED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::FINALISED_READABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_FINALISED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::FINALISED:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_FINALISED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::DEPLOYED_WRITABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsWritable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_DEPLOYED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::DEPLOYED_READABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_DEPLOYED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::DEPLOYED:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_DEPLOYED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::MEASURED_WRITABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsWritable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_MEASURED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::MEASURED_READABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_MEASURED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::MEASURED:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_MEASURED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::CLOTURED_WRITABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsWritable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_CLOTURED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::CLOTURED_READABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_CLOTURED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::CLOTURED:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_CLOTURED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::ABANDONNED_WRITABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsWritable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_ABANDONNED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::ABANDONNED_READABLE:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_ABANDONNED)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::ABANDONNED:
+                $this->addUser($dto);
+                $dto
+                    ->setIsReadable(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_ABANDONNED)
+                    ->setVisible(ActionDto::TRUE);
+                break;   
         }
 
         return $dto;
     }
 
 
-    private function checkUser(ActionDto $dto)
+    private function addUser(ActionDto $dto)
     {
-        if (!is_null($this->user) && !$this->gestionnaire) {
+        if (!is_null($this->user)) {
             $dto->setUserDto((new UserDto())->setId($this->user->getId()));
         }
         return $dto;

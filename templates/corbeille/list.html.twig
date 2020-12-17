@@ -5,15 +5,15 @@
     'Nom de l\'organisme': {'class': 'alwaysVisible', 'orderBy': true},
     'Description': {'class': 'alwaysVisible', 'orderBy': true},
     '<i class="fa fa-users"  data-toggle="tooltip" data-placement="top" title="Nombre d\'utilisateurs"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
-'<i class="fa fa-crosshairs" data-toggle="tooltip" data-placement="top" title="Corbeille utilisée par défaut"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
+    '<i class="fa fa-crosshairs" data-toggle="tooltip" data-placement="top" title="Corbeille utilisée par défaut"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
     '<i class="fa fa-eye"  data-toggle="tooltip" data-placement="top" title="Corbeille pour la consultation"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
     '<i class="fa fa-bullhorn"  data-toggle="tooltip" data-placement="top" title="Corbeille pour le pilotage"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
-'<i class="fa fa-check-double" data-toggle="tooltip" data-placement="top" title="Corbeille pour la validation"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
+    '<i class="fa fa-check-double" data-toggle="tooltip" data-placement="top" title="Corbeille pour la validation"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
 
 
-'<i class="fa fa-bolt" data-toggle="tooltip" data-placement="top" title="Nombre d\'actions"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
+    '<i class="fa fa-bolt" data-toggle="tooltip" data-placement="top" title="Nombre d\'actions"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
 
-'<i class="fa fa-city" data-toggle="tooltip" data-placement="top" title="Nombre de déploiements"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
+    '<i class="fa fa-city" data-toggle="tooltip" data-placement="top" title="Nombre de déploiements"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
 
     'actions': {'class': 'alwaysVisible', 'orderBy': false}
 } %}
@@ -80,7 +80,7 @@
             </td>
 
             <td class="align-middle text-center">
-                {% set nbr = item.actionReaders.count + item.actionWriters.count  + item.actionValiders.count %}
+                {% set nbr = item.actionReaders.count + item.actionWriters.count + item.actionCOTECHValiders.count + item.actionCODIRValiders.count %}
                 <div class="p-2 {{ nbr==0 ? 'badge badge-light text-light' :'badge badge-success ' }}">
                     {{ nbr }}
                 </div>

@@ -32,7 +32,14 @@ class ParamsInServices
     public const ES_MAILER_SMTP_PORT = 'es.mailer.smtp.port';
     public const ES_NEWS_TIME = 'es.news.time';
     public const ES_TREE_UNDEVELOPPED_NBR = 'es.tree.undevelopped.nbr';
-
+    public const ES_MAILER_WORKFLOW_COTECH='es.mailer.workflow.cotech';
+    public const ES_MAILER_WORKFLOW_CODIR = 'es.mailer.workflow.cotech';
+    public const ES_MAILER_WORKFLOW_REJECTED='es.mailer.workflow.cotech';
+    public const ES_MAILER_WORKFLOW_FINALISED='es.mailer.workflow.cotech';
+    public const ES_MAILER_WORKFLOW_DEPLOYED = 'es.mailer.workflow.cotech';
+    public const ES_MAILER_WORKFLOW_MEASURED = 'es.mailer.workflow.cotech';
+    public const ES_MAILER_WORKFLOW_CLOTURED='es.mailer.workflow.cotech';
+    public const ES_MAILER_WORKFLOW_ABANDONNED='es.mailer.workflow.abandonned';
 
     /** @var ParameterBagInterface */
     private $params;
@@ -57,7 +64,16 @@ class ParamsInServices
             self::ES_NEWS_TIME,
             self::ES_TREE_UNDEVELOPPED_NBR,
             self::ES_DIRECTORY_FIXTURES_DOC,
-            self::ES_DIRECTORY_FIXTURES_JSON
+            self::ES_DIRECTORY_FIXTURES_JSON,
+            self::ES_MAILER_WORKFLOW_COTECH,
+            self::ES_MAILER_WORKFLOW_CODIR,
+            self::ES_MAILER_WORKFLOW_REJECTED,
+            self::ES_MAILER_WORKFLOW_FINALISED,
+            self::ES_MAILER_WORKFLOW_DEPLOYED,
+            self::ES_MAILER_WORKFLOW_MEASURED,
+            self::ES_MAILER_WORKFLOW_CLOTURED,
+            self::ES_MAILER_WORKFLOW_ABANDONNED,
+
         ];
     }
 

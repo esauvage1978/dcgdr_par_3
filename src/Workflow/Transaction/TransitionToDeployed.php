@@ -4,7 +4,7 @@
 namespace App\Workflow\Transaction;
 
 
-class TransitionToDeploye extends TransitionAbstract
+class TransitionToDeployed extends TransitionAbstract
 {
 
     public function getExplains(): array
@@ -26,8 +26,8 @@ class TransitionToDeploye extends TransitionAbstract
     public function intialiseActionForTransition(bool $automate = false)
     {
         if (!$automate) {
-            $this->action->setContentState(
-                $this->action->getContentState() .
+            $this->action->setStateContent(
+                $this->action->getStateContent() .
                 "<br/> Ancienne date de début de déploiement : " . $this->action->getRegionStartAt()->format("d/m/Y")
             );
             $date=new \DateTime();

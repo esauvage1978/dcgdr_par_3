@@ -99,6 +99,7 @@ class WorkflowActionManager
             return true;
         } else {
             dump('ERROR ' . $item->getId() . ' can:not. Current state : ' . $item->getStateCurrent() . '. Transition : ' . $transition);
+            return false;
         }
 
         return false;

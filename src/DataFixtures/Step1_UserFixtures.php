@@ -47,13 +47,15 @@ class Step1_UserFixtures extends Fixture implements FixtureGroupInterface
 
     public function load(ObjectManager $manager)
     {
-        $data = $this->importData->importToArray(self::FILENAME.'.json');
+        $data = $this->importData->importToArray(self::FILENAME . '.json');
 
         for ($i = 0; $i < \count($data); ++$i) {
             $instance = $this->initialise(new User(), $data[$i]);
 
             $this->checkAndPersist($instance);
         }
+
+        $this->createUser_test();
 
         $this->entityManagerInterface->flush();
     }
@@ -67,7 +69,7 @@ class Step1_UserFixtures extends Fixture implements FixtureGroupInterface
 
             return;
         }
-        var_dump('Validator : '.$this->validator->getErrors($instance).$instance->getName());
+        var_dump('Validator : ' . $this->validator->getErrors($instance) . $instance->getName());
     }
 
     private function initialise(User $instance, $data): User
@@ -95,7 +97,8 @@ class Step1_UserFixtures extends Fixture implements FixtureGroupInterface
             ->setEmail(
                 filter_var($data['mail'], FILTER_VALIDATE_EMAIL) ?
                     $data['mail'] :
-                    'achanger@live.fr')
+                    'achanger@live.fr'
+            )
             ->setRoles($roles)
             ->setPlainPassword(('achanger' === $data['mdp'] || null === $data['mdp'] || '' === $data['mdp']) ?
                 'AchangerMerci1' :
@@ -105,6 +108,53 @@ class Step1_UserFixtures extends Fixture implements FixtureGroupInterface
         $this->userManager->initialise($instance);
 
         return $instance;
+    }
+
+    private function createUser_test()
+    {
+        $datas = [
+            [
+                'n0_num' => '154',
+                'nom' => 'Manu COTECH',
+                'mail' => 'esauvage1978@gmail.com',
+                'mdp' => 'Fckgwrhqq101'
+            ],
+            [
+                'n0_num' => '155',
+                'nom' => 'Manu CODIR',
+                'mail' => 'amz_kergava@outlook.fr',
+                'mdp' => 'Fckgwrhqq101'
+            ],
+            [
+                'n0_num' => '156',
+                'nom' => 'Manu PILOTE',
+                'mail' => 'contact@manuso.fr',
+                'mdp' => 'Fckgwrhqq101'
+            ],
+            [
+                'n0_num' => '157',
+                'nom' => 'Manu PILOTE deployement',
+                'mail' => 'contact@par.manuso.fr',
+                'mdp' => 'Fckgwrhqq101'
+            ],
+        ];
+
+        foreach ($datas as $data) {
+            $instance=new user();
+            $instance
+                ->setId($data['n0_num'])
+                ->setName($data['nom'])
+                ->setEmailValidated(true)
+                ->setEmailValidatedToken(md5(random_bytes(50)))
+                ->setIsEnable(true)
+                ->setEmail($data['mail'])
+                ->setRoles(['ROLE_USER'])
+                ->setPlainPassword($data['mdp'])                    
+                ->setCreatedAt(new \DateTime());
+
+            $this->userManager->initialise($instance);
+            $this->checkAndPersist($instance);
+        }
     }
 
     public static function getGroups(): array

@@ -4,16 +4,11 @@
 {% import "macros/workflow.html.twig" as wkf %}
 
 
-
 {% set columns = {
     '#': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
 'Total': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
-
+'Consultable': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
 'Modifiable': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
-
-'Modifiable
-<br/>
-propriétaire': {'class': 'align-middle alwaysVisible text-center bg-def1 text-def1', 'orderBy': true},
 
 } %}
 
@@ -34,12 +29,9 @@ propriétaire': {'class': 'align-middle alwaysVisible text-center bg-def1 text-d
 		<div class="col-sm-12 col-lg-6 ">
 
 			{{ tables.datatable_header('dsb', columns,  {'striped': true}) }}
-
 			<tr>
-				{{ wkf.state_table_td('started') }}
-
-				{% for  item in started %}
-
+				{{ wkf.state_table_td('abandonned') }}
+				{% for  item in abandonned %}
 					<td class="align-middle text-center text-lg">
 						<a class=" hvr-float-shadow " href="{{ path(item.route) }}">
 							<span class=''>
@@ -47,9 +39,106 @@ propriétaire': {'class': 'align-middle alwaysVisible text-center bg-def1 text-d
 							</span>
 						</a>
 					</td>
-
 				{% endfor %}
+			</tr>
+			<tr>
+				{{ wkf.state_table_td('started') }}
+				{% for  item in started %}
+					<td class="align-middle text-center text-lg">
+						<a class=" hvr-float-shadow " href="{{ path(item.route) }}">
+							<span class=''>
+								{{ item.data}}
+							</span>
+						</a>
+					</td>
+				{% endfor %}
+			</tr>
 
+
+			<tr>
+				{{ wkf.state_table_td('cotech') }}
+				{% for  item in cotech %}
+					<td class="align-middle text-center text-lg">
+						<a class=" hvr-float-shadow " href="{{ path(item.route) }}">
+							<span class=''>
+								{{ item.data}}
+							</span>
+						</a>
+					</td>
+				{% endfor %}
+			</tr>
+			<tr>
+				{{ wkf.state_table_td('rejected') }}
+				{% for  item in rejected %}
+					<td class="align-middle text-center text-lg">
+						<a class=" hvr-float-shadow " href="{{ path(item.route) }}">
+							<span class=''>
+								{{ item.data}}
+							</span>
+						</a>
+					</td>
+				{% endfor %}
+			</tr>
+
+			<tr>
+				{{ wkf.state_table_td('codir') }}
+				{% for  item in codir %}
+					<td class="align-middle text-center text-lg">
+						<a class=" hvr-float-shadow " href="{{ path(item.route) }}">
+							<span class=''>
+								{{ item.data}}
+							</span>
+						</a>
+					</td>
+				{% endfor %}
+			</tr>
+			<tr>
+				{{ wkf.state_table_td('finalised') }}
+				{% for  item in finalised %}
+					<td class="align-middle text-center text-lg">
+						<a class=" hvr-float-shadow " href="{{ path(item.route) }}">
+							<span class=''>
+								{{ item.data}}
+							</span>
+						</a>
+					</td>
+				{% endfor %}
+			</tr>
+			<tr>
+				{{ wkf.state_table_td('deployed') }}
+				{% for  item in deployed %}
+					<td class="align-middle text-center text-lg">
+						<a class=" hvr-float-shadow " href="{{ path(item.route) }}">
+							<span class=''>
+								{{ item.data}}
+							</span>
+						</a>
+					</td>
+				{% endfor %}
+			</tr>
+			<tr>
+				{{ wkf.state_table_td('measured') }}
+				{% for  item in measured %}
+					<td class="align-middle text-center text-lg">
+						<a class=" hvr-float-shadow " href="{{ path(item.route) }}">
+							<span class=''>
+								{{ item.data}}
+							</span>
+						</a>
+					</td>
+				{% endfor %}
+			</tr>
+			<tr>
+				{{ wkf.state_table_td('clotured') }}
+				{% for  item in clotured %}
+					<td class="align-middle text-center text-lg">
+						<a class=" hvr-float-shadow " href="{{ path(item.route) }}">
+							<span class=''>
+								{{ item.data}}
+							</span>
+						</a>
+					</td>
+				{% endfor %}
 			</tr>
 
 

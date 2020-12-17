@@ -19,63 +19,141 @@
 	<div class="row justify-content-center">
 		<div class="jumbotron col-12 text-center">
 			<h3>
-				<a href="{{ path('corbeille_show',{'id':corbeille.id}) }}">
-					{{ corbeille.name }}
+				<a href="{{ path('corbeille_show',{'id':item.id}) }}">
+					{{ item.name }}
 				</a>
 			</h3>
 		</div>
 		<div class="col-12">
-			{% set datas = corbeille.actionReaders %}
+			{% set datas = item.actionReaders %}
 			{% set nbr = datas | length %}
 
-			{% embed 'widgets/card-widget.html.twig' with {
+			{% if nbr>0 %}
+				{% embed 'widgets/card-widget.html.twig' with {
                 'collapsed':true,
                 'collapsible':true
             } %}
-				{% import "macros/action.html.twig" as act %}
-				{% block card_title %}
-					Validation d'actions ({{ nbr }})
-				{% endblock %}
-				{% block card_body %}
-					{{ act.vignettes(datas) }}
-				{% endblock %}
-			{% endembed %}
+					{% import "macros/action.html.twig" as act %}
+					{% block card_title_class %}
+						bg-p-ligth text-p-dark2
+					{% endblock %}
+					{% block card_title %}
+						Consultation d'actions ({{ nbr }})
+					{% endblock %}
+					{% block card_body %}
+						{{ act.vignettes(datas) }}
+					{% endblock %}
+				{% endembed %}
+			{% endif %}
 
 
-			{% set datas = corbeille.actionWriters %}
+			{% set datas = item.actionWriters %}
 			{% set nbr = datas | length %}
 
-			{% embed 'widgets/card-widget.html.twig' with {
+			{% if nbr>0 %}
+				{% embed 'widgets/card-widget.html.twig' with {
                 'collapsed':true,
                 'collapsible':true
             } %}
-				{% import "macros/action.html.twig" as act %}
-				{% block card_title %}
-					Validation d'actions ({{ nbr }})
-				{% endblock %}
-				{% block card_body %}
-					{{ act.vignettes(datas) }}
-				{% endblock %}
-			{% endembed %}
+					{% import "macros/action.html.twig" as act %}
+					{% block card_title_class %}
+						bg-p-ligth text-p-dark2
+					{% endblock %}
+					{% block card_title %}
+						Pilotage d'actions ({{ nbr }})
+					{% endblock %}
+					{% block card_body %}
+						{{ act.vignettes(datas) }}
+					{% endblock %}
+				{% endembed %}
+			{% endif %}
 
-			{% set datas = corbeille.actionValiders %}
+			{% set datas = item.actionCOTECHValiders %}
 			{% set nbr = datas | length %}
 
-			{% embed 'widgets/card-widget.html.twig' with {
+			{% if nbr>0 %}
+				{% embed 'widgets/card-widget.html.twig' with {
                 'collapsed':true,
                 'collapsible':true
             } %}
-				{% import "macros/action.html.twig" as act %}
-				{% block card_title %}
-					Validation d'actions ({{ nbr }})
-				{% endblock %}
-				{% block card_body %}
-					{{ act.vignettes(datas) }}
-				{% endblock %}
-			{% endembed %}
+					{% import "macros/action.html.twig" as act %}
+					{% block card_title_class %}
+						bg-p-ligth text-p-dark2
+					{% endblock %}
+					{% block card_title %}
+						Validation des actions au COTECH ({{ nbr }})
+					{% endblock %}
+					{% block card_body %}
+						{{ act.vignettes(datas) }}
+					{% endblock %}
+				{% endembed %}
+			{% endif %}
+
+			{% set datas = item.actionCODIRValiders %}
+			{% set nbr = datas | length %}
+
+			{% if nbr>0 %}
+				{% embed 'widgets/card-widget.html.twig' with {
+                'collapsed':true,
+                'collapsible':true
+            } %}
+					{% import "macros/action.html.twig" as act %}
+					{% block card_title_class %}
+						bg-p-ligth text-p-dark2
+					{% endblock %}
+					{% block card_title %}
+						Validation des actions au CODIR ({{ nbr }})
+					{% endblock %}
+					{% block card_body %}
+						{{ act.vignettes(datas) }}
+					{% endblock %}
+				{% endembed %}
+			{% endif %}
+
+			{% set datas = item.deployementReaders %}
+			{% set nbr = datas | length %}
+
+			{% if nbr>0 %}
+				{% embed 'widgets/card-widget.html.twig' with {
+                'collapsed':true,
+                'collapsible':true
+            } %}
+					{% import "macros/deployement.html.twig" as dep %}
+					{% block card_title_class %}
+						bg-p-ligth text-p-dark2
+					{% endblock %}
+					{% block card_title %}
+						Consultation des déploiements ({{ nbr }})
+					{% endblock %}
+					{% block card_body %}
+						{{ dep.vignettes(datas) }}
+					{% endblock %}
+				{% endembed %}
+			{% endif %}
+
+			{% set datas = item.deployementWriters %}
+			{% set nbr = datas | length %}
+
+			{% if nbr>0 %}
+				{% embed 'widgets/card-widget.html.twig' with {
+                'collapsed':true,
+                'collapsible':true
+            } %}
+				{% import "macros/deployement.html.twig" as dep %}
+
+					{% block card_title_class %}
+						bg-p-ligth text-p-dark2
+					{% endblock %}
+					{% block card_title %}
+						Pilotage des déploiements ({{ nbr }})
+					{% endblock %}
+					{% block card_body %}
+						{{ dep.vignettes(datas) }}
+					{% endblock %}
+				{% endembed %}
+			{% endif %}
 
 
 		</div>
 	</div>
-
 {% endblock %}

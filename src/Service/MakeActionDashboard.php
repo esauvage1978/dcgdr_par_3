@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Dto\UserDto;
 use App\Entity\User;
 use App\Dto\ActionDto;
+use App\Security\CurrentUser;
 use App\Widget\WidgetInfoBox;
 use App\Workflow\WorkflowData;
 use App\Repository\ActionDtoRepository;
@@ -37,6 +38,110 @@ private const STATE='state';
                 self::STATE =>  WorkflowData::STATE_STARTED,
                 self::TITLE => 'Tous les brouillons',
             ],
+            ActionMakerDto::STARTED_WRITABLE => [
+                self::STATE =>  WorkflowData::STATE_STARTED,
+                self::TITLE => 'Les brouillons modifiable',
+            ],
+            ActionMakerDto::STARTED_READABLE => [
+                self::STATE =>  WorkflowData::STATE_STARTED,
+                self::TITLE => 'Les brouillons consultable',
+            ],
+            ActionMakerDto::COTECH => [
+                self::STATE =>  WorkflowData::STATE_COTECH,
+                self::TITLE => 'Au COTECH',
+            ],
+            ActionMakerDto::COTECH_WRITABLE => [
+                self::STATE =>  WorkflowData::STATE_COTECH,
+                self::TITLE => 'Au COTECH modifiable',
+            ],
+            ActionMakerDto::COTECH_READABLE => [
+                self::STATE =>  WorkflowData::STATE_COTECH,
+                self::TITLE => 'Au COTECH consultable',
+            ],
+            ActionMakerDto::CODIR => [
+                self::STATE =>  WorkflowData::STATE_CODIR,
+                self::TITLE => 'Au CODIR',
+            ],
+            ActionMakerDto::CODIR_WRITABLE => [
+                self::STATE =>  WorkflowData::STATE_CODIR,
+                self::TITLE => 'Au CODIR modifiable',
+            ],
+            ActionMakerDto::CODIR_READABLE => [
+                self::STATE =>  WorkflowData::STATE_CODIR,
+                self::TITLE => 'Au CODIR consultable',
+            ],
+            ActionMakerDto::REJECTED => [
+                self::STATE =>  WorkflowData::STATE_REJECTED,
+                self::TITLE => 'Rejeté',
+            ],
+            ActionMakerDto::REJECTED_WRITABLE => [
+                self::STATE =>  WorkflowData::STATE_REJECTED,
+                self::TITLE => 'Rejeté et modifiable',
+            ],
+            ActionMakerDto::REJECTED_READABLE => [
+                self::STATE =>  WorkflowData::STATE_REJECTED,
+                self::TITLE => 'Rejeté et consultable',
+            ],
+            ActionMakerDto::FINALISED => [
+                self::STATE =>  WorkflowData::STATE_FINALISED,
+                self::TITLE => 'A finaliser',
+            ],
+            ActionMakerDto::FINALISED_WRITABLE => [
+                self::STATE =>  WorkflowData::STATE_FINALISED,
+                self::TITLE => 'A finaliser et modifiable',
+            ],
+            ActionMakerDto::FINALISED_READABLE => [
+                self::STATE =>  WorkflowData::STATE_FINALISED,
+                self::TITLE => 'A finaliser et consultable',
+            ],
+            ActionMakerDto::DEPLOYED => [
+                self::STATE =>  WorkflowData::STATE_DEPLOYED,
+                self::TITLE => 'Déployé',
+            ],
+            ActionMakerDto::DEPLOYED_WRITABLE => [
+                self::STATE =>  WorkflowData::STATE_DEPLOYED,
+                self::TITLE => 'Déployé et modifiable',
+            ],
+            ActionMakerDto::DEPLOYED_READABLE => [
+                self::STATE =>  WorkflowData::STATE_DEPLOYED,
+                self::TITLE => 'Déployé consultable',
+            ],
+            ActionMakerDto::MEASURED => [
+                self::STATE =>  WorkflowData::STATE_MEASURED,
+                self::TITLE => 'A mesurer',
+            ],
+            ActionMakerDto::MEASURED_WRITABLE => [
+                self::STATE =>  WorkflowData::STATE_MEASURED,
+                self::TITLE => 'A mesurer et modifiable',
+            ],
+            ActionMakerDto::MEASURED_READABLE => [
+                self::STATE =>  WorkflowData::STATE_MEASURED,
+                self::TITLE => 'A mesurer et consultable',
+            ],
+            ActionMakerDto::CLOTURED => [
+                self::STATE =>  WorkflowData::STATE_CLOTURED,
+                self::TITLE => 'Clôturé',
+            ],
+            ActionMakerDto::CLOTURED_WRITABLE => [
+                self::STATE =>  WorkflowData::STATE_CLOTURED,
+                self::TITLE => 'Clôturé et modifiable',
+            ],
+            ActionMakerDto::CLOTURED_READABLE => [
+                self::STATE =>  WorkflowData::STATE_CLOTURED,
+                self::TITLE => 'Clôturé et consultable',
+            ],
+            ActionMakerDto::ABANDONNED => [
+                self::STATE =>  WorkflowData::STATE_ABANDONNED,
+                self::TITLE => 'Abandonné',
+            ],
+            ActionMakerDto::ABANDONNED_WRITABLE => [
+                self::STATE =>  WorkflowData::STATE_ABANDONNED,
+                self::TITLE => 'Abandonné et modifiable',
+            ],
+            ActionMakerDto::ABANDONNED_READABLE => [
+                self::STATE =>  WorkflowData::STATE_ABANDONNED,
+                self::TITLE => 'Abandonné et consultable',
+            ],
         ];
 
 
@@ -45,9 +150,9 @@ private const STATE='state';
 
     public function __construct(
         ActionDtoRepository $actionDtoRepository,
-        User $user
+        CurrentUser $currentUser
     ) {
-        $this->counter = new ActionCounter($actionDtoRepository, $user);
+        $this->counter = new ActionCounter($actionDtoRepository, $currentUser);
     }
 
     private function getArray($datas,$filter)

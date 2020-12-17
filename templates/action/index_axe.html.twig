@@ -1,0 +1,75 @@
+{% extends 'action/layout.html.twig' %}
+
+
+{% block page_subtitle %}
+	{% set nbr = items | length %}
+	Liste
+	{% if nbr==1 %}
+		(1 action)
+	{% elseif nbr>1 %}
+		({{nbr}}
+		actions)
+	{% endif %}
+{% endblock %}
+
+
+
+{% block breadcrumb %}
+	{% import "default/actions.html.twig" as actions %}
+	{{ actions.admin(
+        'list',
+        null,
+        null,
+        domaine
+    ) }}
+{% endblock %}
+
+
+{% block page_content %}
+	<div class="row">
+		<div class="col-lg-12 col-xl-2">
+			<div class="sticky-top mb-3 ">
+				<h4 class="text-p-dark2 mt-5 text-center">
+					<small>
+						<i class="fas fa-stream"></i>
+					</small>
+					Pôles
+				</h4>
+				<div class="card mt-3">
+					<div
+						class="list-group">
+						<!-- the events -->
+						{% for pole in axe.poles %}
+<a href="{{ path('actions_for_pole',{'id':pole.id}) }}" class="list-group-item list-group-item-action text-p-dark hvr-grow-shadow">
+								{{ pole.name }}
+							</a>
+						{% endfor %}
+					</div>
+				</div>
+				<!-- /.card-body -->
+			</div>
+		</div>
+<div class="col-lg-12 col-xl-10 ">
+
+
+			{% include "action/_view/_datatable.html.twig" %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% import "macros/datatables.html.twig" as tables %}
+	{% set columns = {
+	'Référence ': {'class': 'all', 'orderBy': true},
+	'Action ': {'class': 'all', 'orderBy': true},
+	'Classement ': {'class': 'desktop', 'orderBy': true},
+    'Fin de déploiement': {'class': 'alwaysVisible', 'orderBy': true},
+	'Jalon': {'class': 'alwaysVisible', 'orderBy': true},
+	'Etat': {'class': 'alwaysVisible', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+	{{ tables.datatable_javascript(tableName,1,columns) }}
+{% endblock %}

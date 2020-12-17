@@ -5,7 +5,7 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Repository\ActionDtoRepository;
-
+use App\Security\CurrentUser;
 
 class ActionCounter
 {
@@ -19,11 +19,11 @@ class ActionCounter
 
     public function __construct(
         ActionDtoRepository $backpackDtoRepository,
-        User $user
+        CurrentUser $currentUser
     )
     {
         $this->backpackDtoRepository = $backpackDtoRepository;
-        $this->backpackMakerDto=new ActionMakerDto($user);
+        $this->backpackMakerDto=new ActionMakerDto($currentUser);
     }
 
     public function get(string $type,?string $param=null)

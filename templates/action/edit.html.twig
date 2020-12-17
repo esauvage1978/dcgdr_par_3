@@ -9,18 +9,17 @@
 {% endblock %}
 
 {% block breadcrumb %}
-	{% import "default/actions.html.twig" as actions %}
-	{{ actions.admin(
+	{% import "action/_btn_actions.html.twig" as actions %}
+	{{ actions.show(
         'edit',
-        is_granted('ROLE_GESTIONNAIRE'),
-        item,
-        domaine
+        item.stateCurrent,
+        item
     ) }}
 {% endblock %}
 
 {% block page_content %}
 	{{ form_start(form) }}
-	<div class="row justify-content-start pb-5">
+	<div class="row justify-content-center pb-5">
 		{{ include('action/_show/_name.html.twig') }}
 
 		<div class="row col-12">
@@ -72,8 +71,8 @@
 					{{ include('action/_show/_info_part.html.twig') }}
 				{% endif %}
 
-				{{ save.btn()}}
 
+				{{ save.btn()}}
 			</div>
 			<div id="col3" class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
 <h4 class="text-p-dark  p-2 rounded">Etat du porte-document</h4>
@@ -83,7 +82,8 @@
 
 			</div>
 		</div>
-		<div class="row col-12 mt-5">
+<div class="row col-12 mt-5 justify-content-center">
+
 			<div id="col4" class="col-sm-12 col-md-12 col-lg-6 col-xl-4 ">
 				<div class="bg-white  card-body h-100">
 
@@ -114,6 +114,8 @@
 					{% endif %}
 				</div>
 			</div>
+{{ save.btn()}}
+
 		</div>
 		<div class="col-12 bg-white  p-5 mt-5">
 			{% if item.stateCurrent in ['started','finalised'] %}

@@ -18,7 +18,8 @@ class CorbeilleRepository extends ServiceEntityRepository
 
     const ALIAS_ACTION_READERS = 'car';
     const ALIAS_ACTION_WRITERS = 'caw';
-    const ALIAS_ACTION_VALIDERS = 'cav';
+    const ALIAS_ACTION_COTECH = 'cacotech';
+    const ALIAS_ACTION_CODIR = 'cacodir';
     const ALIAS_DEPLOYEMENT_WRITERS = 'cdw';
     const ALIAS_DEPLOYEMENT_READERS = 'cdr';
 
@@ -32,19 +33,19 @@ class CorbeilleRepository extends ServiceEntityRepository
         return $this->createQueryBuilder(self::ALIAS)
             ->select(
                 self::ALIAS,
-                UserRepository::ALIAS,
                 OrganismeRepository::ALIAS,
                 self::ALIAS_ACTION_READERS,
                 self::ALIAS_ACTION_WRITERS,
-                self::ALIAS_ACTION_VALIDERS,
+                self::ALIAS_ACTION_COTECH,
+                self::ALIAS_ACTION_CODIR,
                 self::ALIAS_DEPLOYEMENT_WRITERS,
-            self::ALIAS_DEPLOYEMENT_READERS
+                self::ALIAS_DEPLOYEMENT_READERS
             )
             ->innerJoin(self::ALIAS . '.organisme', OrganismeRepository::ALIAS)
-            ->leftJoin(self::ALIAS . '.users', UserRepository::ALIAS)
             ->leftJoin(self::ALIAS . '.actionReaders', self::ALIAS_ACTION_READERS)
             ->leftJoin(self::ALIAS . '.actionWriters', self::ALIAS_ACTION_WRITERS)
-            ->leftJoin(self::ALIAS . '.actionValiders', self::ALIAS_ACTION_VALIDERS)
+            ->leftJoin(self::ALIAS . '.actionCOTECHValiders', self::ALIAS_ACTION_COTECH)
+            ->leftJoin(self::ALIAS . '.actionCODIRValiders', self::ALIAS_ACTION_CODIR)
             ->leftJoin(self::ALIAS . '.deployementWriters', self::ALIAS_DEPLOYEMENT_WRITERS)
             ->leftJoin(self::ALIAS . '.deployementReaders', self::ALIAS_DEPLOYEMENT_READERS)
             ->orderBy(self::ALIAS . '.name', 'ASC')

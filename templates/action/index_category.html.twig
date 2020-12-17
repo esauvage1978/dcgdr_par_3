@@ -1,0 +1,50 @@
+{% extends 'action/layout.html.twig' %}
+
+
+{% block page_subtitle %}
+	{% set nbr = items | length %}
+	Liste
+	{% if nbr==1 %}
+		(1 action)
+	{% elseif nbr>1 %}
+		({{nbr}}
+		actions)
+	{% endif %}
+{% endblock %}
+
+
+{% block breadcrumb %}
+	{% import "default/actions.html.twig" as actions %}
+	{{ actions.admin(
+        'list',
+        null,
+        null,
+        domaine
+    ) }}
+{% endblock %}
+
+
+{% block page_content %}
+<a href="{{ path('actions_for_thematique',{'id':category.thematique.id}) }}" class=" text-p-dark hvr-grow-shadow">
+	retour vers
+	{{ category.thematique.name }}
+</a>
+			{% include "action/_view/_datatable.html.twig" %}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% import "macros/datatables.html.twig" as tables %}
+	{% set columns = {
+	'Référence ': {'class': 'all', 'orderBy': true},
+	'Action ': {'class': 'all', 'orderBy': true},
+	'Classement ': {'class': 'desktop', 'orderBy': true},
+    'Fin de déploiement': {'class': 'alwaysVisible', 'orderBy': true},
+	'Jalon': {'class': 'alwaysVisible', 'orderBy': true},
+	'Etat': {'class': 'alwaysVisible', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+	{{ tables.datatable_javascript(tableName,1,columns) }}
+{% endblock %}

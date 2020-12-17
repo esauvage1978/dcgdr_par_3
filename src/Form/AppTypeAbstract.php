@@ -194,10 +194,30 @@ abstract class AppTypeAbstract extends AbstractType
             ]);
     }
 
-    public function buildFormValiders(FormBuilderInterface $builder): FormBuilderInterface
+    public function buildFormCOTECHValiders(FormBuilderInterface $builder): FormBuilderInterface
     {
         return $builder
-            ->add('validers', EntityType::class, [
+            ->add('COTECHValiders', EntityType::class, [
+                'class' => Corbeille::class,
+                self::CHOICE_LABEL => 'fullname',
+                self::MULTIPLE => true,
+                self::ATTR => ['class' => 'select2'],
+                self::REQUIRED => false,
+                self::QUERY_BUILDER => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->select('c', 'o')
+                        ->leftJoin('c.organisme', 'o')
+                        ->where('o.isEnable = true')
+                        ->andWhere('c.isEnable = true')
+                        ->andWhere('c.isShowValidate = true')
+                        ->orderBy('c.name', 'ASC');
+                },
+            ]);
+    }
+    public function buildFormCODIRValiders(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        return $builder
+            ->add('CODIRValiders', EntityType::class, [
                 'class' => Corbeille::class,
                 self::CHOICE_LABEL => 'fullname',
                 self::MULTIPLE => true,

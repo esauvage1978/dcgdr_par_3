@@ -80,13 +80,7 @@ class WorkflowMailerSubscriber implements EventSubscriberInterface
 
 
         $mailState = [
-            WorkflowData::STATE_TO_RESUME,
-            WorkflowData::STATE_TO_VALIDATE,
-            WorkflowData::STATE_TO_CONTROL,
-            WorkflowData::STATE_TO_CHECK,
-            WorkflowData::STATE_PUBLISHED,
-            WorkflowData::STATE_TO_REVISE,
-            WorkflowData::STATE_IN_REVIEW,
+            WorkflowData::STATE_COTECH,
         ];
 
         if (in_array($state, $mailState)) {
@@ -102,44 +96,28 @@ class WorkflowMailerSubscriber implements EventSubscriberInterface
         }
 
 
-        $stateOwner = [
-            WorkflowData::STATE_TO_RESUME,
-            WorkflowData::STATE_TO_VALIDATE,
-            WorkflowData::STATE_TO_CONTROL,
-            WorkflowData::STATE_TO_CHECK,
-            WorkflowData::STATE_PUBLISHED,
-            WorkflowData::STATE_TO_REVISE,
-            WorkflowData::STATE_IN_REVIEW,
-        ];
+        $stateForPilote = [
+            WorkflowData::STATE_COTECH,
+            WorkflowData::STATE_CODIR,
+            WorkflowData::STATE_REJECTED,
+            WorkflowData::STATE_FINALISED,
+            WorkflowData::STATE_DEPLOYED,
+            WorkflowData::STATE_MEASURED,
+            WorkflowData::STATE_CLOTURED,
+            WorkflowData::STATE_ABANDONNED,
 
-        $stateForContributor = [
-            WorkflowData::STATE_TO_RESUME,
-            WorkflowData::STATE_TO_REVISE,
-            WorkflowData::STATE_IN_REVIEW,
-        ];
-
-        $stateForValidator = [
-            WorkflowData::STATE_TO_VALIDATE,
-            WorkflowData::STATE_PUBLISHED,
         ];
 
 
-        if (in_array($state, $stateOwner)) {
-            $this->getOwner($action);
+        if (in_array($state, $stateForPilote)) {
+            $this->getUserForPilote($action);
         }
-        if (in_array($state, $stateForValidator)) {
-            $this->getUserForValidator($action);
+        if ($state === WorkflowData::STATE_COTECH) {
+            $this->getUsersCOTECH($action);
         }
-        if (in_array($state, $stateForContributor)) {
-            $this->getUserForContributor($action);
+        if ($state === WorkflowData::STATE_CODIR) {
+            $this->getUsersCODIR($action);
         }
-        if ($state === WorkflowData::STATE_TO_CONTROL) {
-            $this->getUsersControl();
-        }
-        if ($state === WorkflowData::STATE_TO_CHECK) {
-            $this->getUsersDoc();
-        }
-
 
         if ($this->users->isEmpty()) {
             return -1;
@@ -177,14 +155,23 @@ class WorkflowMailerSubscriber implements EventSubscriberInterface
         return $this->paramsInServices->get($parameter);
     }
 
-    public function getUserMprocessValider(Action $action)
+    public function getUserForPilote(Action $action)
     {
-        $this->addUsers($action->getMProcess()->getDirValidators());
+        foreach ($action->getWriters() as $corbeille) {
+            $this->addUsers($corbeille->getUsers());
+        }
     }
-    public function getOwner(Action $action)
+    public function getUsersCOTECH(Action $action)
     {
-
-        $this->addUser($action->getOwner());
+        foreach ($action->getCOTECHValiders() as $corbeille) {
+            $this->addUsers($corbeille->getUsers());
+        }
+    }
+    public function getUsersCODIR(Action $action)
+    {
+        foreach ($action->getCODIRValiders() as $corbeille) {
+            $this->addUsers($corbeille->getUsers());
+        }
     }
 
     public function getUsersControl()
@@ -197,25 +184,6 @@ class WorkflowMailerSubscriber implements EventSubscriberInterface
         $this->addUsers($this->userRepository->findAllForDoc());
     }
 
-    public function getUserForValidator(Action $action)
-    {
-        if ($action->getProcess() !== null) {
-            $this->addUsers($action->getProcess()->getValidators());
-        } elseif ($action->getCategory()->getIsValidatedByADD()) {
-            $this->addUsers($action->getMProcess()->getDirValidators());
-        } else {
-            $this->addUsers($action->getMProcess()->getPoleValidators());
-        }
-    }
-
-    public function getUserForContributor(Action $action)
-    {
-        if ($action->getProcess() !== null) {
-            $this->addUsers($action->getProcess()->getContributors());
-        } else {
-            $this->addUsers($action->getMProcess()->getContributors());
-        }
-    }
 
     private function addUser(User $user)
     {

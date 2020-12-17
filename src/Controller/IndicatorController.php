@@ -12,10 +12,11 @@ use App\Repository\IndicatorRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 /**
  * Class IndicatorController
  * @package App\Controller
- * @route("/")
+ * @route("/indicator")
  */
 class IndicatorController extends AbstractGController
 {
@@ -40,7 +41,7 @@ class IndicatorController extends AbstractGController
     }
 
     /**
-     * @Route("/action/{id}/indicator/add", name="indicator_add", methods={"GET","POST"})
+     * @Route("/{id}/indicator/add", name="indicator_add", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function add(Action $action, Request $request, IndicatorManager $manager)
@@ -85,7 +86,7 @@ class IndicatorController extends AbstractGController
 
 
     /**
-     * @Route("/action/indicator/{id}/edit", name="indicator_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="indicator_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function edit(Request$request, IndicatorManager $manager, Indicator $item)

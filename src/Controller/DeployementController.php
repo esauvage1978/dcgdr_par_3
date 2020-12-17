@@ -215,4 +215,32 @@ class DeployementController extends AbstractGController
         ]);
     }
 
+    /**
+     * @Route("/deployement/{id}/edit", name="deployement_append_edit", methods={"GET","POST"})
+     *
+     * @IsGranted("ROLE_USER")
+     */
+    public function appendEditAction(
+        Request $request,
+        Deployement $entity,
+        DeployementManager $manager
+    ) {
+        $this->denyAccessUnlessGranted(DeployementVoter::APPEND_UPDATE, $entity);
+
+        $form = $this->createForm(DeployementAppendType::class, $entity);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->save($entity);
+            $this->addFlash(self::SUCCESS, self::MSG_MODIFY);
+        }
+
+        return $this->render(self::DOMAINE . '/append_edit.html.twig', [
+            'item' => $entity,
+            self::FORM => $form->createView(),
+            'action' => $entity->getAction(),
+        ]);
+    }
+
 }

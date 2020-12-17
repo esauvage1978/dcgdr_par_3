@@ -39,8 +39,7 @@ class Step9_CategoryFixtures extends Fixture implements FixtureGroupInterface
         CategoryValidator $validator,
         ThematiqueRepository $thematiqueRepository,
         EntityManagerInterface $entityManagerI
-    )
-    {
+    ) {
         $this->fixturesImportData = $fixturesImportData;
         $this->validator = $validator;
         $this->thematiques = $thematiqueRepository->findAll();
@@ -64,9 +63,8 @@ class Step9_CategoryFixtures extends Fixture implements FixtureGroupInterface
             $instance = $this->initialise(new Category(), $data[$i]);
 
             $this->checkAndPersist($instance);
-
         }
-
+        $this->create_items_test();
         $this->entityManagerInterface->flush();
     }
 
@@ -95,7 +93,75 @@ class Step9_CategoryFixtures extends Fixture implements FixtureGroupInterface
 
         return $instance;
     }
+    private function create_items_test()
+    {
+        $t1 = $this->getInstance('35', $this->thematiques);
+        $t2 = $this->getInstance('36', $this->thematiques);
+        $t3 = $this->getInstance('37', $this->thematiques);
+        $t4 = $this->getInstance('38', $this->thematiques);
+        $datas = [
+            [
+                'id' => '122',
+                'name' => 'TEST Catégorie Manu 1',
+                'ref' => 'c1',
+                'pole' => $t1,
+            ],
+            [
+                'id' => '123',
+                'name' => 'TEST Catégorie Manu 2',
+                'ref' => 'c2',
+                'pole' => $t2,
+            ],
+            [
+                'id' => '124',
+                'name' => 'TEST Catégorie Manu 3',
+                'ref' => 'c3',
+                'pole' => $t3,
+            ],
+            [
+                'id' => '125',
+                'name' => 'TEST Catégorie Manu 4',
+                'ref' => 'c4',
+                'pole' => $t4,
+            ],
+            [
+                'id' => '126',
+                'name' => 'TEST Catégorie Manu 5',
+                'ref' => 'c5',
+                'pole' => $t1,
+            ],
+            [
+                'id' => '127',
+                'name' => 'TEST Catégorie Manu 6',
+                'ref' => 'c6',
+                'pole' => $t2,
+            ],
+            [
+                'id' => '128',
+                'name' => 'TEST Catégorie Manu 7',
+                'ref' => 'c7',
+                'pole' => $t3,
+            ],
+            [
+                'id' => '129',
+                'name' => 'TEST Catégorie Manu 8',
+                'ref' => 'c8',
+                'pole' => $t4,
+            ],
+        ];
 
+        foreach ($datas as $data) {
+            //création d'une corbeille COTECH
+            $item = new Category();
+            $item
+                ->setId($data['id'])
+                ->setName($data['name'])
+                ->setIsEnable(true)
+                ->setThematique($data['pole'])
+                ->setRef($data['ref']);
+            $this->checkAndPersist($item);
+        }
+    }
 
     public static function getGroups(): array
     {

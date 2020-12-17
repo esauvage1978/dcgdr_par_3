@@ -1,15 +1,22 @@
 <!-- Intervenants -->
-<section >
+<section>
 	<h5 class="text-p-dark2 p-1  text-center ">
 		Intervenants
 	</h5>
 	<div class="card-body">
 		<div class="form-group row">
-			<label for="{{ form.validers.vars.id }}">
-				Valideur
+			<label for="{{ form.COTECHValiders.vars.id }}">
+				COTECH
 			</label>
-			{{ form_widget(form.validers) }}
+			{{ form_widget(form.COTECHValiders) }}
 		</div>
+		<div class="form-group row">
+			<label for="{{ form.CODIRValiders.vars.id }}">
+				CODIR
+			</label>
+			{{ form_widget(form.CODIRValiders) }}
+		</div>
+
 		<div class="form-group row">
 			<label for="{{ form.writers.vars.id }}">
 				Pilote

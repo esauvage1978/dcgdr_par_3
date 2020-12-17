@@ -47,7 +47,7 @@ class Step6_AxeFixtures extends Fixture implements FixtureGroupInterface
 
             $this->checkAndPersist($instance);
         }
-
+        $this->create_items_test();
         $this->entityManagerInterface->flush();
     }
 
@@ -63,6 +63,26 @@ class Step6_AxeFixtures extends Fixture implements FixtureGroupInterface
             $this->entityManagerInterface->persist($instance);
         } else {
             var_dump('Validator : ' . $this->validator->getErrors($instance));
+        }
+    }
+
+    private function create_items_test()
+    {
+        $datas = [
+            [
+                'id' => '4',
+                'name' => 'TEST PA Manu',
+            ],
+        ];
+        foreach ($datas as $data) {
+            //création d'une corbeille COTECH
+            $item = new Axe();
+            $item
+                ->setId($data['id'])
+                ->setName($data['name'])
+                ->setIsEnable(true)
+                ->setIsArchiving(false);
+            $this->checkAndPersist($item);
         }
     }
 

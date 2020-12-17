@@ -21,6 +21,15 @@ parameters:
     es.news.time: "%env(ES_NEWS_TIME)%"
     es.directory.css: "%kernel.project_dir%/public/css"
 
+    es.mailer.workflow.cotech: "%env(ES_MAILER_WORKFLOW_COTECH)%"
+    es.mailer.workflow.codir: "%env(ES_MAILER_WORKFLOW_CODIR)%"
+    es.mailer.workflow.rejected: "%env(ES_MAILER_WORKFLOW_REJECTED)%"
+    es.mailer.workflow.finalised: "%env(ES_MAILER_WORKFLOW_FINALISED)%"
+    es.mailer.workflow.deployed: "%env(ES_MAILER_WORKFLOW_DEPLOYED)%"
+    es.mailer.workflow.measured: "%env(ES_MAILER_WORKFLOW_MEASURED)%"
+    es.mailer.workflow.clotured: "%env(ES_MAILER_WORKFLOW_CLOTURED)%"
+    es.mailer.workflow.abandonned: "%env(ES_MAILER_WORKFLOW_ABANDONNED)%"
+
 services:
     # default configuration for services in *this* file
     _defaults:

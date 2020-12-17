@@ -27,8 +27,8 @@ class TransitionToMeasured extends TransitionAbstract
     public function intialiseActionForTransition(bool $automate = false)
     {
         if (!$automate) {
-            $this->action->setContentState(
-                $this->action->getContentState() .
+            $this->action->setStateContent(
+                $this->action->getStateContent() .
                 "<br/>Forçage de la bascule dans l'état " . WorkflowData::getNameOfState(WorkflowData::STATE_DEPLOYED) .
                 "<br/> Ancienne date de fin de déploiement : " . $this->action->getRegionEndAt()->format("d/m/Y")
             );

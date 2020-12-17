@@ -89,7 +89,7 @@ class ActionCheck
     }
     public function getDiffRegionStartAtBeforeOrEqualNow()
     {
-        return $this->getNbrDayBeetwenDates($this->action->getRegionStarAt(), new \DateTime());
+        return $this->getNbrDayBeetwenDates($this->action->getRegionStartAt(), new \DateTime());
     }
     public function getDiffRegionEndAtAfterNow()
     {
@@ -180,12 +180,21 @@ class ActionCheck
         }
     }
 
-    public function checkCorbeilleValidation()
+    public function checkCorbeilleCOTECHValidation()
     {
-        if ($this->action->getValiders()->count() > 0) {
-            $this->actionCheckMessage->addMessageSuccess('Corbeille de validation');
+        if ($this->action->getCOTECHValiders()->count() > 0) {
+            $this->actionCheckMessage->addMessageSuccess('Corbeille de validation COTECH');
         } else {
-            $this->actionCheckMessage->addMessageError('Corbeille(s) de validation non présente(s)');
+            $this->actionCheckMessage->addMessageError('Corbeille(s) de validation COTECH non présente(s)');
+        }
+    }
+
+    public function checkCorbeilleCODIRValidation()
+    {
+        if ($this->action->getCODIRValiders()->count() > 0) {
+            $this->actionCheckMessage->addMessageSuccess('Corbeille de validation CODIR');
+        } else {
+            $this->actionCheckMessage->addMessageError('Corbeille(s) de validation CODIR non présente(s)');
         }
     }
 
@@ -193,7 +202,7 @@ class ActionCheck
     {
         $nbr = 0;
         foreach ($this->action->getIndicators() as $indicator) {
-            if (true == $indicator->getEnable()) {
+            if (true == $indicator->getIsEnable()) {
                 $nbr = $nbr + 1;
             }
         }
@@ -219,7 +228,7 @@ class ActionCheck
         $nbr = 0;
         foreach ($this->action->getIndicators() as $indicator) {
             foreach ($indicator->getIndicatorValues() as $indicatorValue) {
-                if (true == $indicatorValue->getEnable()) {
+                if (true == $indicatorValue->getIsEnable()) {
                     $nbr = $nbr + 1;
                 }
             }

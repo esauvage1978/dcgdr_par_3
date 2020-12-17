@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Action;
+use App\History\HistoryShow;
 use App\Security\ActionVoter;
 use App\Manager\ActionManager;
 use App\Form\Action\ActionEditType;
@@ -77,7 +78,25 @@ class ActionController extends AbstractGController
      */
     public function edit(Request $request, Action $item)
     {
-        return $this->editAction($request, $item, ActionEditType::class);
+        $this->denyAccessUnlessGranted(ActionVoter::UPDATE, $item);
+        $itemOld = clone ($item);
+        $form = $this->createForm(ActionEditType::class, $item);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($this->manager->save($item)) {
+                $this->addFlash(self::SUCCESS, self::MSG_MODIFY);
+                $this->manager->historize($item, $itemOld);
+            } else {
+                $this->addFlash(self::DANGER, self::MSG_MODIFY_ERROR . $this->manager->getErrors($item));
+            }
+        }
+
+        return $this->render('action/edit.html.twig', [
+            'item' => $item,
+            self::FORM => $form->createView(),
+        ]);
     }
 
     /**
@@ -122,4 +141,24 @@ class ActionController extends AbstractGController
         return $this->file($file, $cadrageFile->getTitle() . '.' . $cadrageFile->getFileExtension());
     }
 
+    /**
+     * @Route("/action/{id}/history", name="action_history", methods={"GET","POST"})
+     * @return Response
+     * @IsGranted("ROLE_USER")
+     */
+    public function historyAction(Request $request, Action $item)
+    {
+        $this->denyAccessUnlessGranted(ActionVoter::READ, $item);
+        $historyShow = new HistoryShow(
+            $this->generateUrl('action_edit', ['id' => $item->getId()]),
+            "Porte-document : " . $item->getName(),
+            "Historiques des modifications du porte-document"
+        );
+
+        return $this->render('action/history.html.twig', [
+            'item' => $item,
+            'histories' => $item->getHistories(),
+            'data' => $historyShow->getParams()
+        ]);
+    }
 }

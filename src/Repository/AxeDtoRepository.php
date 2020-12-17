@@ -23,6 +23,8 @@ class AxeDtoRepository extends ServiceEntityRepository implements DtoRepositoryI
 
     const ALIAS = 'pa';
 
+    const FILTRE_DTO_INIT_HOME = 'home';
+    const FILTRE_DTO_INIT = 'normal';
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -88,14 +90,20 @@ class AxeDtoRepository extends ServiceEntityRepository implements DtoRepositoryI
             ->getResult();
     }
 
-    public function findAllForDto(DtoInterface $dto,$filtre='')
+    public function findAllForDto(DtoInterface $dto,$filtre=self::FILTRE_DTO_INIT)
     {
         /**
          * var ContactDto
          */
         $this->dto = $dto;
-
-        $this->initialise_select();
+        switch ($filtre) {
+            case self::FILTRE_DTO_INIT:
+                $this->initialise_select();
+                break;
+            case self::FILTRE_DTO_INIT_HOME:
+                $this->initialise_select_home();
+                break;
+        }
 
         $this->initialise_where();
 
@@ -112,6 +120,21 @@ class AxeDtoRepository extends ServiceEntityRepository implements DtoRepositoryI
             ->select(
                 self::ALIAS
             );
+    }
+    private function initialise_select_home()
+    {
+        $this->builder = $this->createQueryBuilder(self::ALIAS)
+            ->select(
+                self::ALIAS,
+            PoleRepository::ALIAS,
+            ThematiqueRepository::ALIAS,
+            CategoryRepository::ALIAS,
+            ActionRepository::ALIAS
+            )
+            ->leftJoin(self::ALIAS . '.poles', PoleRepository::ALIAS)
+            ->leftJoin(PoleRepository::ALIAS . '.thematiques', ThematiqueRepository::ALIAS)
+            ->leftJoin(ThematiqueRepository::ALIAS . '.categories', CategoryRepository::ALIAS)
+            ->leftJoin(CategoryRepository::ALIAS . '.actions', ActionRepository::ALIAS);
     }
 
     private function initialise_selectCount()

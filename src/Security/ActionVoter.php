@@ -13,6 +13,7 @@ class ActionVoter extends Voter
 {
     const READ = 'read';
     const UPDATE = 'read';
+    const DELETE = 'delete';
 
     private $security;
 
@@ -24,7 +25,7 @@ class ActionVoter extends Voter
     protected function supports(string $attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::READ, self::UPDATE])) {
+        if (!in_array($attribute, [self::READ, self::UPDATE, self::DELETE])) {
             return false;
         }
 
@@ -52,6 +53,8 @@ class ActionVoter extends Voter
                 return $this->canRead($action, $user);
             case self::UPDATE:
                 return $this->canUpdate($action, $user);
+            case self::DELETE:
+                return $this->canDelete($action, $user);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -74,6 +77,15 @@ class ActionVoter extends Voter
         }
 
         return $this->canUpdate($action, $user);
+    }
+
+    public function canDelete(Action $action, User $user)
+    {
+        if ($this->security->isGranted('ROLE_GESTIONNAIRE')) {
+            return true;
+        }
+
+        return false;
     }
 
     public function canUpdate(Action $action, User $user)

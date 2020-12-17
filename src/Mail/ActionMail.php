@@ -19,13 +19,14 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ActionMail
 {
-    public const TOCOTECH = 'workflow/toCotech';
-    public const TOCODIR = 'workflow/toCodir';
-    public const TOCONTROL = 'workflow/toControl';
-    public const TOCHECK = 'workflow/toCheck';
-    public const PUBLISHED = 'workflow/published';
-    public const TOREVISE = 'workflow/toRevise';
-    public const INREVIEW = 'workflow/inReview';
+    public const COTECH = 'workflow/cotech';
+    public const CODIR = 'workflow/codir';
+    public const REJECTED = 'workflow/rejected';
+    public const FINALISED = 'workflow/finalised';
+    public const DEPLOYED = 'workflow/deployed';
+    public const MEASURED = 'workflow/measured';
+    public const CLOTURED = 'workflow/clotured';
+    public const ABANDONNED = 'workflow/abandonned';
 
     private $mail;
 
@@ -39,8 +40,14 @@ class ActionMail
         $context = 'workflow/' . $context;
 
         $contextValid = [
-            self::TOCOTECH,
-            self::TOCODIR,
+            self::COTECH,
+            self::CODIR,
+            self::REJECTED,
+            self::FINALISED,
+            self::DEPLOYED,
+            self::MEASURED,
+            self::CLOTURED,
+            self::ABANDONNED,
         ];
 
         if (!in_array($context, $contextValid)) {

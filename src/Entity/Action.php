@@ -185,6 +185,12 @@ class Action implements EntityInterface
      */
     private $actionMailHistories;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\History", mappedBy="action", orphanRemoval=true)
+     */
+    private $histories;
+
     public function __construct()
     {
         $this->setStateCurrent(WorkflowData::STATE_STARTED);
@@ -209,6 +215,7 @@ class Action implements EntityInterface
         $this->actionStates = new ArrayCollection();
         $this->mailers = new ArrayCollection();
         $this->actionMailHistories = new ArrayCollection();
+        $this->histories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -868,4 +875,36 @@ class Action implements EntityInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|History[]
+     */
+    public function getHistories(): Collection
+    {
+        return $this->histories;
+    }
+
+    public function addHistory(History $history): self
+    {
+        if (!$this->histories->contains($history)) {
+            $this->histories[] = $history;
+            $history->setAction($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistory(History $history): self
+    {
+        if ($this->histories->contains($history)) {
+            $this->histories->removeElement($history);
+            // set the owning side to null (unless already changed)
+            if ($history->getAction() === $this) {
+                $history->setAction(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

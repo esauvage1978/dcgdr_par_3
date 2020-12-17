@@ -5,7 +5,11 @@
 {% endblock %}
 {% block page_title %}
 	<i class="fas fa-home"></i>
-	Page d'accueil
+	{{app_name}}
+{% endblock %}
+{% block page_subtitle %}
+	{{app_name_description}}
+
 {% endblock %}
 
 {% block page_content %}
@@ -17,4 +21,11 @@
 		{{user.messageEmailValidated(app.user)}}
 
 	{% endif %}
+	{% import 'macros/axe.html.twig' as axe %}
+
+	<div class="row justify-content-center mb-5 d-flex align-items-center">
+		{{axe.showBoxes(axes)}}
+	</div>
+
+
 {% endblock %}

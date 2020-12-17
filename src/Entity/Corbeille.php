@@ -114,6 +114,11 @@ class Corbeille implements EntityInterface
         $this->actionCODIRValiders = new ArrayCollection();
         $this->deployementWriters = new ArrayCollection();
         $this->deployementReaders = new ArrayCollection();
+        $this->setIsEnable(true);
+        $this->setIsUseByDefault(false);
+        $this->setIsShowRead(false);
+        $this->setIsShowWrite(false);
+        $this->setIsShowValidate(false);
     }
 
     public function getId(): ?int

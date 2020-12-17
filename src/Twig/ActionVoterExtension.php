@@ -34,6 +34,7 @@ class ActionVoterExtension extends AbstractExtension
         return [
             new TwigFilter('actionCanRead', [$this, 'actionCanRead']),
             new TwigFilter('actionCanUpdate', [$this, 'actionCanUpdate']),
+            new TwigFilter('actionCanDelete', [$this, 'actionCanDelete']),
         ];
     }
 
@@ -51,5 +52,13 @@ class ActionVoterExtension extends AbstractExtension
         $user = $this->currentUser->getUser();
 
         return $this->actionVoter->canUpdate($action, $user);
+    }
+
+    public function actionCanDelete(Action $action)
+    {
+        /** @var User $user */
+        $user = $this->currentUser->getUser();
+
+        return $this->actionVoter->canDelete($action, $user);
     }
 }

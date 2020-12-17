@@ -18,7 +18,7 @@ class WorkflowActionEventSubscriber implements EventSubscriberInterface
     /**
      * @var ActionRepository
      */
-    private $ActionRepository;
+    private $actionRepository;
     
     public function __construct(ActionRepository $actionRepository)
     {
@@ -28,7 +28,7 @@ class WorkflowActionEventSubscriber implements EventSubscriberInterface
     /**
      * @param GuardEvent $event
      */
-    public function onGuardToAbandonned(GuardEvent $event)
+    public function onGuardToAbandonned(GuardEvent $event) 
     {
         $this->onGuard($event, WorkflowData::TRANSITION_TO_ABANDONNED);
     }
@@ -40,54 +40,68 @@ class WorkflowActionEventSubscriber implements EventSubscriberInterface
     {
         $this->onGuard($event, WorkflowData::TRANSITION_TO_COTECH);
     }
-
     /**
      * @param GuardEvent $event
      */
-    public function onGuardGoToResume(GuardEvent $event)
+    public function onGuardToCodir(GuardEvent $event)
     {
-        $this->onGuard($event, WorkflowData::TRANSITION_GO_TO_RESUME);
+        $this->onGuard($event, WorkflowData::TRANSITION_TO_CODIR);
     }
-
     /**
      * @param GuardEvent $event
      */
-    public function onGuardGoToRevise(GuardEvent $event)
+    public function onGuardToRejected(GuardEvent $event)
     {
-        $this->onGuard($event, WorkflowData::TRANSITION_GO_TO_REVISE);
+        $this->onGuard($event, WorkflowData::TRANSITION_TO_REJECTED);
     }
-
     /**
      * @param GuardEvent $event
      */
-    public function onGuardGoInReview(GuardEvent $event)
+    public function onGuardToFinalised(GuardEvent $event)
     {
-        $this->onGuard($event, WorkflowData::TRANSITION_GO_IN_REVIEW);
+        $this->onGuard($event, WorkflowData::TRANSITION_TO_FINALISED);
     }
-
     /**
      * @param GuardEvent $event
      */
-    public function onGuardGoToControl(GuardEvent $event)
+    public function onGuardToDeployed(GuardEvent $event)
     {
-        $this->onGuard($event, WorkflowData::TRANSITION_GO_TO_CONTROL);
+        $this->onGuard($event, WorkflowData::TRANSITION_TO_DEPLOYED);
     }
-
     /**
      * @param GuardEvent $event
      */
-    public function onGuardGoToCheck(GuardEvent $event)
+    public function onGuardToMeasured(GuardEvent $event)
     {
-        $this->onGuard($event, WorkflowData::TRANSITION_GO_TO_CHECK);
+        $this->onGuard($event, WorkflowData::TRANSITION_TO_MEASURED);
     }
-
-
     /**
      * @param GuardEvent $event
      */
-    public function onGuardGoToValidate(GuardEvent $event)
+    public function onGuardToClotured(GuardEvent $event)
     {
-        $this->onGuard($event, WorkflowData::TRANSITION_GO_TO_VALIDATE);
+        $this->onGuard($event, WorkflowData::TRANSITION_TO_CLOTURED);
+    }
+    /**
+     * @param GuardEvent $event
+     */
+    public function onGuardUnDeployed(GuardEvent $event)
+    {
+        $this->onGuard($event, WorkflowData::TRANSITION_UN_DEPLOYED);
+    }
+    /**
+     * @param GuardEvent $event
+     */
+    public function onGuardUnMeasured(GuardEvent $event)
+    {
+        $this->onGuard($event, WorkflowData::TRANSITION_UN_MEASURED);
+    }
+    /**
+     * @param GuardEvent $event
+     */
+    public function onGuardUnClotured(GuardEvent $event)
+    {
+        $this->onGuard($event, WorkflowData::TRANSITION_UN_CLOTURED);
     }
 
     private function onGuard(GuardEvent $event, string $transition)
@@ -110,14 +124,17 @@ class WorkflowActionEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'workflow.wkf_all.guard.goAbandonned' => ['onGuardToAbandonned'],
-            'workflow.wkf_all.guard.goToResume' => ['onGuardToCotech'],
-            'workflow.wkf_all.guard.goToValidate' => ['onGuardGoToValidate'],
-            'workflow.wkf_all.guard.goToControl' => ['onGuardGoToControl'],
-            'workflow.wkf_all.guard.goToCheck' => ['onGuardGoToCheck'],
-            'workflow.wkf_all.guard.goPublished' => ['onGuardGoPublished'],
-            'workflow.wkf_all.guard.goToRevise' => ['onGuardGoToRevise'],
-            'workflow.wkf_all.guard.goInReview' => ['onGuardGoInReview'],
+            'workflow.wkf_all.guard.toAbandonned' => ['onGuardToAbandonned'],
+            'workflow.wkf_all.guard.toCotech' => ['onGuardtoCotech'],
+            'workflow.wkf_all.guard.toCodir' => ['onGuardToCodir'],
+            'workflow.wkf_all.guard.toRejected' => ['onGuardToRejected'],
+            'workflow.wkf_all.guard.toFinalised' => ['onGuardToFinalised'],
+            'workflow.wkf_all.guard.toDeployed' => ['onGuardToDeployed'],
+            'workflow.wkf_all.guard.toMeasured' => ['onGuardToMeasured'],
+            'workflow.wkf_all.guard.toClotured' => ['onGuardToClotured'],
+            'workflow.wkf_all.guard.unDeployed' => ['onGuardUnDeployed'],
+            'workflow.wkf_all.guard.unMeasured' => ['onGuardUnMeasured'],
+            'workflow.wkf_all.guard.unClotured' => ['onGuardUnClotured'],
         ];
     }
 }

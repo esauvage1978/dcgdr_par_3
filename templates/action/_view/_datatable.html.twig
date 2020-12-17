@@ -1,0 +1,90 @@
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/taux.html.twig" as tx %}
+{% import "macros/workflow.html.twig" as wrk %}
+{% import "macros/action.html.twig" as action %}
+{% import '@AdminLTE/Macros/buttons.html.twig'  as btn %}
+
+{% set columns = {
+	'Référence ': {'class': 'all', 'orderBy': true},
+	'Action ': {'class': 'all', 'orderBy': true},
+	'Classement ': {'class': 'desktop', 'orderBy': true},
+    'Fin de déploiement': {'class': 'alwaysVisible', 'orderBy': true},
+	'Jalon': {'class': 'alwaysVisible', 'orderBy': true},
+	'Etat': {'class': 'alwaysVisible', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+{% import "@AdminLTE/Macros/default.html.twig" as macro %}
+
+{{ tables.datatable_header(tableName, columns,  {'striped': true}) }}
+{% for item in items %}
+
+	<tr>
+		<td class="align-middle text-lg">
+			{{ item.category.thematique.ref }}-{{ item.category.ref }}-{{ item.ref }}
+		</td>
+		<td class="align-middle text-lg ">
+			{% if item | actionCanRead %}
+				<a href="{{ path(route_show,{id:item.id}) }}" class="text-p-dark">
+					{{ item.name }}
+				</a>
+			{% else %}
+				{{ item.name }}
+			{% endif %}
+		</td>
+		<td class="align-middle text-xs">
+			<span class="text-{{ item.category.thematique.pole.axe.isEnable ? 'gray' : 'danger text-bold' }} clearfix">
+
+				{{ item.category.thematique.pole.axe.name }}
+			</span>
+
+			<span class="text-{{ item.category.thematique.pole.isEnable ? 'gray' : 'danger text-bold' }} clearfix">
+
+				{{ item.category.thematique.pole.name }}
+			</span>
+			<span class="text-{{ item.category.thematique.isEnable ? 'gray' : 'danger text-bold' }} clearfix">
+				{{ item.category.thematique.name }}
+			</span>
+			<span class="text-{{ item.category.isEnable ? 'gray' : 'danger text-bold' }}">
+				{{ item.category.name }}
+			</span>
+
+		</td>
+		<td class="text-center  align-middle">
+			{{ action.ShowRegionEndAt(item.regionEndAt) }}
+		</td>
+
+		<td class="text-center  align-middle">
+			{{ action.ShowJalon(item.showAt) }}
+		</td>
+
+
+		<td class="align-middle text-center">
+			{{  wrk.badge_state(item.stateCurrent)}}
+
+
+		</td>
+		<td class="align-middle text-center col-1 text-xs">{{ tx.showBar(item.taux1,item.taux2 ) }}</td>
+
+
+		<td class="  align-middle">
+
+			{% if item | actionCanUpdate %}
+
+				{{ btn.link_button(
+                        'Modifier',
+                        path(route_edit,{id:item.id}),
+                        'fa fa-edit',
+                        'p-dark',
+                        'p-dark btn-sm'
+                    ) }}
+			{% endif %}
+		</td>
+	</tr>
+{% else %}
+	{{ tables.datatable_data_else(columns) }}
+{% endfor %}
+{{ tables.datatable_footer(tableName,1) }}
+
+

@@ -64,6 +64,17 @@ class CorbeilleController extends AbstractGController
         return $this->showAction($request, $item);
     }
 
+    /**
+     * @Route("/{id}/use", name="corbeille_show_use", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function showUse( Corbeille $item)
+    {
+        return $this->render($this->domaine . '/showUse.html.twig', [
+            'item' => $item
+        ]);
+    }
+
 
     /**
      * @Route("/{id}/edit", name="corbeille_edit", methods={"GET","POST"})

@@ -3,7 +3,7 @@
 	<div class="row justify-content-center">
 		<div class="{{ col_1_2 }}">
 			{% embed 'widgets/card-widget.html.twig' %}
- 
+
 
 				{% block card_class %}
 					card-primary card-outline
@@ -28,9 +28,9 @@
 						{% endif %}
 					</div>
 				{% endblock %}
-{% block card_footer %}
-	
-{% endblock %}
+				{% block card_footer %}
+					<a href="{{ path('corbeille_show_use',{id:item.id})}}" class="text-p-dark">Consulter l'utilisation de la corbeille</a>
+				{% endblock %}
 
 			{% endembed %}
 
@@ -88,11 +88,11 @@
 							{% if item.isShowValidate %}
 								<span class="text-success">
 									<i class="fas fa-check"></i>
-									Utilisable pour la validation</span>
+									Utilisable pour la validation (CODIR ou COTECH)</span>
 							{% else %}
 								<span class="text-danger">
 									<i class="fas fa-times"></i>
-									Utilisable pour la validation</span>
+									Utilisable pour la validation (CODIR ou COTECH)</span>
 							{% endif %}
 						</div>
 

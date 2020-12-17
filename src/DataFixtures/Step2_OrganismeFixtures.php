@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class Step2_OrganismeFixtures extends Fixture implements FixtureGroupInterface
 {
-    CONST FILENAME = 'dcgdr_organisme';
+    const FILENAME = 'dcgdr_organisme';
     /**
      * @var FixturesImportData
      */
@@ -31,11 +31,10 @@ class Step2_OrganismeFixtures extends Fixture implements FixtureGroupInterface
         FixturesImportData $importData,
         OrganismeValidator $validator,
         EntityManagerInterface $entityManagerI
-    )
-    {
+    ) {
         $this->importData = $importData;
         $this->validator = $validator;
-        $this->entityManagerInterface=$entityManagerI;
+        $this->entityManagerInterface = $entityManagerI;
     }
 
     public function load(ObjectManager $manager)
@@ -48,14 +47,13 @@ class Step2_OrganismeFixtures extends Fixture implements FixtureGroupInterface
             $instance = $this->initialise(new Organisme(), $data[$i]);
 
             $this->checkAndPersist($instance);
-
         }
-
+        $this->create_items_test();
         $this->entityManagerInterface->flush();
     }
 
 
-    private function checkAndPersist( Organisme $instance)
+    private function checkAndPersist(Organisme $instance)
     {
         if ($this->validator->isValid($instance)) {
             $metadata = $this->entityManagerInterface->getClassMetadata(Organisme::class);
@@ -78,9 +76,30 @@ class Step2_OrganismeFixtures extends Fixture implements FixtureGroupInterface
         return $instance;
     }
 
+    private function create_items_test()
+    {
+        $datas = [
+            [
+                'id' => '13',
+                'name' => 'TEST organisme',
+                'ref' => 'test'
+            ],
+        ];
+        foreach ($datas as $data) {
+            //création d'une corbeille COTECH
+            $item = new Organisme();
+            $item
+                ->setId($data['id'])
+                ->setName($data['name'])
+                ->setRef($data['ref'])
+                ->setIsEnable(true)
+                ->setIsAlterable(true);
+            $this->checkAndPersist($item);
+        }
+    }
+
     public static function getGroups(): array
     {
         return ['step2'];
     }
-
 }
