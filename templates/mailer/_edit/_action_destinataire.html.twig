@@ -1,0 +1,36 @@
+<!-- Intervenants -->
+<section>
+	<h5 class="text-p-dark2 p-1  text-center ">
+		Destinataires
+	</h5>
+	<div class="card-body">
+		<div class="form-group row">
+			<label for="{{ form.actionValiderCOTECH.vars.id }}">
+				COTECH
+			</label>
+			{{ form_widget(form.actionValiderCOTECH) }}
+		</div>
+        
+		<div class="form-group row">
+			<label for="{{ form.actionValiderCODIR.vars.id }}">
+				CODIR
+			</label>
+			{{ form_widget(form.actionValiderCODIR) }}
+		</div>
+
+		<div class="form-group row">
+			<label for="{{ form.actionWriter.vars.id }}">
+				Pilotes de l'action
+			</label>
+			{{ form_widget(form.actionWriter) }}
+		</div>
+
+		<div class="form-group row">
+			<label for="{{ form.deployementWriter.vars.id }}">
+				Pilotes des déploiements
+			</label>
+			{{ form_widget(form.deployementWriter) }}
+		</div>
+
+	</div>
+</section>

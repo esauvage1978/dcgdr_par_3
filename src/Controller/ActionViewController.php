@@ -119,6 +119,8 @@ class ActionViewController extends AbstractGController
         $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_WITHOUT_WRITERS));
         return $this->render('action/list.html.twig', ['items' => $items]);
     }
+
+    
     /**
      * @Route("/action_without_validers_cotech", name="actions_action_without_validers_cotech", methods={"GET"})
      * @IsGranted("ROLE_USER")
