@@ -82,7 +82,6 @@ class CalculTauxCommand extends AbstractCommand implements CommandInterface
         $repo->tauxCalcul();
 
 
-
         $fin = microtime(true);
 
         $this->addMessage('Traitement effectué en  '.$this->calculTime($fin, $debut).' millisecondes.');

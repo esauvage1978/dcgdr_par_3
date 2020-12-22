@@ -32,11 +32,12 @@ class IndicatorValueListener
      * @param IndicatorValueManager       $indicatorValueManager
      * @param CalculTauxCommand           $calculTauxCommand
      */
-    public function __construct(IndicatorValueManager $indicatorValueManager,
-                                CalculTauxCommand $calculTauxCommand,
-                                IndicatorValueHistoryCreate $iVHistoryCreate
+    public function __construct(
+        IndicatorValueManager $indicatorValueManager,
+        CalculTauxCommand $calculTauxCommand,
+        IndicatorValueHistoryCreate $iVHistoryCreate
     ) {
-        $this->iVHistoryCreate=$iVHistoryCreate;
+        $this->iVHistoryCreate = $iVHistoryCreate;
         $this->indicatorValueManager = $indicatorValueManager;
         $this->calculTauxCommand = $calculTauxCommand;
     }
@@ -59,7 +60,6 @@ class IndicatorValueListener
     }
 
 
-
     /**
      * @param IndicatorValue $indicatorValue
      *
@@ -71,5 +71,6 @@ class IndicatorValueListener
     public function postUpdateHandler(IndicatorValue $indicatorValue)
     {
         $this->iVHistoryCreate->createHistory($indicatorValue);
+        $this->calculTauxCommand->runTraitement();
     }
 }

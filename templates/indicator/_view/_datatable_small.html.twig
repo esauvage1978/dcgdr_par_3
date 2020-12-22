@@ -1,0 +1,49 @@
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/taux.html.twig" as tx %}
+{% import "macros/workflow.html.twig" as wrk %}
+{% import "macros/action.html.twig" as action %}
+{% import '@AdminLTE/Macros/buttons.html.twig'  as btn %}
+
+
+{% set columns = {
+'Indicateur': {'class': 'align-middle text-center', 'orderBy': true},
+'Taux': {'class': 'align-middle text-center', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+{% import "@AdminLTE/Macros/default.html.twig" as macro %}
+
+{{ tables.datatable_header(tableName ~ 'small', columns,  {'striped': true}) }}
+
+
+{% for item in items %}
+
+	<tr>
+		<td class="align-middle ">
+			{% if item.action | actionCanRead %}
+				<a href="{{ path('action_show',{id:item.action.id}) }}" class="text-p-dark">
+					{{ item.name }}
+				</a>
+			{% else %}
+				{{ item.name }}
+			{% endif %}
+		</td>
+
+		<td class="align-middle text-center text-xs">{{ tx.showBar(item.taux1,item.taux2 ) }}</td>
+		<td class="  align-middle">
+			{% if item.action | actionCanUpdate %}
+				{{ btn.link_button(
+                        'Compléter',
+						path('action_edit',{id:item.action.id}),
+                        'fa fa-edit',
+                        'p-dark',
+                        'p-dark btn-sm'
+                    ) }}
+			{% endif %}
+		</td>
+	</tr>
+{% else %}
+	{{ tables.datatable_data_else(columns) }}
+{% endfor %}
+{{ tables.datatable_footer(tableName ~ 'small',1) }}
+

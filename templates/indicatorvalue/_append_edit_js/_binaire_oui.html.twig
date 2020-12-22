@@ -1,0 +1,11 @@
+{% set id='binaire_oui_' %}
+
+
+        <script type="text/javascript">
+            $(function () {
+                $('#{{ id }}{{ loop.index0 }}').change(function () {
+                    $('#{{ formIV.value.vars.id }}').val($('#{{ id }}{{ loop.index0 }}').val());
+                });
+            })
+        </script>
+

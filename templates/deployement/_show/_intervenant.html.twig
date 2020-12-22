@@ -1,0 +1,40 @@
+<!-- Intervenants -->
+{% import 'macros/corbeille.html.twig' as cbl %}
+
+
+<section id="anchor_intervenant" class="bg-white">
+	<h5 class="text-p-dark2 p-1  text-center ">
+		Intervenants
+	</h5>
+
+	{% set datas = item.writers %}
+	{% set nbr = datas.count %}
+	{% if nbr >0 %}
+		<article class="card-body ">
+			<h6>Pilote</h6>
+			<div class="list-group list-group-flush  bg-light">
+				{% if nbr>0 %}
+					{{ cbl.listing(datas) }}
+				{% else %}
+					<div class="list-group-item">En attente d'ajout</div>
+				{% endif %}
+			</div>
+		</article>
+	{% endif %}
+
+	{% set datas = item.readers %}
+	{% set nbr = datas.count %}
+	{% if nbr >0 %}
+		<article class="card-body ">
+			<h5 class="card-title  p-2  bg-light ">Consultant</h5>
+			<div class="list-group list-group-flush">
+				{% if nbr>0 %}
+					{{ cbl.listing(datas) }}
+				{% else %}
+					<div class="list-group-item">En attente d'ajout</div>
+				{% endif %}
+
+			</div>
+		</article>
+	{% endif %}
+</section>

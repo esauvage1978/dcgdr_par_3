@@ -1,0 +1,15 @@
+{% import "macros/widgets.html.twig" as wdg %}
+
+
+<div class="info-box bg-p-light mt-5">
+	<div class="info-box-content">
+		<span class="info-box-text text-center text-muted">Jalon</span>
+		<span class="info-box-number text-center  text-lg mb-0">
+			{% if item.showAt %}
+				{{ wdg.showXShortDate(item.showAt) }}
+			{% else %}
+				--/--/----
+			{% endif %}
+		</span>
+	</div>
+</div>

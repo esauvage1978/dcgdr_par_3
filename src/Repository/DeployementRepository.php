@@ -63,20 +63,20 @@ class DeployementRepository extends ServiceEntityRepository
         $alias_distante = IndicatorValueRepository::ALIAS;
         $alias_distante2 = IndicatorRepository::ALIAS;
 
-        $sql = ' update ' . $table_source . ' ' . self::ALIAS
-            . ' inner join ( '
-            . ' select ' . $table_source . '_id, avg(' . $alias_distante . '.taux1) as taux1, avg(' . $alias_distante . '.taux2) as taux2, ' . $alias_distante . '.isEnable '
-            . ' from ' . $table_distante . '  ' . $alias_distante . ' inner join ' . $table_distante2 . ' ' . $alias_distante2 . ' on ' . $alias_distante2 . '.id=' . $alias_distante . '.indicator_id '
-            . ' where ' . $alias_distante . '.isEnable=true AND ' . $alias_distante2 . '.isEnable=true group by ' . $table_source . '_id ) ' . $alias_distante . ' '
-            . ' on ' . self::ALIAS . '.id=' . $alias_distante . '.' . $table_source . '_id '
-            . ' set ' . self::ALIAS . '.taux1=' . $alias_distante . '.taux1, '
+        $sql = ' UPDATE ' . $table_source . ' ' . self::ALIAS
+            . ' INNER JOIN ( '
+            . ' SELECT ' . $table_source . '_id, FLOOR(AVG(' . $alias_distante . '.taux1)) AS taux1, FLOOR(AVG(' . $alias_distante . '.taux2)) AS taux2, ' . $alias_distante . '.is_enable '
+            . ' FROM ' . $table_distante . '  ' . $alias_distante . ' INNER JOIN ' . $table_distante2 . ' ' . $alias_distante2 . ' ON ' . $alias_distante2 . '.id=' . $alias_distante . '.indicator_id '
+            . ' WHERE ' . $alias_distante . '.is_enable=true AND ' . $alias_distante2 . '.is_enable=true GROUP BY ' . $table_source . '_id ) ' . $alias_distante . ' '
+            . ' ON ' . self::ALIAS . '.id=' . $alias_distante . '.' . $table_source . '_id '
+            . ' SET ' . self::ALIAS . '.taux1=' . $alias_distante . '.taux1, '
             . self::ALIAS . '.taux2=' . $alias_distante . '.taux2 ; ';
 
         try {
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
 
             return $stmt->execute([]);
-        } catch (DBALException $e) {
+        } catch (\Exception $e) {
             return 'Error' . $e->getMessage();
         }
     }

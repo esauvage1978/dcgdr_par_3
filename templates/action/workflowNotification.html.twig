@@ -1,17 +1,15 @@
-{% extends 'backpack/layout.html.twig' %}
+{% extends 'action/layout.html.twig' %}
 
-{% import "backpack/_btn_actions.html.twig" as actions %}
+{% import "action/_btn_actions.html.twig" as actions %}
 
 {% block page_subtitle %}Historique des notifications
 {% endblock %}
 
 {% block breadcrumb %}
-	{{ actions.backpack(
+	{{ actions.show(
 'workflow',
         item.stateCurrent,
-        item.owner==app.user,
         item,
-        null
     ) }}
 {% endblock %}
 
@@ -20,19 +18,18 @@
 		<div class="col-10">
 			{% embed 'widgets/card-widget.html.twig' %}
 				{% import "macros/widgets.html.twig" as widgets %}
-				{% import "macros/backpack.html.twig" as bpk %}
+				{% import "macros/action.html.twig" as bpk %}
 				{% block card_body_class %}h-100 bg-light shadow
 				{% endblock %}
 				{% block card_body %}
-					{{ include('backpack/_show/_identification.html.twig') }}
-					{{ include('backpack/_show/_content.html.twig') }}
+					{{ include('action/_show/_name.html.twig') }}
 					<hr/>
 					<table class="table table-striped table-bordered">
 						<tr>
 							<th>Le</th>
 							<th>Notifications</th>
 						</tr>
-						{% for data in item.backpackMailHistories %}
+						{% for data in item.actionMailHistories %}
 							<tr>
 								<td>{{ widgets.showLongDate(data.sendAt) }}</td>
 								<td>{{ data.content |raw }}</td>

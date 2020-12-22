@@ -1,0 +1,62 @@
+{% extends 'deployement/layout.html.twig' %}
+{% import "macros/submit.html.twig" as sub %}
+{% import "macros/save.html.twig" as save %}
+
+{% block page_subtitle %}Modification d'un déploiement
+{% endblock %}
+
+{% block breadcrumb %}
+	{% import "deployement/_btn_actions_append.html.twig" as actions %}
+
+	{{ actions.show(
+        'edit',
+        is_granted('ROLE_GESTIONNAIRE'),
+        item,
+        domaine
+    ) }}
+{% endblock %}
+
+
+{% block page_content %}
+{{ form_start(form) }}
+
+	<div class="row justify-content-start pb-5">
+		{{ include('deployement/_show/_name.html.twig') }}
+
+		<div class="row col-12">
+			<div id="col1" class="col-sm-12  order-sm-second  col-md-12 order-sm-second col-lg-6 order-lg-second col-xl-2 order-xl-first">
+				<div class="bg-white  card-body">
+					{{ include('deployement/_show/_tuile.html.twig') }}
+					{{ include('deployement/_edit/_jalon.html.twig') }}
+					{{ include('deployement/_edit/_date.html.twig') }}
+				</div>
+			</div>
+			<div id="col2" class="col-sm-12  order-sm-first  col-md-12 order-md-first col-lg-12  order-lg-first col-xl-7 order-xl-second  bg-white  p-5">
+				{{ include('deployement/_show/_classement.html.twig') }}
+				{{ include('deployement/_show/_cadrage.html.twig') }}
+{{ save.btn()}}
+
+			</div>
+			<div id="col3" class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+				<div class="bg-white  card-body">
+					{{ include('deployement/_edit/_intervenant.html.twig') }}
+					{{ include('deployement/_edit/_deployementFile.html.twig') }}
+				</div>
+			</div>
+		</div>
+		<div class="col-12 bg-white  p-5 mt-5">
+			{{ include('deployement/_edit/_indicator.html.twig') }}
+		</div>
+	</div>
+<div class="d-none">{{ sub.btn() }}</div>
+{{form_rest(form)}}
+
+{{ form_end(form) }}
+
+{% endblock %}
+
+{%  block javascripts %}
+{{ parent() }}
+{{ include('deployement/_edit/_indicator_js.html.twig') }}</div>
+
+{% endblock %}

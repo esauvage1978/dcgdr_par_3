@@ -45,7 +45,10 @@ body {
     background-color: #e6e7f9 !important;
 }
 
-.bg-p-dark {
+.bg-p-dark  {
+    background-color: #675ef2 !important;
+}
+.badge-p-dark {
     background-color: #675ef2 !important;
 }
 

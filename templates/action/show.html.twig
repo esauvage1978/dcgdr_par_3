@@ -5,12 +5,11 @@
 {% endblock %}
 
 {% block breadcrumb %}
-	{% import "default/actions.html.twig" as actions %}
-	{{ actions.admin(
+	{% import "action/_btn_actions.html.twig" as actions %}
+	{{ actions.show(
         'show',
-        is_granted('ROLE_GESTIONNAIRE'),
+		item.stateCurrent,
         item,
-        domaine
     ) }}
 {% endblock %}
 

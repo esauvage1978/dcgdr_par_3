@@ -26,40 +26,42 @@
 
 {% block page_content %}
 	<div class="row">
-		<div class="col-lg-12 col-xl-2">
-			<div class="sticky-top mb-3 ">
-				<h4 class="text-p-dark2 mt-5 text-center">
-					<small>
-						<i class="fas fa-stream"></i>
-					</small>
-					Catégorie
-				</h4>
-				<div class="card mt-3">
-					<div
-						class="list-group">
-						<!-- the events -->
-						{% for category in thematique.categories %}
+		<div class="col-xl-12 col-xxl-2">
 
-							<a href="{{ path('actions_for_category',{'id':category.id}) }}" class="list-group-item list-group-item-action text-p-dark hvr-grow-shadow">
-								{{ category.name }}
-							</a>
-						{% endfor %}
-					</div>
+			<h4 class="text-p-dark2 mt-5 text-center">
+				<small>
+					<i class="fas fa-stream"></i>
+				</small>
+				Catégorie
+			</h4>
+			<div>
+					<!-- the events -->
+					{% for category in thematique.categories %}
+
+<a href="{{ path('actions_for_category',{'id':category.id}) }}" class="badge badge-p-dark text-p-light text-md m-2">
+
+							{{ category.name }}
+						</a>
+					{% endfor %}
 				</div>
 
-				<a href="{{ path('actions_for_pole',{'id':thematique.pole.id}) }}" class=" text-p-dark hvr-grow-shadow">
-					retour vers
-					{{ thematique.pole.name }}
+			<a href="{{ path('actions_for_pole',{'id':thematique.pole.id}) }}" class=" text-p-dark hvr-grow-shadow">
+				retour vers
+				{{ thematique.pole.name }}
 
-				</a>
+			</a>
 
-				<!-- /.card-body -->
-			</div>
+			<!-- /.card-body -->
 		</div>
-		<div class="col-lg-12 col-xl-10 ">
+		<div class="col-xl-12 col-xxl-2">
 
+			<div class="d-none d-lg-block">
+				{% include "action/_view/_datatable.html.twig" %}
+			</div>
+			<div class="d-lg-none">
+				{% include "action/_view/_datatable_small.html.twig" %}
+			</div>
 
-			{% include "action/_view/_datatable.html.twig" %}
 		</div>
 	</div>
 {% endblock %}
@@ -79,4 +81,13 @@
 } %}
 
 	{{ tables.datatable_javascript(tableName,1,columns) }}
+
+	{% set columns = {
+	'Action ': {'class': 'all', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+	{{ tables.datatable_javascript(tableName ~ 'small',1,columns) }}
+
 {% endblock %}

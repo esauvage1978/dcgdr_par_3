@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ActionDto extends AbstractDto
 {
+    Use TraitJalon;
+    use TraitWriter;
 
     /**
      * @var ?UserDto
@@ -38,12 +40,23 @@ class ActionDto extends AbstractDto
     /**
      * @var ?string
      */
-    private $isWritable;
+    private $states;
+
 
     /**
      * @var ?string
      */
+
+    private $isValidersCOTECH;
+    private $isValidersCODIR;
+    /**
+     * @var ?string
+     */
     private $isReadable;
+
+
+    private $hasValidersCOTECH;
+    private $hasValidersCODIR;
 
     /**
      * @return mixed
@@ -146,24 +159,25 @@ class ActionDto extends AbstractDto
         return $this;
     }
 
-    /**
-     * @param mixed $isWritable
-     * @return ActionDto
-     */
-    public function setIsWritable($isWritable)
-    {
-        $this->checkBool($isWritable);
-        $this->isWritable = $isWritable;
-        return $this;
-    }
 
     /**
      * @return mixed
      */
-    public function getIsWritable()
+    public function getStates()
     {
-        return $this->isWritable;
+        return $this->states;
     }
+
+    /**
+     * @param mixed $states
+     * @return ActionDto
+     */
+    public function setStates($states)
+    {
+        $this->states = $states;
+        return $this;
+    }
+
 
     /**
      * @param mixed $isReadable
@@ -176,6 +190,84 @@ class ActionDto extends AbstractDto
         return $this;
     }
 
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getHasValidersCOTECH()
+    {
+        return $this->hasValidersCOTECH;
+    }
+
+    /**
+     * @param mixed $hasValidersCOTECH
+     * @return ActionDto
+     */
+    public function setHasValidersCOTECH($hasValidersCOTECH)
+    {
+        $this->checkBool($hasValidersCOTECH);
+        $this->hasValidersCOTECH = $hasValidersCOTECH;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHasValidersCODIR()
+    {
+        return $this->hasValidersCODIR;
+    }
+
+    /**
+     * @param mixed $hasValidersCODIR
+     * @return ActionDto
+     */
+    public function setHasValidersCODIR($hasValidersCODIR)
+    {
+        $this->checkBool($hasValidersCODIR);
+        $this->hasValidersCODIR = $hasValidersCODIR;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsValidersCOTECH()
+    {
+        return $this->isValidersCOTECH;
+    }
+
+    /**
+     * @param mixed $isValidersCOTECH
+     * @return ActionDto
+     */
+    public function setIsValidersCOTECH($isValidersCOTECH)
+    {
+        $this->checkBool($isValidersCOTECH);
+        $this->isValidersCOTECH = $isValidersCOTECH;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsValidersCODIR()
+    {
+        return $this->isValidersCODIR;
+    }
+
+    /**
+     * @param mixed $isValidersCODIR
+     * @return ActionDto
+     */
+    public function setIsValidersCODIR($isValidersCODIR)
+    {
+        $this->checkBool($isValidersCODIR);
+        $this->isValidersCODIR = $isValidersCODIR;
+        return $this;
+    }
     /**
      * @return mixed
      */

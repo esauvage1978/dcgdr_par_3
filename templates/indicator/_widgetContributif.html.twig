@@ -1,0 +1,17 @@
+{% import "macros/widgets.html.twig" as widgets %}
+{% set nbr = contributif| length %}
+{% if nbr>0 %}
+	<div class="small-box bg-p-dark ">
+		<div class="inner  text-p-light">
+			<h3>{{ nbr }}</h3>
+			<p>Indicateur{{nbr>1?'s':''}}
+				contributif{{nbr>1?'s':''}} régional</p>
+		</div>
+		<div class="icon">
+			{{ widgets.icon('indicator') }}
+		</div>
+		<a href="{{ path('indicator_contributif')}}" class="small-box-footer ">Consulter
+			<i class="fas fa-arrow-circle-right"></i>
+		</a>
+	</div>
+{% endif %}

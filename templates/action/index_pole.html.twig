@@ -26,39 +26,36 @@
 
 {% block page_content %}
 	<div class="row">
-		<div class="col-lg-12 col-xl-2">
-
-			<div class="sticky-top mb-3 ">
+		<div class="col-xl-12 col-xxl-2">
 				<h4 class="text-p-dark2 mt-5 text-center">
 					<small>
 						<i class="fas fa-stream"></i>
 					</small>
 					Thématiques
 				</h4>
-				<div class="card mt-3">
-					<div
-						class="list-group">
+				<div>
 						<!-- the events -->
 						{% for thematique in pole.thematiques %}
-							<a href="{{ path('actions_for_thematique',{'id':thematique.id}) }}" class="list-group-item list-group-item-action text-p-dark hvr-grow-shadow">
+<a href="{{ path('actions_for_thematique',{'id':thematique.id}) }}" class="badge badge-p-dark text-p-light text-md m-2">
+
 								{{ thematique.name }}
 							</a>
 						{% endfor %}
-					</div>
-				</div>
-
-				<a href="{{ path('actions_for_axe',{'id':pole.axe.id}) }}" class=" text-p-dark hvr-grow-shadow">
+</div>
+				<a href="{{ path('actions_for_axe',{'id':pole.axe.id}) }}" class=" text-p-dark hvr-grow-shadow clearfix">
 					retour vers
 					{{ pole.axe.name }}
 				</a>
 
 				<!-- /.card-body -->
-			</div>
 		</div>
-		<div class="col-lg-12 col-xl-10">
-
-
-			{% include "action/_view/_datatable.html.twig" %}
+		<div class="col-xl-12 col-xxl-2">
+			<div class="d-none d-lg-block">
+				{% include "action/_view/_datatable.html.twig" %}
+			</div>
+			<div class="d-lg-none">
+				{% include "action/_view/_datatable_small.html.twig" %}
+			</div>
 		</div>
 	</div>
 {% endblock %}
@@ -77,5 +74,15 @@
     'actions': {'class': 'alwaysVisible', 'orderBy': false}
 } %}
 
+
 	{{ tables.datatable_javascript(tableName,1,columns) }}
+
+	{% set columns = {
+	'Action ': {'class': 'all', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+	{{ tables.datatable_javascript(tableName ~ 'small',1,columns) }}
+
 {% endblock %}

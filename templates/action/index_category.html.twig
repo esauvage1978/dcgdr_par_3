@@ -29,7 +29,14 @@
 	retour vers
 	{{ category.thematique.name }}
 </a>
-			{% include "action/_view/_datatable.html.twig" %}
+<div class="d-none d-lg-block">
+	{% include "action/_view/_datatable.html.twig" %}
+</div>
+<div class="d-lg-none">
+	{% include "action/_view/_datatable_small.html.twig" %}
+</div>
+
+
 {% endblock %}
 
 {% block javascripts %}
@@ -47,4 +54,13 @@
 } %}
 
 	{{ tables.datatable_javascript(tableName,1,columns) }}
+
+{% set columns = {
+	'Action ': {'class': 'all', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+{{ tables.datatable_javascript(tableName ~ 'small',1,columns) }}
+
 {% endblock %}

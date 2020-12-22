@@ -20,13 +20,14 @@ use App\Repository\DeployementDtoRepository;
 use App\Form\Deployement\DeployementEditType;
 use App\Repository\DeployementFileRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\Deployement\DeployementAppendType;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * Class DeployementController
  * @package App\Controller
- * @route("/deployement")
+ * @route("/")
  */
 class DeployementController extends AbstractGController
 {
@@ -42,7 +43,7 @@ class DeployementController extends AbstractGController
     }
 
     /**
-     * @Route("/", name="deployement_list", methods={"GET"})
+     * @Route("/deployement", name="deployement_list", methods={"GET"})
      * @IsGranted("ROLE_USER")
      */
     public function list()
@@ -84,7 +85,7 @@ class DeployementController extends AbstractGController
     }
 
     /**
-     * @Route("/{id}", name="deployement_del", methods={"DELETE"})
+     * @Route("/deployement/{id}", name="deployement_del", methods={"DELETE"})
      * @IsGranted("ROLE_GESTIONNAIRE")
      */
     public function delete(Request $request, Deployement $item)
@@ -93,7 +94,7 @@ class DeployementController extends AbstractGController
     }
 
     /**
-     * @Route("/{id}", name="deployement_show", methods={"GET"})
+     * @Route("/deployement/{id}", name="deployement_show", methods={"GET"})
      * @IsGranted("ROLE_USER")
      */
     public function show(Request $request, Deployement $item)
@@ -135,7 +136,7 @@ class DeployementController extends AbstractGController
 
 
     /**
-     * @Route("/deployement/{id}", name="deployement_append", methods={"GET"})
+     * @Route("/deployement/{id}/append", name="deployement_append", methods={"GET"})
      *
      * @IsGranted("ROLE_USER")
      */
@@ -144,7 +145,7 @@ class DeployementController extends AbstractGController
         $this->denyAccessUnlessGranted(DeployementVoter::APPEND_READ, $entity);
 
         return $this->render(self::DOMAINE . '/append.html.twig', [
-            self::DOMAINE => $entity,
+            'item' => $entity,
         ]);
     }
 
@@ -216,7 +217,7 @@ class DeployementController extends AbstractGController
     }
 
     /**
-     * @Route("/deployement/{id}/edit", name="deployement_append_edit", methods={"GET","POST"})
+     * @Route("/deployement/{id}/append/edit", name="deployement_append_edit", methods={"GET","POST"})
      *
      * @IsGranted("ROLE_USER")
      */

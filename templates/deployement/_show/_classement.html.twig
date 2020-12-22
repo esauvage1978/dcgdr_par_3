@@ -1,0 +1,65 @@
+<!-- classement -->
+<h3 id="anchor_classement" class="text-p-dark2">
+	<small>
+		<i class="fas fa-stream"></i>
+	</small>
+	Classement
+	{%  if item.action.category.isEnable ==false or
+item.action.category.thematique.isEnable ==false or
+item.action.category.thematique.pole.isEnable ==false or
+        item.action.category.thematique.pole.axe.isEnable ==false  %}
+		<span class="badge badge-danger text-sm float-right">L'action n'est pas visible</span>
+	{% endif %}
+	{%  if item.action.category.thematique.pole.axe.isArchiving ==true  %}
+		<span class="badge badge-danger text-sm float-right">L'action est archivée</span>
+	{% endif %}
+</h3>
+<article class="card-body bg-light mt-5">
+	<div class="row">
+
+		<div class="col-12 d-flex justify-content-between">
+			<a class="text-p-dark" href="{{ path('actions_for_axe',{'id': item.action.category.thematique.pole.axe.id}) }}">
+				<i class="fas fa-long-arrow-alt-right"></i>
+				{{ item.action.category.thematique.pole.axe.name }}
+			</a>
+			<div class="pt-2">
+				<small class=" {{ item.action.category.thematique.pole.axe.isEnable ? 'text-muted':'text-danger'}}">Plan d'actions</small>
+			</div>
+		</div>
+
+		<div class="col-12  d-flex justify-content-between ">
+			<a class="text-p-dark" href="{{ path('actions_for_pole',{'id': item.action.category.thematique.pole.id}) }}">
+				<i class="fas fa-long-arrow-alt-right"></i>
+				{{ item.action.category.thematique.pole.name }}
+			</a>
+			<div class="pt-2">
+				<small class="{{ item.action.category.thematique.pole.isEnable ? 'text-muted':'text-danger'}}">Pôle</small>
+			</div>
+		</div>
+
+		<div class="col-12  d-flex justify-content-between">
+			<a class="text-p-dark " href="{{ path('actions_for_thematique',{'id': item.action.category.thematique.id}) }}">
+				<i class="fas fa-long-arrow-alt-right"></i>
+				{{ item.action.category.thematique.ref }}
+				-
+				{{ item.action.category.thematique.name }}
+			</a>
+			<div class="pt-2">
+				<small class="{{ item.action.category.thematique.isEnable ? 'text-muted':'text-danger'}}">thématique</small>
+			</div>
+		</div>
+
+		<div class="col-12   d-flex justify-content-between">
+			<a class="text-p-dark" href="{{ path('actions_for_category',{'id': item.action.category.id}) }}">
+				<i class="fas fa-long-arrow-alt-right"></i>
+				{{ item.action.category.ref }}
+				-
+				{{ item.action.category.name }}
+			</a>
+			<div class="pt-2">
+				<small class="{{ item.action.category.isEnable ? 'text-muted':'text-danger'}}">Catégorie</small>
+			</div>
+		</div>
+
+	</div>
+</article>

@@ -133,3 +133,26 @@
 	{% endif %}
 
 {% endmacro %}
+
+
+{% macro listAction(items,color) %}
+
+
+	{% for  item in items %}
+		{% if item.data!="0" %}
+			<a class="text-p-dark bg-p-light list-group-item list-group-item-action hvr-float-shadow  d-flex justify-content-between align-items-center" href="{{ path(item.route) }}" style="color:{{ item.foreColor}};background-color:{{ item.bgColor}};">
+
+				<span class=' mr-5'>
+					{{ item.title | raw}}
+				</span>
+				<span class=''>
+					<span class='badge badge-{{color}} mr-1'>
+						{{ item.data}}
+					</span>
+				</span>
+			</a>
+		{% endif %}
+	{% endfor %}
+
+
+{% endmacro %}

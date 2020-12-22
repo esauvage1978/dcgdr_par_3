@@ -18,8 +18,7 @@ item.category.thematique.pole.isEnable ==false or
 	<div class="row">
 
 		<div class="col-12 d-flex justify-content-between">
-
-			<a class="text-p-dark" href="{{ path('axe_show',{'id': item.category.thematique.pole.axe.id}) }}">
+			<a class="text-p-dark" href="{{ path('actions_for_axe',{'id': item.category.thematique.pole.axe.id}) }}">
 				<i class="fas fa-long-arrow-alt-right"></i>
 				{{ item.category.thematique.pole.axe.name }}
 			</a>
@@ -29,9 +28,7 @@ item.category.thematique.pole.isEnable ==false or
 		</div>
 
 		<div class="col-12  d-flex justify-content-between ">
-
-<a class="text-p-dark" href="{{ path('pole_show',{'id': item.category.thematique.pole.id}) }}">
-
+			<a class="text-p-dark" href="{{ path('actions_for_pole',{'id': item.category.thematique.pole.id}) }}">
 				<i class="fas fa-long-arrow-alt-right"></i>
 				{{ item.category.thematique.pole.name }}
 			</a>
@@ -41,9 +38,7 @@ item.category.thematique.pole.isEnable ==false or
 		</div>
 
 		<div class="col-12  d-flex justify-content-between">
-
-<a class="text-p-dark " href="{{ path('thematique_show',{'id': item.category.thematique.id}) }}">
-
+			<a class="text-p-dark " href="{{ path('actions_for_thematique',{'id': item.category.thematique.id}) }}">
 				<i class="fas fa-long-arrow-alt-right"></i>
 				{{ item.category.thematique.ref }}
 				-
@@ -55,9 +50,7 @@ item.category.thematique.pole.isEnable ==false or
 		</div>
 
 		<div class="col-12   d-flex justify-content-between">
-
-<a class="text-p-dark" href="{{ path('category_show',{'id': item.category.id}) }}">
-
+			<a class="text-p-dark" href="{{ path('actions_for_category',{'id': item.category.id}) }}">
 				<i class="fas fa-long-arrow-alt-right"></i>
 				{{ item.category.ref }}
 				-

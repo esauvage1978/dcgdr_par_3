@@ -3,7 +3,6 @@
 namespace App\Service;
 
 
-use App\Entity\User;
 use App\Repository\ActionDtoRepository;
 use App\Security\CurrentUser;
 
@@ -13,23 +12,23 @@ class ActionCounter
     /**
      * @var ActionDtoRepository
      */
-    private $backpackDtoRepository;
+    private $actionDtoRepository;
 
-    private $backpackMakerDto;
+    private $actionMakerDto;
 
     public function __construct(
-        ActionDtoRepository $backpackDtoRepository,
+        ActionDtoRepository $actionDtoRepository,
         CurrentUser $currentUser
     )
     {
-        $this->backpackDtoRepository = $backpackDtoRepository;
-        $this->backpackMakerDto=new ActionMakerDto($currentUser);
+        $this->actionDtoRepository = $actionDtoRepository;
+        $this->actionMakerDto=new ActionMakerDto($currentUser);
     }
 
     public function get(string $type,?string $param=null)
     {
-        return $this->backpackDtoRepository->countForDto(
-            $this->backpackMakerDto->get($type,$param)
+        return $this->actionDtoRepository->countForDto(
+            $this->actionMakerDto->get($type,$param)
         );
     }
 

@@ -1,0 +1,36 @@
+{% import "macros/taux.html.twig" as tx %}
+
+<div class=" mt-4 ml-4">
+	<div class="card-header bg-p-light">
+		<h4 class="card-title text-p-dark2">
+			{{ indicatorvalue.indicator.name }}
+		</h4>
+		<small class="float-right">
+			{{ indicatorvalue.indicator.indicatorType | indicatorGetNameOfIndicator }}
+		</small>
+	</div>
+	<div class="card-body">
+		{% if indicatorvalue.indicator.content and indicatorvalue.indicator.content != '<br>' %}
+			<div class="row mt-2 mb-3">
+				<div class="col-12 bg-light p-5">
+					{{ indicatorvalue.indicator.content | raw }}
+				</div>
+			</div>
+		{% endif %}
+		<div class="row mt-2">
+			<div class="col-md-12 col-lg-2">
+				<div class="info-box bg-p-light ">
+					<div class="info-box-content">
+						<span class="info-box-text text-center text-muted">Taux</span>
+						<span class="info-box-number text-center  text-lg mb-0">
+							{{ tx.showBar(indicatorvalue.taux1,indicatorvalue.taux2 ) }}
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 col-lg-10">
+				{{ include('indicatorvalue/_append_show/_' ~ indicatorvalue.indicator.indicatortype ~ '.html.twig') }}
+			</div>
+		</div>
+	</div>
+</div>

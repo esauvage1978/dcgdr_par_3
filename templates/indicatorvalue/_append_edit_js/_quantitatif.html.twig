@@ -1,0 +1,13 @@
+{%  set id='quantitatif_' %}
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#{{id}}_value_{{ loop.index0 }}').change(function () {
+            $('#{{ formIV.value.vars.id }}').val($('#{{id}}_value_{{ loop.index0 }}').val());
+        });
+        $('#{{id}}_goal_{{ loop.index0 }}').change(function () {
+            $('#{{ formIV.goal.vars.id }}').val($('#{{id}}_goal_{{ loop.index0 }}').val());
+        });
+    })
+</script>

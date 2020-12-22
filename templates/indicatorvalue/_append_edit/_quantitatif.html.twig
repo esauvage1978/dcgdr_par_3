@@ -1,0 +1,29 @@
+{%  set id='quantitatif_' %}
+<div class="info-box  bg-p-light ">
+    <div class="info-box-content form-group">
+        <label for="{{id}}_value_{{ loop.index0 }}" class="info-box-text text-center text-muted">
+            Résultat
+        </label>
+
+        <input type="text" name="{{id}}_value_{{ loop.index0 }}" id="{{id}}_value_{{ loop.index0 }}" class="form-control text-center"
+               value="{{ indicatorvalue.value }}"
+        />
+
+
+    </div>
+
+</div>
+<div class="info-box  bg-p-light ">
+
+    <div class="info-box-content form-group">
+        <label for="{{id}}_goal_{{ loop.index0 }}" class="info-box-text text-center text-muted">
+            Objectif
+        </label>
+
+        <input type="text" name="{{id}}_goal_{{ loop.index0 }}" id="{{id}}_goal_{{ loop.index0 }}" class="form-control text-center"
+               value="{{ indicatorvalue.goal }}"
+        />
+
+    </div>
+</div>
+

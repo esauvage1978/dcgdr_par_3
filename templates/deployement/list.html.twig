@@ -1,0 +1,54 @@
+{% extends 'deployement/layout.html.twig' %}
+
+
+{% block page_subtitle %}Liste
+{% endblock %}
+
+
+{% block breadcrumb %}
+	{% import "deployement/_btn_actions_append.html.twig" as actions %}
+	{{ actions.show(
+        'list',
+        null,
+        null,
+        domaine
+    ) }}
+{% endblock %}
+
+
+{% block page_content %}
+	<div class="d-none d-lg-block">
+		{% include "deployement/_view/_datatable.html.twig" %}
+	</div>
+	<div class="d-lg-none">
+		{% include "deployement/_view/_datatable_small.html.twig" %}
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% import "macros/datatables.html.twig" as tables %}
+	{% set columns = {
+	'Référence ': {'class': 'all', 'orderBy': true},
+	'Déployement ': {'class': 'all', 'orderBy': true},
+	'Classement ': {'class': 'desktop', 'orderBy': true},
+    'Fin de déploiement': {'class': 'alwaysVisible', 'orderBy': true},
+	'Jalon': {'class': 'alwaysVisible', 'orderBy': true},
+	'Indicateurs': {'class': 'alwaysVisible', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+	{{ tables.datatable_javascript(tableName,1,columns) }}
+
+{% set columns = {
+	'Déployement ': {'class': 'all', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+{{ tables.datatable_javascript(tableName ~ 'small',1,columns) }}
+
+
+{% endblock %}

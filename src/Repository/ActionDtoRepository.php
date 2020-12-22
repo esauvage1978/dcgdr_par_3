@@ -202,10 +202,139 @@ class ActionDtoRepository extends ServiceEntityRepository implements DtoReposito
         $this->initialise_where_is_updatable();
         $this->initialise_where_is_readable();
 
+        $this->initialise_where_is_corbeille();
+
+        $this->initialise_where_has_corbeille();
+
+        $this->initialise_where_states();
+
         $this->initialise_where_search();
+
+        $this->initialise_where_has_jalon();
+        $this->initialise_where_has_jalon_to_late();
 
         if (count($this->params) > 0) {
             $this->builder->setParameters($this->params);
+        }
+    }
+
+    private function initialise_where_has_jalon()
+    {
+        $dto = $this->dto;
+        $builder = $this->builder;
+
+        if ($dto->getHasJalon() === ActionDto::FALSE) {
+            $builder->andWhere(self::ALIAS . '.showAt is null ');
+        } elseif ($dto->getHasJalon() === ActionDto::TRUE) {
+            $builder->andWhere(self::ALIAS . '.showAt is not null ');
+        }
+    }
+
+    private function initialise_where_has_jalon_to_late()
+    {
+        $dto = $this->dto;
+        $builder = $this->builder;
+        $date =  (new \DateTime())->format('Y-m-d');
+        if ($dto->getHasJalonToLate() === ActionDto::FALSE) {
+            $builder->andWhere(self::ALIAS . '.showAt is null ');
+        } elseif ($dto->getHasJalonToLate() === ActionDto::TRUE) {
+            $builder->andWhere(self::ALIAS . '.showAt < :from ');
+            $this->addParams('from', $date);
+        }
+    }
+
+    private function initialise_where_has_corbeille()
+    {
+        if ($this->dto->getHasWriters() == ActionDto::FALSE) {
+            $qWu = $this->createQueryBuilder('id')
+                ->innerJoin('id.writers', 'cordw');
+            $this->builder->andwhere(self::ALIAS . '.id NOT IN (' . $qWu->getDQL() . ')');
+        } else if ($this->dto->getHasWriters() == ActionDto::TRUE) {
+            $qWu = $this->createQueryBuilder('id')
+                ->innerJoin('id.writers', 'cordw');
+            $this->builder->andwhere(self::ALIAS . '.id IN (' . $qWu->getDQL() . ')');
+        }
+
+        if ($this->dto->getHasValidersCOTECH() == ActionDto::FALSE) {
+            $qVC1 = $this->createQueryBuilder('id')
+                ->innerJoin('id.COTECHValiders', 'cordvc1');
+            $this->builder->andwhere(self::ALIAS . '.id NOT IN (' . $qVC1->getDQL() . ')');
+        } else if ($this->dto->getHasValidersCOTECH() == ActionDto::TRUE) {
+            $qVC1 = $this->createQueryBuilder('id')
+                ->innerJoin('id.COTECHValiders', 'cordvc1');
+            $this->builder->andwhere(self::ALIAS . '.id  IN (' . $qVC1->getDQL() . ')');
+        }
+
+        if ($this->dto->getHasValidersCODIR() == ActionDto::FALSE) {
+            $qVC2 = $this->createQueryBuilder('id')
+                ->innerJoin('id.CODIRValiders', 'cordvc2');
+            $this->builder->andwhere(self::ALIAS . '.id NOT IN (' . $qVC2->getDQL() . ')');
+        } else if ($this->dto->getHasValidersCODIR() == ActionDto::TRUE) {
+            $qVC2 = $this->createQueryBuilder('id')
+                ->innerJoin('id.CODIRValiders', 'cordvc2');
+            $this->builder->andwhere(self::ALIAS . '.id  IN (' . $qVC2->getDQL() . ')');
+        }
+    }
+    private function initialise_where_states()
+    {
+        if (!empty($this->dto->getStates())) {
+            $states = implode('\',\'', $this->dto->getStates());
+            $this->builder->andwhere(self::ALIAS . '.stateCurrent in (\'' . $states . '\')');
+        }
+    }
+
+    private function initialise_where_is_corbeille()
+    {
+        if ($this->dto->getIsWriter() === ActionDto::TRUE) {
+            $u = $this->dto->getUserDto();
+
+            if (!empty($u) && !empty($u->getId())) {
+
+                $rqtPilote = $this->createQueryBuilder(self::ALIAS . '1')
+                    ->select(self::ALIAS . '1.id')
+                    ->join(self::ALIAS . '1.writers', CorbeilleRepository::ALIAS_ACTION_WRITERS . '1')
+                    ->join(CorbeilleRepository::ALIAS_ACTION_WRITERS . '1.users', UserRepository::ALIAS . '1')
+                    ->where(UserRepository::ALIAS . '1.id= :idUser');
+
+                $this->addParams('idUser', $u->getId());
+
+                $this->builder
+                    ->andWhere(self::ALIAS . '.id IN (' . $rqtPilote->getDQL() . ')');
+            }
+        }
+        if ($this->dto->getIsValidersCOTECH() === ActionDto::TRUE) {
+            $u = $this->dto->getUserDto();
+
+            if (!empty($u) && !empty($u->getId())) {
+
+                $rqtVC1 = $this->createQueryBuilder(self::ALIAS . '2')
+                    ->select(self::ALIAS . '2.id')
+                    ->join(self::ALIAS . '2.COTECHValiders', CorbeilleRepository::ALIAS_ACTION_COTECH . '2')
+                    ->join(CorbeilleRepository::ALIAS_ACTION_COTECH . '2.users', UserRepository::ALIAS . '2')
+                    ->where(UserRepository::ALIAS . '2.id= :idUser');
+
+                $this->addParams('idUser', $u->getId());
+
+                $this->builder
+                    ->andWhere(self::ALIAS . '.id IN (' . $rqtVC1->getDQL() . ')');
+            }
+        }
+        if ($this->dto->getIsValidersCODIR() === ActionDto::TRUE) {
+            $u = $this->dto->getUserDto();
+
+            if (!empty($u) && !empty($u->getId())) {
+
+                $rqtVC2 = $this->createQueryBuilder(self::ALIAS . '3')
+                    ->select(self::ALIAS . '3.id')
+                    ->join(self::ALIAS . '3.CODIRValiders', CorbeilleRepository::ALIAS_ACTION_CODIR . '3')
+                    ->join(CorbeilleRepository::ALIAS_ACTION_CODIR . '3.users', UserRepository::ALIAS . '3')
+                    ->where(UserRepository::ALIAS . '3.id= :idUser');
+
+                $this->addParams('idUser', $u->getId());
+
+                $this->builder
+                    ->andWhere(self::ALIAS . '.id IN (' . $rqtVC2->getDQL() . ')');
+            }
         }
     }
 

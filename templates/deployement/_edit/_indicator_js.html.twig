@@ -1,0 +1,9 @@
+{% set nbr= item | organismeIndicateurDeployed %}
+
+{% if nbr>0 %}
+	{% for indicatorvalue in item.indicatorvalues %}
+		{% if indicatorvalue.isEnable and indicatorvalue.indicator.isEnable %}
+			{{ include('indicatorvalue/_append_edit_js/_edit.html.twig',{'indicatorvalue':indicatorvalue}) }}
+		{% endif %}
+	{% endfor %}
+{% endif %}

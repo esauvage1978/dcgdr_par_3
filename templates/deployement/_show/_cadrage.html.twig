@@ -1,0 +1,52 @@
+{% set nbrL=item.action.cadrageLinks | length %}
+{% set nbrF=item.action.cadrageFiles | length %}
+<h3 id="anchor_cadrage" class="text-p-dark2 pt-5">
+    <small><i class="fas fa-crop-alt"></i></small> Cadrage
+</h3>
+
+        {% if item.action.cadrage and item.action.cadrage != '<br>'  %}
+            <section  class="mt-4 p-3 col-12 bg-light">
+                {{ item.action.cadrage | raw }}
+            </section>
+        {% elseif nbrL == 0 and nbrF == 0 %}
+            <section  class="mt-4 p-3 col-12 bg-light">
+                en cours de rédaction
+            </section>
+        {% endif %}
+
+
+
+<section  class="mt-4 p-3 col-12 ">
+{% if nbrL>0 or nbrF>0 %}
+	{% import "macros/file.html.twig" as file %}
+	<div class=" list-blk">
+		<table class="table table-hover bg-white">
+			<colgroup>
+				<col class="col-lg-1">
+				<col class="col-lg-8">
+				<col class="col-lg-2">
+				<col class="col-lg-1">
+			</colgroup>
+			<thead class="thead-default">
+				<tr>
+					<th class="bg-p-dark"></th>
+					<th class="bg-p-dark text-p-light">
+						Nom
+					</th>
+					<th class="hidden-xs text-center bg-p-dark text-p-light">
+						Date
+					</th>
+					<th class="hidden-xs bg-p-dark text-p-light">
+						Taille
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+                {{ file.showFiles(item.action.cadrageFiles,item,'cadrage_file_show') }}
+                {{ file.showLinks(item.action.cadrageLinks) }}
+			</tbody>
+		</table>
+	</div>
+{% endif %}
+
+</section>

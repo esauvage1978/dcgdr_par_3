@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Command\CalculTauxCommand;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
@@ -103,5 +104,21 @@ class AdminController extends AbstractController
             'app_entries' => $app_entries,
             'action_entries' => $action_entries,
         ]);
+    }
+
+    /**
+     * @Route("/command/calcultaux", name="command_calcul_taux", methods={"GET"})
+     *
+     * @IsGranted("ROLE_GESTIONNAIRE")
+     *
+     * @return Response
+     */
+    public function calculTauxAction(CalculTauxCommand $calculTauxCommand)
+    {
+        $calculTauxCommand->runTraitement();
+
+        $this->addFlash('info', $calculTauxCommand->getMessagesForAlert());
+
+        return $this->redirectToRoute('admin');
     }
 }

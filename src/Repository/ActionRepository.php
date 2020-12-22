@@ -54,20 +54,20 @@ class ActionRepository extends ServiceEntityRepository
 
         $alias_distante = IndicatorRepository::ALIAS;
 
-        $sql = ' update '.$table_source.' '.self::ALIAS
-            .' inner join ( '
-            .' select '.$table_source.'_id, avg(taux1) as taux1, avg(taux2) as taux2, enable '
-            .' from '.$table_distante.' where enable=true group by '.$table_source.'_id ) '.$alias_distante.' '
-            .' on '.self::ALIAS.'.id='.$alias_distante.'.'.$table_source.'_id '
-            .' set '.self::ALIAS.'.taux1='.$alias_distante.'.taux1, '
+        $sql = ' UPDATE '.$table_source.' '.self::ALIAS
+            .' INNER JOIN ( '
+            .' SELECT '.$table_source.'_id, FLOOR(AVG(taux1)) AS taux1, FLOOR(AVG(taux2)) AS taux2, is_enable '
+            .' FROM '.$table_distante. ' WHERE is_enable=true GROUP BY '.$table_source.'_id ) '.$alias_distante.' '
+            .' ON '.self::ALIAS.'.id='.$alias_distante.'.'.$table_source.'_id '
+            .' SET '.self::ALIAS.'.taux1='.$alias_distante.'.taux1, '
             .self::ALIAS.'.taux2='.$alias_distante.'.taux2 '
-            .' where '.self::ALIAS.'.state in ( \'started\',\'cotech\',\'codir\',\'finalised\',\'deployed\',\'measured\',\'clotured\')';
+            .' WHERE '.self::ALIAS.'.state_current IN ( \'started\',\'cotech\',\'codir\',\'finalised\',\'deployed\',\'measured\',\'clotured\')';
 
         try {
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
 
             return $stmt->execute([]);
-        } catch (DBALException $e) {
+        } catch (\Exception $e) {
             return 'Error'.$e->getMessage();
         }
     }

@@ -6,10 +6,60 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DeployementDto extends AbstractDto
 {
+
+    use TraitJalon;
+    use TraitWriter;
+
+    /**
+     * @var ?string
+     */
+    private $isTerminated;
+
     /**
      * @var ActionDto;
      */
     private $actionDto;
+
+    /**
+     * @var ?UserDto
+     */
+    private $userDto;
+
+    /**
+     * @return mixed
+     */
+    public function getUserDto()
+    {
+        return $this->userDto;
+    }
+
+    /**
+     * @param mixed $userDto
+     */
+    public function setUserDto($userDto)
+    {
+        $this->userDto = $userDto;
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getIsTerminated()
+    {
+        return $this->isTerminated;
+    }
+
+    /**
+     * @param mixed $isTerminated
+     */
+    public function setIsTerminated($isTerminated)
+    {
+        $this->checkBool($isTerminated);
+        $this->isTerminated = $isTerminated;
+        return $this;
+    }
 
     /**
      * @return mixed

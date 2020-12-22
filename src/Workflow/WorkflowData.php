@@ -82,6 +82,7 @@ class WorkflowData
                 self::BGCOLOR => '#794A8D',
                 self::FORECOLOR => '#ffffff',
                 self::TRANSITIONS => [
+                    self::TRANSITION_TO_FINALISED,
                     self::TRANSITION_TO_REJECTED,
                     self::TRANSITION_TO_ABANDONNED
                 ]
@@ -281,11 +282,46 @@ class WorkflowData
                 $data['titre'] = 'Mettre à la validation du CODIR';
                 $data['btn_label'] = 'CODIR';
                 break;
+            case self::TRANSITION_TO_FINALISED:
+                $data['state'] = self::STATE_FINALISED;
+                $data['titre'] = 'Rédiger la méthodolgie l\'action';
+                $data['btn_label'] = 'Redaction';
+                break;                
             case self::TRANSITION_TO_REJECTED:
                 $data['state'] = self::STATE_REJECTED;
                 $data['titre'] = 'Rejeter l\'action';
                 $data['btn_label'] = 'Rejeter';
-                break;                                   
+                break;
+            case self::TRANSITION_TO_DEPLOYED:
+                $data['state'] = self::STATE_DEPLOYED;
+                $data['titre'] = 'Deployer l\'action';
+                $data['btn_label'] = 'Déployer';
+                break;
+            case self::TRANSITION_UN_DEPLOYED:
+                $data['state'] = self::STATE_FINALISED;
+                $data['titre'] = 'Modifier l\'action';
+                $data['btn_label'] = 'Modifier';
+                break;                
+            case self::TRANSITION_TO_MEASURED:
+                $data['state'] = self::STATE_MEASURED;
+                $data['titre'] = 'Mesurer l\'efficacité de l\'action';
+                $data['btn_label'] = 'Mesurer';
+                break;
+            case self::TRANSITION_UN_MEASURED:
+                $data['state'] = self::STATE_DEPLOYED;
+                $data['titre'] = 'Re-déployer de l\'action';
+                $data['btn_label'] = 'Re-déployer';
+                break;                
+            case self::TRANSITION_TO_CLOTURED:
+                $data['state'] = self::STATE_CLOTURED;
+                $data['titre'] = 'Clôturer de l\'action';
+                $data['btn_label'] = 'Clôturer';
+                break;
+            case self::TRANSITION_UN_CLOTURED:
+                $data['state'] = self::STATE_MEASURED;
+                $data['titre'] = 'Réouvrir de l\'action';
+                $data['btn_label'] = 'Réouvrir';
+                break;                                                                
             case self::TRANSITION_TO_ABANDONNED:
                 $data['state'] = self::STATE_ABANDONNED;
                 $data['titre'] = 'Abandonner le porte-document';

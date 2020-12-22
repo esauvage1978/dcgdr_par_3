@@ -1,0 +1,6 @@
+{% if indicatorvalue.isEnable %}
+    {% set formIV = form.indicatorvalues[loop.index0] %}
+
+    {{ include('indicatorvalue/_append_edit_js/_' ~ indicatorvalue.indicator.indicatortype ~ '.html.twig') }}
+
+{% endif %}

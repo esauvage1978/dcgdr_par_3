@@ -1,0 +1,28 @@
+{% macro show(twigTemplace,gestionnaire,item, domaine,action) %}
+	{% import "macros/delele.html.twig" as del %}
+	{% import "macros/widgets.html.twig" as widgets %}
+
+	{% set _save = { 'save': {onclick: 'document.getElementById(\'submit_1\').click();', class:'btn-success',attr:{title:'Sauvegarder'}}} %}
+	{% set _home = { 'home': {url: path('home'),class:'btn-p-dark',attr:{title:'Accueil'}}}  %}
+    
+	{% if item %}
+		{% set _showAction = { 'action': {url: path('action_show',{id:item.action.id}),class:'btn-p-dark',attr:{title:'Consulter l\'action'}}} %}
+    {% set _show = { 'show': {url: path('deployement_append',{id:item.id}),class:'btn-p-dark',attr:{title:'Consulter l\'e déploiement'}}} %}
+		{% set _edit = { 'edit': {url: path('deployement_append_edit',{id:item.id}),class:'btn-p-dark',attr:{title:'Modifier l\'e déploiement'}}} %}
+    {% endif %}
+
+
+    {% set actions = {} %}
+
+    {% set actions = actions|merge(_home) %}
+
+    {% if twigTemplace=='show' %}
+        {% set actions = actions|merge(_showAction) %}
+        {% set actions = actions|merge(_edit) %}
+    {% elseif twigTemplace=='edit' %}
+        {% set actions = actions|merge(_showAction) %}
+        {% set actions = actions|merge(_show) %}
+        {% set actions = actions|merge(_save) %}
+    {% endif %}
+    {{ widgets.page_actions(actions) }}
+{% endmacro %}

@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	Vérif l'action
+{% endblock %}
+
+
+{% block page_content %}
+
+	<a href="{{ path('action_edit',{'id':item.id}) }}">
+
+
+		{{ include('action/_show/_name.html.twig') }}
+
+
+	</a>
+	<br/>
+	{{ item.stateCurrent }}
+
+	<br/>
+	{{ item.stateContent }}
+
+	<br/>
+	{{ item.stateAt | date("d/m/Y") }}
+	<br/>
+	Liste des transitions possibles :
+	{% for transition in workflow_transitions(item) %}
+
+		<a href="{{ path('workflow_action_check_apply_transition',{'id': item.id, 'transition':transition.name}) }}">
+
+			{{ transition.name }}
+		</a>
+	{% else %}
+		No actions available.
+	{% endfor %}
+	<hr>
+	<table class="table table-striped table-bordered">
+		<tr>
+			<th>Num</th>
+			<th>Qui</th>
+			<th>FROM</th>
+			<th>TO</th>
+			<th>Le</th>
+			<th>Commentaire</th>
+		</tr>
+		{% for  actionState in item. actionStates %}
+			<tr>
+				<td>{{  actionState.id }}</td>
+				<td>{{  actionState.user.name }}</td>
+				<td>{{  actionState.stateOld }}</td>
+				<td>{{  actionState.stateNew }}</td>
+				<td>{{  actionState.changeAt | date('d-m-Y') }}</td>
+				<td>{{  actionState.content }}</td>
+			</tr>
+		{% endfor %}
+
+
+	</table>
+{% endblock %}

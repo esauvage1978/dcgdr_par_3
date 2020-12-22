@@ -1,0 +1,94 @@
+{% import "macros/datatables.html.twig" as tables %}
+{% import "macros/taux.html.twig" as tx %}
+{% import "macros/workflow.html.twig" as wrk %}
+{% import "macros/action.html.twig" as action %}
+{% import '@AdminLTE/Macros/buttons.html.twig'  as btn %}
+
+{% set columns = {
+'Référence ': {'class': 'align-middle text-center', 'orderBy': true},
+'Déploiement ': {'class': 'align-middle text-center', 'orderBy': true},
+'Classement ': {'class': 'align-middle desktop', 'orderBy': true},
+'Fin de déploiement': {'class': 'align-middle text-center', 'orderBy': true},
+'Jalon': {'class': 'align-middle text-center', 'orderBy': true},
+'Indicateurs': {'class': 'align-middle text-center', 'orderBy': true},
+'Taux': {'class': 'align-middle text-center', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+{% import "@AdminLTE/Macros/default.html.twig" as macro %}
+
+{{ tables.datatable_header(tableName, columns,  {'striped': true}) }}
+{% for item in items %}
+
+	<tr>
+		<td class="align-middle text-lg">
+			{{ item.action.category.thematique.ref }}-{{ item.action.category.ref }}-{{ item.action.ref }}
+		</td>
+		<td class="align-middle ">
+			<div class="text-lg clearfix">
+				{% if item | deployementCanAppendRead %}
+					<a href="{{ path('deployement_append',{id:item.id}) }}" class="text-p-dark">
+						{{ item.organisme.name }}
+					</a>
+				{% else %}
+					{{ item.organisme.name }}
+				{% endif %}
+			</div>
+			{% if item.action | actionCanRead %}
+				<a href="{{ path('action_show',{id:item.action.id}) }}" class="text-p-dark">
+					{{ item.action.name }}
+				</a>
+			{% else %}
+				{{ item.action.name }}
+			{% endif %}
+		</td>
+		<td class="align-middle text-xs">
+			<span class="text-{{ item.action.category.thematique.pole.axe.isEnable ? 'gray' : 'danger text-bold' }} clearfix">
+				{{ item.action.category.thematique.pole.axe.name }}
+			</span>
+			<span class="text-{{ item.action.category.thematique.pole.isEnable ? 'gray' : 'danger text-bold' }} clearfix">
+				{{ item.action.category.thematique.pole.name }}
+			</span>
+			<span class="text-{{ item.action.category.thematique.isEnable ? 'gray' : 'danger text-bold' }} clearfix">
+				{{ item.action.category.thematique.name }}
+			</span>
+			<span class="text-{{ item.action.category.isEnable ? 'gray' : 'danger text-bold' }}">
+				{{ item.action.category.name }}
+			</span>
+		</td>
+		<td class="text-center  align-middle">
+			{{ action.ShowRegionEndAt(item.endAt) }}
+		</td>
+		<td class="text-center  align-middle">
+			{{ action.ShowJalon(item.showAt) }}
+		</td>
+		<td class="align-middle text-center">
+			{% set nbr= item | organismeIndicateurDeployed %}
+			{% if  nbr==0 %}
+				<span class="text-p-dark2 ">
+					<i class="fas fa-circle"></i>
+				</span>
+			{% else %}
+				<small class="badge bg-p-dark2 text-p-light">
+					<i class="fas fa-chart-line"></i>
+					{{ nbr }}</small>
+			{% endif %}
+
+		</td>
+		<td class="align-middle text-center  text-xs">{{ tx.showBar(item.taux1,item.taux2 ) }}</td>
+		<td class="  align-middle">
+			{% if item | deployementCanAppendUpdate %}
+				{{ btn.link_button(
+                        'Compléter',
+						path('deployement_append_edit',{id:item.id}),
+                        'fa fa-edit',
+                        'p-dark',
+                        'p-dark btn-sm'
+                    ) }}
+			{% endif %}
+		</td>
+	</tr>
+{% else %}
+	{{ tables.datatable_data_else(columns) }}
+{% endfor %}
+{{ tables.datatable_footer(tableName,1) }}

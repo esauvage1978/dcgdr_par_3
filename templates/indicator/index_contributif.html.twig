@@ -1,0 +1,55 @@
+{% extends 'indicator/layout.html.twig' %}
+
+
+{% block page_subtitle %}contributif régional
+{% endblock %}
+
+
+{% block breadcrumb %}
+	{% import "indicator/_btn_actions.html.twig" as actions %}
+	{{ actions.show(
+'list_contributif',
+
+        null,
+        null,
+        domaine
+    ) }}
+{% endblock %}
+
+
+{% block page_content %}
+
+	<div class="d-none d-lg-block">
+		{% include "indicator/_view/_datatable.html.twig" %}
+	</div>
+	<div class="d-lg-none">
+		{% include "indicator/_view/_datatable_small.html.twig" %}
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% import "macros/datatables.html.twig" as tables %}
+	{% set columns = {
+'Référence ': {'class': 'align-middle text-center', 'orderBy': true},
+'Action ': {'class': 'align-middle text-center', 'orderBy': true},
+'Classement ': {'class': 'align-middle desktop', 'orderBy': true},
+'Fin de déploiement': {'class': 'align-middle text-center', 'orderBy': true},
+'Indicateur': {'class': 'align-middle text-center', 'orderBy': true},
+'Taux': {'class': 'align-middle text-center', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+	{{ tables.datatable_javascript(tableName,1,columns) }}
+
+	{% set columns = {
+'Action ': {'class': 'align-middle text-center', 'orderBy': true},
+'Taux': {'class': 'align-middle text-center', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+{{ tables.datatable_javascript(tableName ~ 'small',1,columns) }}
+
+
+{% endblock %}

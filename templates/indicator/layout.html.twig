@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
 
 
 {% set domaine = 'indicator' %}
@@ -10,9 +11,12 @@
 {% set route_del = domaine ~ '_del' %}
 {% set route_list = domaine ~ '_list' %}
 
-{% block title %}{{ app_name }} - {{domaineTitle}}{% endblock %}
-{% block page_title %}
-<i class="fas fa-chart-line"></i>
+{% block title %}
+	{{ app_name }}
+	-
 	{{domaineTitle}}
 {% endblock %}
-
+{% block page_title %}
+	{{ widgets.icon('indicator') }}
+	{{domaineTitle}}
+{% endblock %}

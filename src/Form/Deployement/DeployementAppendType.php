@@ -20,11 +20,11 @@ class DeployementAppendType extends AppTypeAbstract
         $this->buildFormReaders($builder);
         
         return $builder
-            ->add('showat', DateType::class, [
+            ->add('showAt', DateType::class, [
                 self::REQUIRED => false,
                 'widget' => 'single_text',
             ])
-            ->add('endat', DateType::class, [
+            ->add('endAt', DateType::class, [
                 self::REQUIRED => false,
                 'widget' => 'single_text',
             ])
