@@ -11,6 +11,7 @@ use App\Entity\Deployement;
 use App\Manager\MailerManager;
 use App\Form\Mailer\MailerFormActionType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\Mailer\MailerFormDeployementType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -39,7 +40,7 @@ class MailerController extends AbstractController
                 $mailer->setAction($action);
                 
                 foreach($users as $user){
-                    $mailerMail->send($user,$mailer,MailerMail::ACTION,'Nouveau message');
+                    $mailerMail->send($user,$mailer,MailerMail::ACTION,$mailer->getSubject());
                 }
 
                 $manager->save($mailer);
@@ -82,25 +83,27 @@ class MailerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $mailer = $manager->initialiseMailer($form->getData());
-            if (is_a($mailer, Mailer::class)) {
 
-                foreach ($manager->getUsersEmailTo() as $mail) {
-                    $mailerMail->send($mail, MailerMail::DEPLOYEMENT, 'Nouveau message');
-                }
+            $mailer = $manager->initialiseMailer($form->getData());
+            $users = $manager->getUsersEmailTo();
+
+            if (is_a($mailer, Mailer::class) && $users->count() > 0) {
 
                 $mailer->setDeployement($deployement);
+
+                foreach ($users as $user) {
+                    $mailerMail->send($user, $mailer, MailerMail::DEPLOYEMENT, $mailer->getSubject());
+                }
 
                 $manager->save($mailer);
 
                 $this->addFlash(AbstractGController::SUCCESS, 'Message envoyé');
             } else {
-                $this->addFlash(AbstractGController::DANGER, 'Une erreur est survenue. Le mail n\'est pas envoyé. La cause probable est une absence de destinataire');
+                $this->addFlash(AbstractGController::DANGER, 'Le mail n\'est pas envoyé. La cause probable est une absence de destinataire');
             }
         }
         return $this->render('mailer/composerDeployement.html.twig', [
-            'controller_name' => 'MailerController',
-            'deployement' => $deployement,
+            'item' => $deployement,
             'form' => $form->createView()
         ]);
     }
@@ -113,7 +116,7 @@ class MailerController extends AbstractController
         Deployement $deployement
     ) {
         return $this->render('mailer/history_deployement.html.twig', [
-            'deployement' => $deployement,
+            'item' => $deployement,
         ]);
     }
 }

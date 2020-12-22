@@ -1,4 +1,4 @@
-{% macro show(twigTemplace,item) %}
+{% macro show(twigTemplace,item,deployement) %}
 	{% import "macros/delele.html.twig" as del %}
 	{% import "macros/widgets.html.twig" as widgets %}
 
@@ -9,8 +9,12 @@
 		{% set _show = { 'action': {url: path('action_show',{id:item.id}),class:'btn-p-dark',attr:{title:'Consulter l\'action'}}} %}
 		{% set _edit = { 'edit': {url: path('action_edit',{id:item.id}),class:'btn-p-dark',attr:{title:'Modifier l\'e déploiement'}}} %}
 		{% set _mail_sent = { 'mail-sent': {url: path('mailer_action_composer',{id:item.id}),class:'btn-p-dark',attr:{title:'Envoyer un message'}}} %}
+	{% endif %}
 
-
+	{% if deployement %}
+        {% set _show = { 'deployement': {url: path('deployement_append',{id:deployement.id}),class:'btn-p-dark',attr:{title:'Consulter l\'action'}}} %}
+        {% set _edit = { 'edit': {url: path('deployement_append_edit',{id:deployement.id}),class:'btn-p-dark',attr:{title:'Modifier l\'e déploiement'}}} %}
+        {% set _mail_sent = { 'mail-sent': {url: path('mailer_deployement_composer',{id:deployement.id}),class:'btn-p-dark',attr:{title:'Envoyer un message'}}} %}
 	{% endif %}
 
 

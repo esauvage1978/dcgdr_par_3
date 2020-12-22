@@ -62,7 +62,6 @@
 			{% endif %}
 		{% elseif twigTemplace=='edit' %}
 			{% set actions = actions|merge(_mail_sent) %}
-
 			{% set actions = actions|merge({'divider3': null}) %}
 
 			{% set actions = actions|merge(_history) %}

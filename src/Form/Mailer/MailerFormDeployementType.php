@@ -22,38 +22,28 @@ class MailerFormDeployementType extends MailerFormType
         $this->buildFormSubjectContent($builder);
 
         $builder
-            ->add('deployementwriter', EntityType::class, [
+            ->add('deployementWriter', EntityType::class, [
                 self::CSS_CLASS => User::class,
                 self::CHOICE_LABEL => 'name',
-                self::LABEL=>'Pilotes des déploiements',
+                self::LABEL => 'Pilotes des déploiements',
                 self::MULTIPLE => true,
                 self::ATTR => [self::CSS_CLASS => 'select2'],
                 self::REQUIRED => false,
-                self::QUERY_BUILDER => function (EntityRepository $er) use($options)  {
-                    return $er->createQueryBuilder(UserRepository::ALIAS_DEPLOYEMENT_WRITERS)
+                self::QUERY_BUILDER => function (EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder(UserRepository::ALIAS)
                         ->select(
-                            UserRepository::ALIAS_DEPLOYEMENT_WRITERS,
+                            UserRepository::ALIAS,
                             CorbeilleRepository::ALIAS_DEPLOYEMENT_WRITERS,
                             DeployementRepository::ALIAS,
                             OrganismeRepository::ALIAS
                         )
-                        ->leftJoin(UserRepository::ALIAS_DEPLOYEMENT_WRITERS.'.corbeilles', CorbeilleRepository::ALIAS_DEPLOYEMENT_WRITERS)
-                        ->leftJoin(CorbeilleRepository::ALIAS_DEPLOYEMENT_WRITERS.'.deployementWriters', DeployementRepository::ALIAS)
-                        ->leftJoin(DeployementRepository::ALIAS.'.organisme', OrganismeRepository::ALIAS)
+                        ->leftJoin(UserRepository::ALIAS . '.corbeilles', CorbeilleRepository::ALIAS_DEPLOYEMENT_WRITERS)
+                        ->leftJoin(CorbeilleRepository::ALIAS_DEPLOYEMENT_WRITERS . '.deployementWriters', DeployementRepository::ALIAS)
+                        ->leftJoin(DeployementRepository::ALIAS . '.organisme', OrganismeRepository::ALIAS)
                         ->where(DeployementRepository::ALIAS . '.id = :depid')
                         ->setParameter('depid', $options['data']['data'])
-                        ->orderBy(UserRepository::ALIAS_DEPLOYEMENT_WRITERS.'.name', 'ASC');
+                        ->orderBy(UserRepository::ALIAS . '.name', 'ASC');
                 },
-            ])
-            ->add('subject', TextType::class, [
-                self::LABEL => ' ',
-                self::ATTR => ['placeholder' => 'Objet du mail : '],
-                self::REQUIRED => true
-            ])
-            ->add('content', TextareaType::class, [
-                self::LABEL => ' ',
-                self::REQUIRED => true,
-                self::ATTR => [self::ROWS => 8, self::CSS_CLASS => 'textarea'],
             ]);
     }
 }

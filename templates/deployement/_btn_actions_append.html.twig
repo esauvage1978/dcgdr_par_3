@@ -4,11 +4,14 @@
 
 	{% set _save = { 'save': {onclick: 'document.getElementById(\'submit_1\').click();', class:'btn-success',attr:{title:'Sauvegarder'}}} %}
 	{% set _home = { 'home': {url: path('home'),class:'btn-p-dark',attr:{title:'Accueil'}}}  %}
-    
+
 	{% if item %}
 		{% set _showAction = { 'action': {url: path('action_show',{id:item.action.id}),class:'btn-p-dark',attr:{title:'Consulter l\'action'}}} %}
     {% set _show = { 'show': {url: path('deployement_append',{id:item.id}),class:'btn-p-dark',attr:{title:'Consulter l\'e déploiement'}}} %}
 		{% set _edit = { 'edit': {url: path('deployement_append_edit',{id:item.id}),class:'btn-p-dark',attr:{title:'Modifier l\'e déploiement'}}} %}
+    {% set _mail_sent = { 'mail-sent': {url: path('mailer_deployement_composer',{id:item.id}),class:'btn-p-dark',attr:{title:'Envoyer un message'}}} %}
+
+
     {% endif %}
 
 
@@ -16,13 +19,22 @@
 
     {% set actions = actions|merge(_home) %}
 
+    {% set actions = actions|merge({'divider2': null}) %}
+
+
     {% if twigTemplace=='show' %}
-        {% set actions = actions|merge(_showAction) %}
-        {% set actions = actions|merge(_edit) %}
+      {% set actions = actions|merge(_mail_sent) %}
+      {% set actions = actions|merge({'divider3': null}) %}
+      {% set actions = actions|merge(_showAction) %}
+      {% set actions = actions|merge(_edit) %}
     {% elseif twigTemplace=='edit' %}
-        {% set actions = actions|merge(_showAction) %}
-        {% set actions = actions|merge(_show) %}
-        {% set actions = actions|merge(_save) %}
+      {% set actions = actions|merge(_mail_sent) %}
+      {% set actions = actions|merge({'divider3': null}) %}
+      {% set actions = actions|merge(_showAction) %}
+      {% set actions = actions|merge(_show) %}
+      {% set actions = actions|merge(_save) %}
     {% endif %}
+
     {{ widgets.page_actions(actions) }}
+
 {% endmacro %}
