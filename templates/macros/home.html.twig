@@ -1,0 +1,145 @@
+{% macro showJalons(datas,title) %}
+	{% import _self as hm %}
+	{% set nbr = datas.without.data + datas.to_late.data + datas.to_near.data + datas.come_up.data %}
+	{% if nbr > 0 %}
+		<h5 class="clearfix mt-2 text-p-dark2">
+			{{title |default('Jalon')}}
+		</h5>
+		<div class="p-3 d-flex justify-content-around bg-p-light">
+			{{ hm.showHomeData(datas.without, 'far fa-hourglass', 'info')}}
+			{{ hm.showHomeData(datas.to_late,'fas fa-hourglass-end','danger')}}
+			{{ hm.showHomeData(datas.to_near,'fas fa-hourglass-half','warning')}}
+			{{ hm.showHomeData(datas.come_up,'fas fa-hourglass-start','success')}}
+		</div>
+	{% endif %}
+{% endmacro %}
+
+
+{% macro showActionsIntervenants(datas,title) %}
+	{% import _self as hm %}
+	{% set nbr = datas.writers.data + datas.cotech.data + datas.codir.data %}
+
+	{% if nbr > 0 %}
+		<h5 class="clearfix mt-2 text-p-dark2">
+			{{title |default('Intervenant')}}
+		</h5>
+		<div class="p-3 d-flex justify-content-around bg-p-light">
+			{{ hm.showHomeData(datas.writers, 'fas fa-users', 'danger')}}
+			{{ hm.showHomeData(datas.cotech,'fas fa-user-cog','danger')}}
+			{{ hm.showHomeData(datas.codir,'fas fa-user-tie','danger')}}
+
+		</div>
+	{% endif %}
+{% endmacro %}
+
+{% macro showDeployementsIntervenants(datas,title) %}
+	{% import _self as hm %}
+	{% set nbr = 0 %}
+{% if datas.writersGestionnaire is defined %}
+
+		{% set nbr = datas.writersGestionnaire.data   %}
+	{% endif %}
+{% if datas.writersGestionnaireLocal is defined %}
+
+		{% set nbr =  datas.writersGestionnaireLocal.data  %}
+	{% endif %}
+
+
+	{% if nbr > 0 %}
+		<h5 class="clearfix mt-2 text-p-dark2">
+			{{title |default('Intervenant')}}
+		</h5>
+		<div class="p-3 d-flex justify-content-around bg-p-light">
+			{{ hm.showHomeData(datas.writersGestionnaire, 'fas fa-users', 'danger')}}
+			{{ hm.showHomeData(datas.writersGestionnaireLocal, 'fas fa-users', 'danger')}}
+		</div>
+	{% endif %}
+{% endmacro %}
+
+{% macro showDeployementsActions(datas,title) %}
+	{% import _self as hm %}
+	{% set nbr = datas.en_cours.data + datas.terminated.data  %}
+
+	{% if nbr > 0 %}
+		<h5 class="clearfix mt-2 text-p-dark2">
+			{{title |default('Mes déploiements')}}
+		</h5>
+		<div class="p-3 d-flex justify-content-around bg-p-light">
+			{{ hm.showHomeData(datas.en_cours, 'fas fa-play', 'success')}}
+			{{ hm.showHomeData(datas.terminated, 'fas fa-pause', 'warning')}}
+		</div>
+	{% endif %}
+{% endmacro %}
+
+{% macro showActionsMyForPilote(datas,title) %}
+	{% import _self as hm %}
+	{% set nbr = datas.started.data + datas.rejected.data + datas.finalised.data + datas.measured.data  %}
+
+	{% if nbr > 0 %}
+
+		<h5 class="clearfix mt-2 text-p-dark2">
+			{{title |default('Mes déploiements')}}
+		</h5>
+		<div class="p-3 d-flex justify-content-around bg-p-light">
+			{{ hm.showHomeDataState(datas.started,'started')}}
+			{{ hm.showHomeDataState(datas.rejected,'rejected')}}
+			{{ hm.showHomeDataState(datas.finalised,'finalised')}}
+			{{ hm.showHomeDataState(datas.measured,'measured')}}
+		</div>
+	{% endif %}
+
+{% endmacro %}
+
+{% macro showActionsSupervisionForPilote(datas,title) %}
+	{% import _self as hm %}
+	{% set nbr = datas.cotech.data + datas.codir.data + datas.deployed.data + datas.clotured.data  %}
+
+	{% if nbr > 0 %}
+
+
+		<h5 class="clearfix mt-2 text-p-dark2">
+			{{title |default('Mes supervisions')}}
+		</h5>
+		<div class="p-3 d-flex justify-content-around bg-p-light">
+			{{ hm.showHomeDataState(datas.cotech,'cotech')}}
+			{{ hm.showHomeDataState(datas.codir,'codir')}}
+			{{ hm.showHomeDataState(datas.deployed,'deployed')}}
+			{{ hm.showHomeDataState(datas.clotured,'clotured')}}
+		</div>
+	{% endif %}
+
+{% endmacro %}
+
+
+{% macro showHomeDataState(data,state) %}
+	{% import 'macros/workflow.html.twig' as wkf %}
+
+	{% set nbr = data.data %}
+	{% if nbr >0 %}
+		<a class="btn  hvr-grow-shadow " title="{{data.title}}" href="{{ path(data.route) }}">
+			<i class="{{ state | workflowGetIconOfState }} fa-2x" style="color:{{ state | workflowGetBGColorOfState }};"></i>
+			<span class="badge " style="background-color:{{ state | workflowGetBGColorOfState }};color:{{ state | workflowGetForeColorOfState }}">{{nbr}}</span>
+		</a>
+	{% else %}
+		<a class="btn disabled " title="{{data.title}}">
+			<i class="{{ state | workflowGetIconOfState }} text-white fa-2x"></i>
+			<span class="badge badge-light text-white">0</span>
+
+		</a>
+	{% endif %}
+{% endmacro %}
+
+{% macro showHomeData(data,icon, color) %}
+	{% set nbr = data.data %}
+	{% if nbr >0 %}
+		<a class="btn  hvr-grow-shadow " title="{{data.title}}" href="{{ path(data.route) }}">
+			<i class="{{icon}} text-{{color}} fa-2x"></i>
+			<span class="badge badge-{{color}}">{{nbr}}</span>
+		</a>
+	{% else %}
+		<a class="btn disabled " title="{{data.title}}">
+			<i class="{{icon}} text-white fa-2x"></i>
+			<span class="badge badge-light text-white">0</span>
+		</a>
+	{% endif %}
+{% endmacro %}

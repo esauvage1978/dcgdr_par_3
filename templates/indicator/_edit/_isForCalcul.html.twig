@@ -1,0 +1,28 @@
+{% embed 'widgets/card-widget.html.twig' %}
+	{% block card_class %}flat mt-3
+	{% endblock %}
+	{% block card_body %}
+		<div class="form-group row m-2 js-createTip-wrapper">
+			<div class=" mt-4">
+				{{ form_row(form.isForCalcul) }}
+			</div>
+
+			<div class="createTip ">
+				<div class="createTip__title">
+					Pris en compte dans le calcul
+				</div>
+				<p>
+					<b>Coché</b>
+					: Le taux de l'indicateur sera propagé vers de déploiement et l'action 
+				</p>
+				<p>
+					<b>décoché</b>
+: Le taux de l'indicateur ne sera pas propagé vers de déploiement et l'action.
+<br/> Ce taux sera donné à titre informatif.
+
+				</p>
+			</div>
+		</div>
+
+	{% endblock %}
+{% endembed %}

@@ -29,98 +29,94 @@ class HomeController extends AbstractController
         AxeDtoRepository $axeDtoRepository,
         ActionDtoRepository $actionDtoRepository,
         DeployementDtoRepository $deployementDtoRepository,
-        CurrentUser $user,
+        CurrentUser $currentUser,
         ParamsInServices $paramsInServices,
         IndicatorRepository $indicatorRepository
     ) {
         $dto = new AxeDto();
         $dto->setVisible(AxeDto::TRUE);
 
-        $md = new MakeActionDashboard($actionDtoRepository, $user);
-        $mdd = new MakeDeployementDashboard($deployementDtoRepository, $user, $paramsInServices);
+        $md = new MakeActionDashboard($actionDtoRepository, $currentUser, $paramsInServices);
+        $mdd = new MakeDeployementDashboard($deployementDtoRepository, $currentUser, $paramsInServices);
 
-        $action_urgent = [
-            $md->getData(ActionMakerDto::ACTION_WITHOUT_JALON_WRITERS),
-            $md->getData(ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_COTECH),
-            $md->getData(ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_CODIR),
-            $md->getData(ActionMakerDto::ACTION_JALON_TO_LATE_WRITERS),
-            $md->getData(ActionMakerDto::ACTION_JALON_TO_LATE_VALIDERS_COTECH),
-            $md->getData(ActionMakerDto::ACTION_JALON_TO_LATE_VALIDERS_CODIR),
-            $md->getData(ActionMakerDto::ACTION_WITHOUT_VALIDERS_COTECH),
-            $md->getData(ActionMakerDto::ACTION_WITHOUT_VALIDERS_CODIR)
+        $actions_jalon_for_pilote = [
+            'without' => $md->getData(ActionMakerDto::ACTION_WITHOUT_JALON_WRITERS),
+            'to_late' => $md->getData(ActionMakerDto::ACTION_JALON_TO_LATE_WRITERS),
+            'to_near' => $md->getData(ActionMakerDto::ACTION_JALON_TO_NEAR_WRITERS),
+            'come_up' => $md->getData(ActionMakerDto::ACTION_JALON_COME_UP_WRITERS),
+        ];
+        $actions_jalon_for_validers_cotech = [
+            'without' => $md->getData(ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_COTECH),
+            'to_late' => $md->getData(ActionMakerDto::ACTION_JALON_TO_LATE_VALIDERS_COTECH),
+            'to_near' => $md->getData(ActionMakerDto::ACTION_JALON_TO_NEAR_VALIDERS_COTECH),
+            'come_up' => $md->getData(ActionMakerDto::ACTION_JALON_COME_UP_VALIDERS_COTECH),
+        ];
+        $actions_jalon_for_validers_codir = [
+            'without' => $md->getData(ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_CODIR),
+            'to_late' => $md->getData(ActionMakerDto::ACTION_JALON_TO_LATE_VALIDERS_CODIR),
+            'to_near' => $md->getData(ActionMakerDto::ACTION_JALON_TO_NEAR_VALIDERS_CODIR),
+            'come_up' => $md->getData(ActionMakerDto::ACTION_JALON_COME_UP_VALIDERS_CODIR),
+        ];
+        $actions_intervenant = [
+            'writers' => $md->getData(ActionMakerDto::ACTION_WITHOUT_WRITERS),
+            'cotech' => $md->getData(ActionMakerDto::ACTION_WITHOUT_VALIDERS_COTECH),
+            'codir' => $md->getData(ActionMakerDto::ACTION_WITHOUT_VALIDERS_CODIR)
+        ];
+
+        $actions_my_for_pilote = [
+            'started'=>$md->getData(ActionMakerDto::STARTED_WRITABLE),
+            'rejected' => $md->getData(ActionMakerDto::REJECTED_WRITABLE),
+            'finalised' => $md->getData(ActionMakerDto::FINALISED_WRITABLE),
+            'measured' => $md->getData(ActionMakerDto::MEASURED_WRITABLE),
+        ];
+
+        $actions_supervision_for_pilote = [
+            'cotech' => $md->getData(ActionMakerDto::COTECH_WRITABLE),
+            'codir' => $md->getData(ActionMakerDto::CODIR_WRITABLE),
+            'deployed' => $md->getData(ActionMakerDto::DEPLOYED_WRITABLE),
+            'clotured' => $md->getData(ActionMakerDto::CLOTURED_WRITABLE),
         ];
         
-        if (Role::isGestionnaire($user->getUser())) {
-            $action_urgent = array_merge($action_urgent, [
-                $md->getData(ActionMakerDto::ACTION_WITHOUT_WRITERS),
-
-            ]);
+        $deployements_intervenant = [];
+        if(Role::isGestionnaire($currentUser->getUser())) {
+            array_push(
+                $deployements_intervenant ,
+                ['writersGestionnaire' => $mdd->getData(DeployementMakerDto::DEPLOYEMENT_WITHOUT_WRITERS_FOR_GESTIONNAIRE)]
+            );
+        }
+        if (Role::isGestionnaireLocal($currentUser->getUser())) {
+            array_push(
+                $deployements_intervenant,
+                ['writersGestionnaireLocal' => $mdd->getData(DeployementMakerDto::DEPLOYEMENT_WITHOUT_WRITERS_FOR_GESTIONNAIRE_LOCAL)]
+            );
         }
 
-
-        $action_en_cours = [
-            $md->getData(ActionMakerDto::STARTED_WRITABLE),
-            $md->getData(ActionMakerDto::REJECTED_WRITABLE),
-            $md->getData(ActionMakerDto::FINALISED_WRITABLE),
-            $md->getData(ActionMakerDto::MEASURED_WRITABLE),
-            $md->getData(ActionMakerDto::COTECH_WRITABLE),
-            $md->getData(ActionMakerDto::CODIR_WRITABLE),
+        
+        $deployements_my = [
+            'en_cours' => $mdd->getData(DeployementMakerDto::DEPLOYEMENT_DEPLOYED_WRITABLE),
+            'terminated' => $mdd->getData(DeployementMakerDto::DEPLOYEMENT_DEPLOYED_WRITABLE_TERMINATED)
         ];
 
-        $action_supervision = [
-            $md->getData(ActionMakerDto::COTECH_READABLE),
-            $md->getData(ActionMakerDto::CODIR_READABLE),
-            $md->getData(ActionMakerDto::DEPLOYED_WRITABLE),
-            $md->getData(ActionMakerDto::CLOTURED_WRITABLE),
-        ];
-       
-        $action_a_venir = [
-            $md->getData(ActionMakerDto::ACTION_WITHOUT_WRITERS),
-            $md->getData(ActionMakerDto::ACTION_WITHOUT_VALIDERS_COTECH),
-            $md->getData(ActionMakerDto::ACTION_WITHOUT_VALIDERS_CODIR),
+        $deployements_jalon_for_pilote = [
+            'without' => $mdd->getData(DeployementMakerDto::DEPLOYEMENT_WITHOUT_JALON_WRITERS),
+            'to_late' => $mdd->getData(DeployementMakerDto::DEPLOYEMENT_JALON_TO_LATE_WRITERS),
+            'to_near' => $mdd->getData(DeployementMakerDto::DEPLOYEMENT_JALON_TO_NEAR_WRITERS),
+            'come_up' => $mdd->getData(DeployementMakerDto::DEPLOYEMENT_JALON_COME_UP_WRITERS),
         ];
 
-        $action_terminated = [];
-
-
-        $actions = [
-            ['data' => $action_urgent, 'color' => 'danger'],
-            ['data' => $action_en_cours, 'color' => 'warning'],
-            ['data' => $action_a_venir, 'color' => 'success'],
-            ['data' => $action_supervision, 'color' => 'primary'],
-            ['data' => $action_terminated, 'color' => 'info'],
-        ];
-
-        $deployement_urgent = [
-            $mdd->getData(DeployementMakerDto::DEPLOYEMENT_WITHOUT_JALON_WRITERS),
-            $mdd->getData(DeployementMakerDto::DEPLOYEMENT_JALON_TO_LATE_WRITERS),
-        ];
-        $deployement_en_cours = [];
-        $deployement_a_venir = [
-            $mdd->getData(DeployementMakerDto::DEPLOYEMENT_JALON_COME_UP_WRITERS),
-        ];
-        $deployement_supervision = [];
-        $deployement_en_cours = [
-            $mdd->getData(DeployementMakerDto::DEPLOYEMENT_DEPLOYED_WRITABLE),
-            $mdd->getData(DeployementMakerDto::DEPLOYEMENT_JALON_TO_NEAR_WRITERS),
-        ];
-        $deployement_terminated = [
-            $mdd->getData(DeployementMakerDto::DEPLOYEMENT_DEPLOYED_WRITABLE_TERMINATED),
-        ];
-
-        $deployements = [
-            ['data' => $deployement_urgent, 'color' => 'danger'],
-            ['data' => $deployement_en_cours, 'color' => 'warning'],
-            ['data' => $deployement_a_venir, 'color' => 'success'],
-            ['data' => $deployement_supervision, 'color' => 'primary'],
-            ['data' => $deployement_terminated, 'color' => 'info'],
-        ];
 
         return $this->render('home/index.html.twig', [
             'axes' => $axeDtoRepository->findAllForDto($dto, AxeDtoRepository::FILTRE_DTO_INIT_HOME),
-            'actions' => $actions,
-            'deployements' => $deployements,
-            'contributif' => $indicatorRepository->findAllIndicatorContributif()
+            'contributif' => $indicatorRepository->findAllIndicatorContributif(),
+            'deployements_jalon_for_pilote' => $deployements_jalon_for_pilote,
+            'deployements_intervenant' => $deployements_intervenant,
+            'deployements_my' => $deployements_my,
+            'actions_jalon_for_pilote' => $actions_jalon_for_pilote,
+            'actions_jalon_for_validers_cotech' => $actions_jalon_for_validers_cotech,
+            'actions_jalon_for_validers_codir' => $actions_jalon_for_validers_codir,
+            'actions_intervenant' => $actions_intervenant,
+            'actions_my_for_pilote' => $actions_my_for_pilote,
+            'actions_supervision_for_pilote' => $actions_supervision_for_pilote,
         ]);
     }
 }

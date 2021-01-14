@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% import 'macros/action.html.twig' as act %}
+{% import 'macros/home.html.twig' as hm %}
 
 {% block title %}
 	{{ app_name }}
@@ -25,54 +26,47 @@
 
 		{% import 'macros/axe.html.twig' as axe %}
 
-		<div class="row justify-content-center mb-5 d-flex align-items-center">
+		<div class="row justify-content-center mb-3 d-flex align-items-center">
 			{{axe.showBoxes(axes)}}
 		</div>
 
-		<div class="row   d-flex align-items-center">
+		<div class="row  ">
 
 			<div class="col-md-12 col-xl-6 col-xxl-4   ">
-				<div class="card-body row   d-flex align-items-center">
+				<div class="card-body p-0 row d-flex align-items-center ">
 
 					<div class="col-xs-12 col-md-4 d-flex flex-column bd-highlight mb-3 align-items-center justify-content-center text-p-dark2">
 						<i class="fas fa-bolt fa-9x "></i>
 						<h2 class="">Action</h1>
 					</div>
 					<div class="col-xs-12 col-md-8">
-
-						<div class="list-group list-group-flush rounded">
-
-							{% for action in actions %}
-								{{ act.listAction(action.data,action.color)}}
-							{% endfor %}
-						</div>
-
+						{{ hm.showJalons(actions_jalon_for_pilote,'Jalon pour les pilotes')}}
+						{{ hm.showJalons(actions_jalon_for_validers_cotech,'Jalon COTECH')}}
+						{{ hm.showJalons(actions_jalon_for_validers_codir,'Jalon CODIR')}}
+						{{ hm.showActionsIntervenants(actions_intervenant)}}
+						{{ hm.showActionsMyForPilote(actions_my_for_pilote)}}
+						{{ hm.showActionsSupervisionForPilote(actions_supervision_for_pilote)}}
 					</div>
 				</div>
 
 			</div>
-<div class="col-md-12 col-xl-6 col-xxl-4   ">
+			<div class="col-md-12 col-xl-6 col-xxl-4   ">
 
+				<div class="card-body row p-0  d-flex align-items-center ">
 
-				<div class="card-body row   d-flex align-items-center">
-
-<div class="col-xs-12 col-md-4 d-flex flex-column bd-highlight mb-3 align-items-center justify-content-center text-p-dark2">
-
+					<div class="col-xs-12 col-md-4 d-flex flex-column bd-highlight mb-3 align-items-center justify-content-center text-p-dark2">
 						<i class="fas fa-city fa-9x "></i>
 						<h2 class="">Déploiement</h1>
 					</div>
-<div class="col-xs-12 col-md-8">
-
-						<div class="list-group list-group-flush rounded">
-							{% for deployement in deployements %}
-								{{ act.listAction(deployement.data,deployement.color)}}
-							{% endfor %}
-						</div>
+					<div class="col-xs-12 col-md-8">
+						{{ hm.showJalons(deployements_jalon_for_pilote)}}
+						{{ hm.showDeployementsIntervenants(deployements_intervenant)}}
+						{{ hm.showDeployementsActions(deployements_my)}}
 					</div>
 				</div>
-				<div class="card-body row   d-flex align-items-center">
-					<div class="col-lg-6 col-md-12 col-sm-12">
+				<div class="card-body row  d-flex justify-content-center">
 
+					<div class="col-lg-6  col-md-12 col-sm-12">
 						{{ include('indicator/_widgetContributif.html.twig') }}
 					</div>
 				</div>

@@ -93,4 +93,24 @@ class DeployementViewController extends AbstractGController
         $items = $this->repository->findAllForDto($this->deployementMakerDto->get(DeployementMakerDto::DEPLOYEMENT_WITHOUT_JALON_WRITERS));
         return $this->render('deployement/list.html.twig', ['items' => $items]);
     }
+
+    /**
+     * @Route("/deployement_without_writers_for_gestionnaire", name="deployements_deployement_without_writers_for_gestionnaire", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function deployements_deployement_without_writers_for_gestionnaire()
+    {
+        $items = $this->repository->findAllForDto($this->deployementMakerDto->get(DeployementMakerDto::DEPLOYEMENT_WITHOUT_WRITERS_FOR_GESTIONNAIRE));
+        return $this->render('deployement/list.html.twig', ['items' => $items]);
+    }
+
+    /**
+     * @Route("/deployement_without_writers_for_gestionnaire_local", name="deployements_deployement_without_writers_for_gestionnaire_local", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function deployements_deployement_without_writers_for_gestionnaire_local()
+    {
+        $items = $this->repository->findAllForDto($this->deployementMakerDto->get(DeployementMakerDto::DEPLOYEMENT_WITHOUT_WRITERS_FOR_GESTIONNAIRE_LOCAL));
+        return $this->render('deployement/list.html.twig', ['items' => $items]);
+    }
 }

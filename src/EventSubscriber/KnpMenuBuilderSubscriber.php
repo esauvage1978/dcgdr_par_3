@@ -41,7 +41,9 @@ class KnpMenuBuilderSubscriber implements EventSubscriberInterface
         if ($this->currentUser->isAuthenticatedRemember() && Role::isUser($this->currentUser->getUser())) {
             $this->addHome();
             $this->addDashboard();
-            $this->addAction();
+            if(Role::isGestionnaire($this->currentUser->getUser())) {
+                $this->addAction();
+            }
             $this->addProfil();
             $this->addAdmin();
             $this->addDeconnexion();

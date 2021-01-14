@@ -25,19 +25,16 @@
 		{{ include(domaine ~ '/_show/_name.html.twig') }}
 		<div class="row col-12">
 			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-4 ">
-				<div class="  bg-white card-body ">
-					{{ include(domaine ~ '/_edit/_isenable.html.twig') }}
-				</div>
-				<div class="  bg-white card-body mt-5">
-					{{ include(domaine ~ '/_edit/_type.html.twig') }}
-				</div>
-
+				{{ include(domaine ~ '/_edit/_isenable.html.twig') }}
+				{{ include(domaine ~ '/_edit/_isForCalcul.html.twig') }}
+				{{ include(domaine ~ '/_edit/_weigth.html.twig') }}
+				{{ include(domaine ~ '/_edit/_type.html.twig') }}
 			</div>
 			<div class="col-sm-12  col-md-12 col-lg-12  col-xl-4   h-100">
-				<div class="  bg-white card-body ">
-					{{ include(domaine ~ '/_edit/_nameContent.html.twig') }}
-					{{ save.btn()}}
-				</div>
+
+				{{ include(domaine ~ '/_edit/_nameContent.html.twig') }}
+				{{ save.btn()}}
+
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-4  ">
 				<div class="  bg-white card-body"></div>
@@ -69,21 +66,21 @@ let divinitialValue = $('#div_indicator_value');
 let goal = $('#indicator_goal');
 let initialValue = $('#indicator_value');
 
-let valType=getVal($('#indicator_indicatortype'));
+let valType = getVal($('#indicator_indicatortype'));
 
 var urlGoal = '/ajax/indicator/showgoal/' + valType;
 var urlInitialValue = '/ajax/indicator/showinitialvalue/' + valType;
 
 divgoal.fadeOut();
 divinitialValue.fadeOut();
-setVal(goal,'');
-setVal(initialValue,'');
+setVal(goal, '');
+setVal(initialValue, '');
 
 axios.get(urlGoal).then(function (response) {
-if(response.data) {
+if (response.data) {
 divgoal.fadeIn(300);
-if(getVal(goal)=="") {
-setVal(goal,'100');
+if (getVal(goal) == "") {
+setVal(goal, '100');
 }
 } else {
 divgoal.fadeOut();
@@ -93,13 +90,13 @@ console.log(error);
 });
 
 axios.get(urlInitialValue).then(function (response) {
-if(response.data) {
+if (response.data) {
 divinitialValue.fadeIn(300);
-if(getVal(initialValue)=="") {
-setVal(initialValue,'0');
+if (getVal(initialValue) == "") {
+setVal(initialValue, '0');
 }
 } else {
-    console.log(response.data)
+console.log(response.data)
 divinitialValue.fadeOut();
 }
 }).catch(function (error) {

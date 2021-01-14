@@ -66,6 +66,11 @@ class IndicatorValue implements EntityInterface
      */
     private $indicatorValueHistories;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $weight;
+
     public function __construct()
     {
         $this->setTaux1('0');
@@ -208,6 +213,18 @@ class IndicatorValue implements EntityInterface
                 $indicatorValueHistory->setIndicatorValue(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getWeight(): ?int
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(?int $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }

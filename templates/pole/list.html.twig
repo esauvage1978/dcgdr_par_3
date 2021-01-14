@@ -42,7 +42,8 @@
 				</a>
 			</td>
 			<td class="align-middle text-xs">
-				<a href="{{ path('axe_show',{id:item.axe.id}) }}" class="text-{{ item.axe.isEnable ? 'p-dark' : 'danger text-bold' }}">
+<a href="{{ path('axe_show',{id:item.axe.id}) }}" class="text-{{ item.axe.isEnable ? ( item.axe.isArchiving ? 'warning text-bold' : 'p-dark' ) : 'danger text-bold' }}">
+
 					{{ item.axe.name }}
 				</a>
 			</td>

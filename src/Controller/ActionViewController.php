@@ -64,31 +64,40 @@ class ActionViewController extends AbstractGController
         return $this->render('action/list.html.twig', ['items' => $items]);
     }
     /**
-     * @Route("/action_without_jalon_validers_cotech", name="actions_action_without_jalon_validers_cotech", methods={"GET"})
-     * @IsGranted("ROLE_USER")
-     */
-    public function actions_action_without_jalon_validers_cotech()
-    {
-        $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_COTECH));
-        return $this->render('action/list.html.twig', ['items' => $items]);
-    }
-    /**
-     * @Route("/action_without_jalon_validers_codir", name="actions_action_without_jalon_validers_codir", methods={"GET"})
-     * @IsGranted("ROLE_USER")
-     */
-    public function actions_action_without_jalon_validers_codir()
-    {
-        $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_CODIR));
-        return $this->render('action/list.html.twig', ['items' => $items]);
-    }
-
-    /**
      * @Route("/action_jalon_to_late_writers", name="actions_action_jalon_to_late_writers", methods={"GET"})
      * @IsGranted("ROLE_USER")
      */
     public function actions_action_jalon_to_late_writers()
     {
         $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_JALON_TO_LATE_WRITERS));
+        return $this->render('action/list.html.twig', ['items' => $items]);
+    }
+    /**
+     * @Route("/action_jalon_to_near_writers", name="actions_action_jalon_to_near_writers", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function actions_action_jalon_to_near_writers()
+    {
+        $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_JALON_TO_NEAR_WRITERS));
+        return $this->render('action/list.html.twig', ['items' => $items]);
+    }
+    /**
+     * @Route("/action_jalon_come_up_writers", name="actions_action_jalon_come_up_writers", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function actions_action_jalon_come_up_writers()
+    {
+        $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_JALON_COME_UP_WRITERS));
+        return $this->render('action/list.html.twig', ['items' => $items]);
+    }
+
+    /**
+     * @Route("/action_without_jalon_validers_cotech", name="actions_action_without_jalon_validers_cotech", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function actions_action_without_jalon_validers_cotech()
+    {
+        $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_COTECH));
         return $this->render('action/list.html.twig', ['items' => $items]);
     }
     /**
@@ -101,12 +110,58 @@ class ActionViewController extends AbstractGController
         return $this->render('action/list.html.twig', ['items' => $items]);
     }
     /**
+     * @Route("/action_jalon_to_near_validers_cotech", name="actions_action_jalon_to_near_validers_cotech", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function actions_action_jalon_to_near_validers_cotech()
+    {
+        $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_JALON_TO_NEAR_VALIDERS_COTECH));
+        return $this->render('action/list.html.twig', ['items' => $items]);
+    }
+    /**
+     * @Route("/action_jalon_come_up_validers_cotech", name="actions_action_jalon_come_up_validers_cotech", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function actions_action_jalon_come_up_validers_cotech()
+    {
+        $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_JALON_COME_UP_VALIDERS_COTECH));
+        return $this->render('action/list.html.twig', ['items' => $items]);
+    }
+
+    /**
+     * @Route("/action_without_jalon_validers_codir", name="actions_action_without_jalon_validers_codir", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function actions_action_without_jalon_validers_codir()
+    {
+        $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_CODIR));
+        return $this->render('action/list.html.twig', ['items' => $items]);
+    }
+    /**
      * @Route("/action_jalon_to_late_validers_codir", name="actions_action_jalon_to_late_validers_codir", methods={"GET"})
      * @IsGranted("ROLE_USER")
      */
     public function actions_action_jalon_to_late_validers_codir()
     {
         $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_JALON_TO_LATE_VALIDERS_CODIR));
+        return $this->render('action/list.html.twig', ['items' => $items]);
+    }
+    /**
+     * @Route("/action_jalon_to_near_validers_codir", name="actions_action_jalon_to_near_validers_codir", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function actions_action_jalon_to_near_validers_codir()
+    {
+        $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_JALON_TO_NEAR_VALIDERS_CODIR));
+        return $this->render('action/list.html.twig', ['items' => $items]);
+    }
+    /**
+     * @Route("/action_jalon_come_up_validers_codir", name="actions_action_jalon_come_up_validers_codir", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function actions_action_jalon_come_up_validers_codir()
+    {
+        $items = $this->repository->findAllForDto($this->actionMakerDto->get(ActionMakerDto::ACTION_JALON_COME_UP_VALIDERS_CODIR));
         return $this->render('action/list.html.twig', ['items' => $items]);
     }
 
@@ -120,7 +175,7 @@ class ActionViewController extends AbstractGController
         return $this->render('action/list.html.twig', ['items' => $items]);
     }
 
-    
+
     /**
      * @Route("/action_without_validers_cotech", name="actions_action_without_validers_cotech", methods={"GET"})
      * @IsGranted("ROLE_USER")

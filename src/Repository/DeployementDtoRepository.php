@@ -179,6 +179,8 @@ class DeployementDtoRepository extends ServiceEntityRepository implements DtoRep
 
         $this->initialise_where_is_terminated();
 
+        $this->initialise_where_is_role();
+
         $this->initialise_where_has_jalon();
         $this->initialise_where_has_jalon_to_late();
         $this->initialise_where_has_jalon_to_near();
@@ -296,6 +298,31 @@ class DeployementDtoRepository extends ServiceEntityRepository implements DtoRep
     private function initialise_where_is_updatable()
     {
         if ($this->dto->getIsWritable() === DeployementDto::TRUE) {
+            $u = $this->dto->getUserDto();
+            if (!empty($u) && !empty($u->getId())) {
+                $states = implode('\',\'', WorkflowData::STATES_DEPLOYEMENT_APPEND);
+                $rqtPilote = $this->createQueryBuilder(self::ALIAS . '1')
+                    ->select(self::ALIAS . '1.id')
+                    ->join(self::ALIAS . '1.writers', CorbeilleRepository::ALIAS_ACTION_WRITERS . '1')
+                    ->join(CorbeilleRepository::ALIAS_ACTION_WRITERS . '1.users', UserRepository::ALIAS . '1')
+                    ->where(UserRepository::ALIAS . '1.id= :idUser')
+                    ->andwhere(ActionRepository::ALIAS . '.stateCurrent in (\'' . $states . '\')');
+
+                $this->addParams('idUser', $u->getId());
+
+                $this->builder
+                    ->andWhere(
+                        '( ' .
+                            self::ALIAS . '.id IN (' . $rqtPilote->getDQL() . '))'
+                    );
+            }
+        }
+    }
+
+
+    private function initialise_where_is_role()
+    {
+        if ($this->dto->getIsGestionnaireLocal() === DeployementDto::TRUE) {
             $u = $this->dto->getUserDto();
             if (!empty($u) && !empty($u->getId())) {
                 $states = implode('\',\'', WorkflowData::STATES_DEPLOYEMENT_APPEND);

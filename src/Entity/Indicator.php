@@ -70,11 +70,23 @@ class Indicator implements EntityInterface
      */
     private $indicatorValues;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isForCalcul;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $weight;
+
     public function __construct()
     {
         $this->setIsEnable(true);
         $this->setTaux1('0');
         $this->setTaux2('0');
+        $this->setIsForCalcul(true);
+        $this->setWeight(1);
         $this->indicatorValues = new ArrayCollection();
     }
 
@@ -225,6 +237,30 @@ class Indicator implements EntityInterface
                 $indicatorValue->setIndicator(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsForCalcul(): ?bool
+    {
+        return $this->isForCalcul;
+    }
+
+    public function setIsForCalcul(?bool $isForCalcul): self
+    {
+        $this->isForCalcul = $isForCalcul;
+
+        return $this;
+    }
+
+    public function getWeight(): ?int
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(?int $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }

@@ -98,7 +98,7 @@ class ActionVoter extends Voter
             return true;
         }
 
-        if (in_array($action->getStateCurrent(), WorkflowData::STATES_ACTION_UPDATE_PILOTES)) {
+        if (in_array($action->getStateCurrent(), WorkflowData::STATES_ACTION_UPDATE_BY_PILOTES)) {
             foreach ($action->getWriters() as $corbeille) {
                 if (in_array($user, $corbeille->getUsers()->toArray())) {
                     return true;
@@ -106,8 +106,16 @@ class ActionVoter extends Voter
             }
         }
 
-        if (in_array($action->getStateCurrent(), WorkflowData::STATES_ACTION_UPDATE_VALIDER)) {
-            foreach ($action->getValiders() as $corbeille) {
+        if (in_array($action->getStateCurrent(), WorkflowData::STATES_ACTION_UPDATE_BY_COTECH)) {
+            foreach ($action->getCOTECHValiders() as $corbeille) {
+                if (in_array($user, $corbeille->getUsers()->toArray())) {
+                    return true;
+                }
+            }
+        }
+
+        if (in_array($action->getStateCurrent(), WorkflowData::STATES_ACTION_UPDATE_BY_CODIR)) {
+            foreach ($action->getCODIRValiders() as $corbeille) {
                 if (in_array($user, $corbeille->getUsers()->toArray())) {
                     return true;
                 }

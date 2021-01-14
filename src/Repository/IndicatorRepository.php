@@ -35,6 +35,8 @@ class IndicatorRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+
+
     public function tauxCalcul()
     {
         $table_source = 'indicator';

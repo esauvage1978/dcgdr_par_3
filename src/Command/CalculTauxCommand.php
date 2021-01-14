@@ -8,6 +8,7 @@ use App\Repository\AxeRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\DeployementRepository;
 use App\Repository\IndicatorRepository;
+use App\Repository\IndicatorValueRepository;
 use App\Repository\PoleRepository;
 use App\Repository\ThematiqueRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -45,6 +46,10 @@ class CalculTauxCommand extends AbstractCommand implements CommandInterface
     public function runTraitement(): void
     {
         $debut = microtime(true);
+
+        $this->addMessage('Calcul pour les valeurs des indicateurs');
+        $indicatorRepo = new IndicatorValueRepository($this->managerRegistry);
+        $indicatorRepo->propagationWeight();
 
         $this->addMessage('Calcul pour les indicateurs');
         $indicatorRepo = new IndicatorRepository($this->managerRegistry);

@@ -5,10 +5,12 @@ namespace App\Form\Indicator;
 use App\Entity\Indicator;
 use App\Form\AppTypeAbstract;
 use App\Indicator\IndicatorData;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class IndicatorType extends AppTypeAbstract
 {
@@ -27,6 +29,27 @@ class IndicatorType extends AppTypeAbstract
                 self::LABEL => 'Valeur initiale ',
                 self::REQUIRED => false,
             ])
+            ->add(
+                'isForCalcul',
+                CheckboxType::class,
+                [
+                    self::LABEL => "  Taux pris en compte dans le calcul",
+                    self::REQUIRED => false,
+                ]
+            )
+            ->add(
+                'weight',
+                RangeType::class,
+                [
+                    self::LABEL => "Poids de l'indicateur",
+                    'data' => 1,
+                    self::ATTR => [
+                        'min' => 1,
+                        'max' => 20,
+                        self::CSS_CLASS => 'range'
+                    ]
+                ]
+            )
             ->add(
                 'indicatortype',
                 ChoiceType::class,

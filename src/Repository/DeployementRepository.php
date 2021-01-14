@@ -65,9 +65,14 @@ class DeployementRepository extends ServiceEntityRepository
 
         $sql = ' UPDATE ' . $table_source . ' ' . self::ALIAS
             . ' INNER JOIN ( '
-            . ' SELECT ' . $table_source . '_id, FLOOR(AVG(' . $alias_distante . '.taux1)) AS taux1, FLOOR(AVG(' . $alias_distante . '.taux2)) AS taux2, ' . $alias_distante . '.is_enable '
-            . ' FROM ' . $table_distante . '  ' . $alias_distante . ' INNER JOIN ' . $table_distante2 . ' ' . $alias_distante2 . ' ON ' . $alias_distante2 . '.id=' . $alias_distante . '.indicator_id '
-            . ' WHERE ' . $alias_distante . '.is_enable=true AND ' . $alias_distante2 . '.is_enable=true GROUP BY ' . $table_source . '_id ) ' . $alias_distante . ' '
+            . ' SELECT ' . $table_source . '_id, FLOOR(SUM(' . $alias_distante . '.taux1 * ' . $alias_distante . '.weight )/SUM(' . $alias_distante . '.weight )) AS taux1,'
+            . ' FLOOR(SUM(' . $alias_distante . '.taux2 * ' . $alias_distante . '.weight )/SUM(' . $alias_distante . '.weight )) AS taux2, ' 
+            . $alias_distante . '.is_enable '
+            . ' FROM ' . $table_distante . '  ' . $alias_distante 
+            . ' INNER JOIN ' . $table_distante2 . ' ' . $alias_distante2 . ' ON ' . $alias_distante2 . '.id=' . $alias_distante . '.indicator_id '
+            . ' WHERE ' . $alias_distante . '.is_enable=true ' 
+            . ' AND ' . $alias_distante2 . '.is_for_calcul=true '
+            . ' AND ' . $alias_distante2 . '.is_enable=true GROUP BY ' . $table_source . '_id ) ' . $alias_distante . ' '
             . ' ON ' . self::ALIAS . '.id=' . $alias_distante . '.' . $table_source . '_id '
             . ' SET ' . self::ALIAS . '.taux1=' . $alias_distante . '.taux1, '
             . self::ALIAS . '.taux2=' . $alias_distante . '.taux2 ; ';

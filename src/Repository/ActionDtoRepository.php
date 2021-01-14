@@ -5,19 +5,20 @@ namespace App\Repository;
 
 
 use DateTime;
-use App\Dto\RubricDto;
-use App\Dto\ProcessDto;
 use App\Dto\ActionDto;
-use App\Dto\MProcessDto;
+use App\Dto\RubricDto;
 use App\Entity\Action;
+use App\Dto\ProcessDto;
+use App\Dto\MProcessDto;
 use App\Entity\MProcess;
 use App\Dto\DtoInterface;
 use App\Entity\ActionLink;
 use App\Workflow\WorkflowData;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use App\Helper\ParamsInServices;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bundle\MakerBundle\Validator;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class ActionDtoRepository extends ServiceEntityRepository implements DtoRepositoryInterface
 {
@@ -28,6 +29,12 @@ class ActionDtoRepository extends ServiceEntityRepository implements DtoReposito
      */
     private $dto;
 
+
+    /**
+     * @var ParamsInServices
+     */
+    private $paramsInServices;
+
     const ALIAS = 'b';
 
     const FILTRE_DTO_INIT_HOME = 'home';
@@ -35,9 +42,10 @@ class ActionDtoRepository extends ServiceEntityRepository implements DtoReposito
     const FILTRE_DTO_INIT_SEARCH = 'search';
     const FILTRE_DTO_INIT_UNITAIRE = 'unitaire';
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry$registry, ParamsInServices $paramsInServices)
     {
         parent::__construct($registry, Action::class);
+        $this->paramsInServices = $paramsInServices;
     }
 
     public function countForDto(DtoInterface $dto)
@@ -212,6 +220,8 @@ class ActionDtoRepository extends ServiceEntityRepository implements DtoReposito
 
         $this->initialise_where_has_jalon();
         $this->initialise_where_has_jalon_to_late();
+        $this->initialise_where_has_jalon_to_near();
+        $this->initialise_where_has_jalon_come_up();
 
         if (count($this->params) > 0) {
             $this->builder->setParameters($this->params);
@@ -240,6 +250,31 @@ class ActionDtoRepository extends ServiceEntityRepository implements DtoReposito
         } elseif ($dto->getHasJalonToLate() === ActionDto::TRUE) {
             $builder->andWhere(self::ALIAS . '.showAt < :from ');
             $this->addParams('from', $date);
+        }
+    }
+
+    private function initialise_where_has_jalon_to_near()
+    {
+        $dto = $this->dto;
+        $builder = $this->builder;
+        $date1 =  date('Y-m-d', strtotime((new \DateTime())->format('Y-m-d') . ' +' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' day'));
+        $date2 =  (new \DateTime())->format('Y-m-d');
+
+        if ($dto->getHasJalonToNear() === ActionDto::TRUE) {
+            $builder->andWhere(self::ALIAS . '.showAt BETWEEN  :from AND :to');
+            $this->addParams('from', $date2);
+            $this->addParams('to', $date1);
+        }
+    }
+    private function initialise_where_has_jalon_come_up()
+    {
+        $dto = $this->dto;
+        $builder = $this->builder;
+        $date1 =  date('Y-m-d', strtotime((new \DateTime())->format('Y-m-d') . ' +' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' day'));
+
+        if ($dto->getHasJalonComeUp() === ActionDto::TRUE) {
+            $builder->andWhere(self::ALIAS . '.showAt > :to');
+            $this->addParams('to', $date1);
         }
     }
 
@@ -337,7 +372,7 @@ class ActionDtoRepository extends ServiceEntityRepository implements DtoReposito
             }
         }
     }
-
+ 
     private function initialise_where_is_readable()
     {
         if ($this->dto->getIsReadable() === ActionDto::TRUE) {

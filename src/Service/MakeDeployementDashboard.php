@@ -40,25 +40,28 @@ class MakeDeployementDashboard
     {
         $datas = [
             DeployementMakerDto::DEPLOYEMENT_DEPLOYED_WRITABLE => [
-                self::TITLE => '<strong>En cours</strong>',
+                self::TITLE => 'En cours',
             ],
             DeployementMakerDto::DEPLOYEMENT_DEPLOYED_WRITABLE_TERMINATED => [
-                self::TITLE => '<strong>Terminé</strong>',
+                self::TITLE => 'Terminé',
             ],
             DeployementMakerDto::DEPLOYEMENT_JALON_COME_UP_WRITERS => [
-                self::TITLE => 'Jalon <strong>> ' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' jours</strong>',
+                self::TITLE => 'Jalon > ' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' jours',
             ],
             DeployementMakerDto::DEPLOYEMENT_JALON_TO_LATE_WRITERS => [
-                self::TITLE => 'Jalon <strong>dépassé</strong>',
+                self::TITLE => 'Jalon dépassé',
             ],
             DeployementMakerDto::DEPLOYEMENT_WITHOUT_JALON_WRITERS => [
-                self::TITLE => '<strong>Sans Jalon</strong>',
+                self::TITLE => 'Sans Jalon',
             ],            
             DeployementMakerDto::DEPLOYEMENT_JALON_TO_NEAR_WRITERS => [
-                self::TITLE => 'Jalon <strong><= ' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' jours</strong>',
+                self::TITLE => 'Jalon <= ' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' jours',
             ],
-            DeployementMakerDto::DEPLOYEMENT_WITHOUT_WRITERS => [
-                self::TITLE => '<strong>Sans</strong> pilote',
+            DeployementMakerDto::DEPLOYEMENT_WITHOUT_WRITERS_FOR_GESTIONNAIRE => [
+                self::TITLE => 'Sans pilote (Gestionnaire)',
+            ],
+            DeployementMakerDto::DEPLOYEMENT_WITHOUT_WRITERS_FOR_GESTIONNAIRE_LOCAL => [
+                self::TITLE => 'Sans pilote (Gestionnaire local)',
             ],                           
         ];
 

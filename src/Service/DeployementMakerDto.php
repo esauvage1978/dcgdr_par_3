@@ -14,7 +14,9 @@ class DeployementMakerDto
 {
 
 
-    public const DEPLOYEMENT_WITHOUT_WRITERS = "deployement_without_writers";
+    public const DEPLOYEMENT_WITHOUT_WRITERS_FOR_GESTIONNAIRE = "deployement_without_writers_for_gestionnaire";
+    public const DEPLOYEMENT_WITHOUT_WRITERS_FOR_GESTIONNAIRE_LOCAL = "deployement_without_writers_for_gestionnaire_local";
+
     public const DEPLOYEMENT_WITHOUT_JALON_WRITERS = "deployement_without_jalon_writers";
     public const DEPLOYEMENT_JALON_TO_LATE_WRITERS = "deployement_jalon_to_late_writers";
     public const DEPLOYEMENT_JALON_TO_NEAR_WRITERS = "deployement_jalon_to_near_writers";
@@ -47,7 +49,7 @@ class DeployementMakerDto
         switch ($type) {
             case self::DEPLOYEMENT_WITHOUT_JALON_WRITERS:
                 $this->addUser($dto);
-                $dtoA=new ActionDto();
+                $dtoA = new ActionDto();
                 $dtoA->setStates(WorkflowData::STATES_DEPLOYEMENT_APPEND);
                 $dto
                     ->setIsWriter(DeployementDto::TRUE)
@@ -87,15 +89,28 @@ class DeployementMakerDto
                     ->setIsTerminated(DeployementDto::FALSE)
                     ->setActionDto($dtoA)
                     ->setVisible(DeployementDto::TRUE);
-                break;                                
-            case self::DEPLOYEMENT_WITHOUT_WRITERS:
+                break;
+            case self::DEPLOYEMENT_WITHOUT_WRITERS_FOR_GESTIONNAIRE:
+                $this->addUser($dto);
                 $dtoA = new ActionDto();
                 $dtoA->setStates(WorkflowData::STATES_DEPLOYEMENT_APPEND);
                 $dto
+                    ->setIsGestionnaire(DeployementDto::FALSE)
                     ->setHasWriters(DeployementDto::FALSE)
                     ->setActionDto($dtoA)
                     ->setVisible(DeployementDto::TRUE);
                 break;
+            case self::DEPLOYEMENT_WITHOUT_WRITERS_FOR_GESTIONNAIRE_LOCAL:
+                $this->addUser($dto);
+                $dtoA = new ActionDto();
+                $dtoA->setStates(WorkflowData::STATES_DEPLOYEMENT_APPEND);
+                $dto
+                    ->setIsGestionnaireLocal(DeployementDto::FALSE)
+                    ->setHasWriters(DeployementDto::FALSE)
+                    ->setActionDto($dtoA)
+                    ->setVisible(DeployementDto::TRUE);
+                break;
+
             case self::DEPLOYEMENT_DEPLOYED_WRITABLE:
                 $this->addUser($dto);
                 $dtoA = new ActionDto();
@@ -115,7 +130,7 @@ class DeployementMakerDto
                     ->setIsTerminated(DeployementDto::TRUE)
                     ->setActionDto($dtoA)
                     ->setVisible(DeployementDto::TRUE);
-                break;                
+                break;
         }
 
         return $dto;

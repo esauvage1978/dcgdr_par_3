@@ -9,6 +9,7 @@ class DeployementDto extends AbstractDto
 
     use TraitJalon;
     use TraitWriter;
+    use TraitRole;
 
     /**
      * @var ?string

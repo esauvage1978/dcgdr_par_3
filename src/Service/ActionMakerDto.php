@@ -18,16 +18,27 @@ class ActionMakerDto
     const HOME_NEWS = 'news';
 
     public const ACTION_WITHOUT_WRITERS = "action_without_writers";
+
+    public const ACTION_WITHOUT_JALON_WRITERS = "action_without_jalon_writers";
+    public const ACTION_JALON_TO_LATE_WRITERS = "action_jalon_to_late_writers";
+    public const ACTION_JALON_TO_NEAR_WRITERS = "action_jalon_to_near_writers";
+    public const ACTION_JALON_COME_UP_WRITERS = "action_jalon_come_up_writers";
+
+
+    public const ACTION_WITHOUT_JALON_VALIDERS_COTECH = "action_without_jalon_validers_cotech";
+    public const ACTION_JALON_TO_LATE_VALIDERS_COTECH = "action_jalon_to_late_validers_cotech";
+    public const ACTION_JALON_TO_NEAR_VALIDERS_COTECH = "action_jalon_to_near_validers_cotech";
+    public const ACTION_JALON_COME_UP_VALIDERS_COTECH = "action_jalon_come_up_validers_cotech";
+
+    public const ACTION_WITHOUT_JALON_VALIDERS_CODIR = "action_without_jalon_validers_codir";
+    public const ACTION_JALON_TO_LATE_VALIDERS_CODIR = "action_jalon_to_late_validers_codir";
+    public const ACTION_JALON_TO_NEAR_VALIDERS_CODIR = "action_jalon_to_near_validers_codir";
+    public const ACTION_JALON_COME_UP_VALIDERS_CODIR = "action_jalon_come_up_validers_codir";
+
+
     public const ACTION_WITHOUT_VALIDERS_COTECH = "action_without_validers_cotech";
     public const ACTION_WITHOUT_VALIDERS_CODIR = "action_without_validers_codir";
 
-    public const ACTION_WITHOUT_JALON_WRITERS = "action_without_jalon_writers";
-    public const ACTION_WITHOUT_JALON_VALIDERS_COTECH = "action_without_jalon_validers_cotech";
-    public const ACTION_WITHOUT_JALON_VALIDERS_CODIR = "action_without_jalon_validers_codir";
-
-    public const ACTION_JALON_TO_LATE_WRITERS = "action_jalon_to_late_writers";
-    public const ACTION_JALON_TO_LATE_VALIDERS_COTECH = "action_jalon_to_late_validers_cotech";
-    public const ACTION_JALON_TO_LATE_VALIDERS_CODIR = "action_jalon_to_late_validers_codir";
 
     public const SEARCH = 'search';
 
@@ -100,22 +111,6 @@ class ActionMakerDto
                     ])
                     ->setVisible(ActionDto::TRUE);
                 break;
-            case self::ACTION_WITHOUT_JALON_VALIDERS_COTECH:
-                $this->addUser($dto);
-                $dto
-                    ->setIsValidersCOTECH(ActionDto::TRUE)
-                    ->setHasJalon(ActionDto::FALSE)
-                    ->setStateCurrent(WorkflowData::STATE_COTECH)
-                    ->setVisible(ActionDto::TRUE);
-                break;
-            case self::ACTION_WITHOUT_JALON_VALIDERS_CODIR:
-                $this->addUser($dto);
-                $dto
-                    ->setIsValidersCODIR(ActionDto::TRUE)
-                    ->setHasJalon(ActionDto::FALSE)
-                    ->setStateCurrent(WorkflowData::STATE_CODIR)
-                    ->setVisible(ActionDto::TRUE);
-                break;
             case self::ACTION_JALON_TO_LATE_WRITERS:
                 $this->addUser($dto);
                 $dto
@@ -128,12 +123,68 @@ class ActionMakerDto
                     ])
                     ->setVisible(ActionDto::TRUE);
                 break;
+            case self::ACTION_JALON_TO_NEAR_WRITERS:
+                $this->addUser($dto);
+                $dto
+                    ->setIsWriter(ActionDto::TRUE)
+                    ->setHasJalonToNear(ActionDto::TRUE)
+                    ->setStates([
+                        WorkflowData::STATE_STARTED,
+                        WorkflowData::STATE_FINALISED,
+                        WorkflowData::STATE_MEASURED
+                    ])
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::ACTION_JALON_COME_UP_WRITERS:
+                $this->addUser($dto);
+                $dto
+                    ->setIsWriter(ActionDto::TRUE)
+                    ->setHasJalonComeUp(ActionDto::TRUE)
+                    ->setStates([
+                        WorkflowData::STATE_STARTED,
+                        WorkflowData::STATE_FINALISED,
+                        WorkflowData::STATE_MEASURED
+                    ])
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::ACTION_WITHOUT_JALON_VALIDERS_COTECH:
+                $this->addUser($dto);
+                $dto
+                    ->setIsValidersCOTECH(ActionDto::TRUE)
+                    ->setHasJalon(ActionDto::FALSE)
+                    ->setStateCurrent(WorkflowData::STATE_COTECH)
+                    ->setVisible(ActionDto::TRUE);
+                break;
             case self::ACTION_JALON_TO_LATE_VALIDERS_COTECH:
                 $this->addUser($dto);
                 $dto
                     ->setIsValidersCOTECH(ActionDto::TRUE)
                     ->setHasJalonToLate(ActionDto::TRUE)
                     ->setStateCurrent(WorkflowData::STATE_COTECH)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::ACTION_JALON_TO_NEAR_VALIDERS_COTECH:
+                $this->addUser($dto);
+                $dto
+                    ->setIsValidersCOTECH(ActionDto::TRUE)
+                    ->setHasJalonToNear(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_COTECH)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::ACTION_JALON_COME_UP_VALIDERS_COTECH:
+                $this->addUser($dto);
+                $dto
+                    ->setIsValidersCOTECH(ActionDto::TRUE)
+                    ->setHasJalonComeUp(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_COTECH)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::ACTION_WITHOUT_JALON_VALIDERS_CODIR:
+                $this->addUser($dto);
+                $dto
+                    ->setIsValidersCODIR(ActionDto::TRUE)
+                    ->setHasJalon(ActionDto::FALSE)
+                    ->setStateCurrent(WorkflowData::STATE_CODIR)
                     ->setVisible(ActionDto::TRUE);
                 break;
             case self::ACTION_JALON_TO_LATE_VALIDERS_CODIR:
@@ -143,28 +194,43 @@ class ActionMakerDto
                     ->setHasJalonToLate(ActionDto::TRUE)
                     ->setStateCurrent(WorkflowData::STATE_CODIR)
                     ->setVisible(ActionDto::TRUE);
-                break;                
+                break;
+            case self::ACTION_JALON_TO_NEAR_VALIDERS_CODIR:
+                $this->addUser($dto);
+                $dto
+                    ->setIsValidersCODIR(ActionDto::TRUE)
+                    ->setHasJalonToNear(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_CODIR)
+                    ->setVisible(ActionDto::TRUE);
+                break;
+            case self::ACTION_JALON_COME_UP_VALIDERS_CODIR:
+                $this->addUser($dto);
+                $dto
+                    ->setIsValidersCODIR(ActionDto::TRUE)
+                    ->setHasJalonComeUp(ActionDto::TRUE)
+                    ->setStateCurrent(WorkflowData::STATE_CODIR)
+                    ->setVisible(ActionDto::TRUE);
+                break;
             case self::ACTION_WITHOUT_WRITERS:
-
                 $dto
                     ->setHasWriters(ActionDto::FALSE)
-                    ->setStates([WorkflowData::STATE_STARTED, WorkflowData::STATE_FINALISED])
+                    ->setStateCurrent(WorkflowData::STATE_STARTED)
                     ->setVisible(ActionDto::TRUE);
                 break;
             case self::ACTION_WITHOUT_VALIDERS_COTECH:
                 $this->addUser($dto);
                 $dto
-                    ->setIsWriter(ActionDto::TRUE)
+                    ->setIsWritable(ActionDto::TRUE)
                     ->setHasValidersCOTECH(ActionDto::FALSE)
-                    ->setStates([WorkflowData::STATE_STARTED, WorkflowData::STATE_FINALISED])
+                    ->setStateCurrent(WorkflowData::STATE_STARTED)
                     ->setVisible(ActionDto::TRUE);
                 break;
             case self::ACTION_WITHOUT_VALIDERS_CODIR:
                 $this->addUser($dto);
                 $dto
-                    ->setIsWriter(ActionDto::TRUE)
+                    ->setIsWritable(ActionDto::TRUE)
                     ->setHasValidersCODIR(ActionDto::FALSE)
-                    ->setStates([WorkflowData::STATE_STARTED, WorkflowData::STATE_FINALISED])
+                    ->setStateCurrent(WorkflowData::STATE_STARTED)
                     ->setVisible(ActionDto::TRUE);
                 break;
             case self::STARTED_WRITABLE:

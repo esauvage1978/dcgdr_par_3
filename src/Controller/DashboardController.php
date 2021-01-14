@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Helper\ParamsInServices;
 use App\Service\MakeActionDashboard;
 use App\Service\ActionMakerDto;
 use App\Repository\ActionDtoRepository;
@@ -18,9 +19,9 @@ class DashboardController extends AbstractController
      * @Route("/dashboard", name="dashboard")
      * @IsGranted("ROLE_USER")
      */
-    public function index(ActionDtoRepository $actionDtoRepository,CurrentUser $currentUser)
+    public function index(ActionDtoRepository $actionDtoRepository,CurrentUser $currentUser, ParamsInServices $paramsInServices)
     {
-        $md = new MakeActionDashboard($actionDtoRepository, $currentUser);
+        $md = new MakeActionDashboard($actionDtoRepository, $currentUser, $paramsInServices);
 
         $started = [
             $md->getData(ActionMakerDto::STARTED),

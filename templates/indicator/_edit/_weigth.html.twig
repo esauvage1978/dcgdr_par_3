@@ -1,0 +1,58 @@
+{% embed 'widgets/card-widget.html.twig' %}
+	{% block card_class %}flat mt-3
+	{% endblock %}
+	{% block card_body %}
+
+
+		<div class="form-group row m-2  js-createTip-wrapper">
+
+			<div class="col-6 mt-2">
+
+
+				{{ form_label(form.weight) }}
+
+			</div>
+			<div class="col mt-2">
+
+
+				{{ form_widget(form.weight) }}
+
+			</div>
+			<div class="col mt-2">
+
+				<span class='js-value'></span>
+
+			</div>
+
+
+			<script>
+				function onClickShowValue(event) {
+const range = document.querySelector(".range");
+
+const spanTarget = document.querySelector('.js-value');
+
+spanTarget.innerHTML = range.value + ' ';
+
+
+}
+onClickShowValue();
+
+document.querySelectorAll(".range").forEach(function (link) {
+link.addEventListener('input', onClickShowValue);
+
+})
+			</script>
+
+
+			<div class="createTip ">
+				<div class="createTip__title">
+					Poids de l'indicateur
+				</div>
+				<p>
+					Lorsqu'un indicateur a plusieurs indicateur <b>et</b> qu'ils sont pris en compte dans le calcul, il est alors possible de faire une moyenne pondérée des taux des indicateurs 
+				</p>
+			</div>
+		</div>
+
+	{% endblock %}
+{% endembed %}

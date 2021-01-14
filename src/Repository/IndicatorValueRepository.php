@@ -34,4 +34,26 @@ class IndicatorValueRepository extends ServiceEntityRepository
 
         return $query->execute();
     }
+
+    public function propagationWeight()
+    {
+        $table_source = 'indicator_value';
+        $table_distante = 'indicator';
+
+        $alias_distante = IndicatorRepository::ALIAS;
+
+        $sql = ' UPDATE ' . $table_source . ' ' . self::ALIAS
+            . ' INNER JOIN ' . $table_distante . ' ' . $alias_distante
+            . ' ON ' . $alias_distante . '.id=' . self::ALIAS . '.' . $table_distante . '_id '
+            . ' SET ' . self::ALIAS . '.weight=' . $alias_distante . '.weight '
+            . ' ; ';
+
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+
+            return $stmt->execute([]);
+        } catch (\Exception $e) {
+            return 'Error' . $e->getMessage();
+        }
+    }
 }

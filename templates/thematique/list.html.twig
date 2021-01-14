@@ -48,7 +48,10 @@
 </td>
 
 			<td class="align-middle text-xs">
-				<ul><li><a href="{{ path('axe_show',{id:item.pole.axe.id}) }}" class="text-{{ item.pole.axe.isEnable ? 'p-dark' : 'danger text-bold' }}">
+<ul>
+	<li>
+		<a href="{{ path('axe_show',{id:item.pole.axe.id}) }}" class="text-{{ item.pole.axe.isEnable ? ( item.pole.axe.isArchiving ? 'warning text-bold' : 'p-dark' ) : 'danger text-bold' }}">
+
 					{{ item.pole.axe.name }}
 				</a></li>
 <li>

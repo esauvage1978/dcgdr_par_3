@@ -8,6 +8,7 @@ use App\Dto\ActionDto;
 use App\Security\CurrentUser;
 use App\Widget\WidgetInfoBox;
 use App\Workflow\WorkflowData;
+use App\Helper\ParamsInServices;
 use App\Repository\ActionDtoRepository;
 use App\Repository\BackpackDtoRepository;
 
@@ -18,6 +19,10 @@ class MakeActionDashboard
      */
     private $counter;
 
+    /**
+     * @var ParamsInServices
+     */
+    private $paramsInServices;
 
     private const ROUTE = 'route';
     private const ROUTE_OPTIONS = 'route_options';
@@ -34,32 +39,50 @@ class MakeActionDashboard
     public function getData(string $filter)
     {
         $datas = [
-            ActionMakerDto::ACTION_WITHOUT_JALON_WRITERS => [
-                self::TITLE => '<strong>Sans jalon</strong> pour les pilotes',
-            ],
-            ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_COTECH => [
-                self::TITLE => '<strong>Sans jalon</strong> au COTECH',
-            ],
-            ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_CODIR  => [
-                self::TITLE => '<strong>Sans jalon</strong> au CODIR',
+            ActionMakerDto::ACTION_JALON_COME_UP_WRITERS => [
+                self::TITLE => 'Jalon > ' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' jours',
             ],
             ActionMakerDto::ACTION_JALON_TO_LATE_WRITERS => [
-                self::TITLE => 'Jalon <strong>depassé</strong> pour les pilotes',
+                self::TITLE => 'Jalon dépassé',
+            ],
+            ActionMakerDto::ACTION_WITHOUT_JALON_WRITERS => [
+                self::TITLE => 'Sans Jalon',
+            ],
+            ActionMakerDto::ACTION_JALON_TO_NEAR_WRITERS => [
+                self::TITLE => 'Jalon <= ' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' jours',
+            ],
+            ActionMakerDto::ACTION_JALON_COME_UP_VALIDERS_COTECH => [
+                self::TITLE => 'Jalon > ' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' jours',
             ],
             ActionMakerDto::ACTION_JALON_TO_LATE_VALIDERS_COTECH => [
-                self::TITLE => 'Jalon <strong>depassé</strong> au COTECH',
+                self::TITLE => 'Jalon dépassé',
             ],
-            ActionMakerDto::ACTION_JALON_TO_LATE_VALIDERS_CODIR  => [
-                self::TITLE => 'Jalon <strong>depassé</strong> au CODIR',
+            ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_COTECH => [
+                self::TITLE => 'Sans Jalon',
+            ],
+            ActionMakerDto::ACTION_JALON_TO_NEAR_VALIDERS_COTECH => [
+                self::TITLE => 'Jalon <= ' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' jours',
+            ],
+            ActionMakerDto::ACTION_JALON_COME_UP_VALIDERS_CODIR => [
+                self::TITLE => 'Jalon > ' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' jours',
+            ],
+            ActionMakerDto::ACTION_JALON_TO_LATE_VALIDERS_CODIR => [
+                self::TITLE => 'Jalon dépassé',
+            ],
+            ActionMakerDto::ACTION_WITHOUT_JALON_VALIDERS_CODIR => [
+                self::TITLE => 'Sans Jalon',
+            ],
+            ActionMakerDto::ACTION_JALON_TO_NEAR_VALIDERS_CODIR => [
+                self::TITLE => 'Jalon <= ' . $this->paramsInServices->get(ParamsInServices::ES_JALON_TO_NEAR) . ' jours',
             ],            
             ActionMakerDto::ACTION_WITHOUT_WRITERS => [
-                self::TITLE => '<strong>Sans pilote</strong>',
+                self::TITLE => 'Sans pilote',
             ],
             ActionMakerDto::ACTION_WITHOUT_VALIDERS_COTECH => [
-                self::TITLE => '<strong>Sans valideur du COTECH</strong>',
+                self::TITLE => 'Sans valideur du COTECH',
             ],
             ActionMakerDto::ACTION_WITHOUT_VALIDERS_CODIR  => [
-                self::TITLE => '<strong>Sans valideur du CODIR</strong>',
+                self::TITLE => 'Sans valideur du CODIR',
             ],
             ActionMakerDto::STARTED => [
                 self::STATE =>  WorkflowData::STATE_STARTED,
@@ -67,11 +90,11 @@ class MakeActionDashboard
             ],
             ActionMakerDto::STARTED_WRITABLE => [
                 self::STATE =>  WorkflowData::STATE_STARTED,
-                self::TITLE => '<strong>Brouillons</strong> modifiable',
+                self::TITLE => 'Brouillons modifiable',
             ],
             ActionMakerDto::STARTED_READABLE => [
                 self::STATE =>  WorkflowData::STATE_STARTED,
-                self::TITLE => '<strong>Les brouillons</strong> consultable',
+                self::TITLE => 'Les brouillons consultable',
             ],
             ActionMakerDto::COTECH => [
                 self::STATE =>  WorkflowData::STATE_COTECH,
@@ -79,11 +102,11 @@ class MakeActionDashboard
             ],
             ActionMakerDto::COTECH_WRITABLE => [
                 self::STATE =>  WorkflowData::STATE_COTECH,
-                self::TITLE => '<strong>Au COTECH</strong>',
+                self::TITLE => 'Au COTECH',
             ],
             ActionMakerDto::COTECH_READABLE => [
                 self::STATE =>  WorkflowData::STATE_COTECH,
-                self::TITLE => '<strong>Au COTECH</strong> consultable',
+                self::TITLE => 'Au COTECH consultable',
             ],
             ActionMakerDto::CODIR => [
                 self::STATE =>  WorkflowData::STATE_CODIR,
@@ -91,11 +114,11 @@ class MakeActionDashboard
             ],
             ActionMakerDto::CODIR_WRITABLE => [
                 self::STATE =>  WorkflowData::STATE_CODIR,
-                self::TITLE => '<strong>Au CODIR</strong>',
+                self::TITLE => 'Au CODIR',
             ],
             ActionMakerDto::CODIR_READABLE => [
                 self::STATE =>  WorkflowData::STATE_CODIR,
-                self::TITLE => '<strong>Au CODIR</strong> consultable',
+                self::TITLE => 'Au CODIR consultable',
             ],
             ActionMakerDto::REJECTED => [
                 self::STATE =>  WorkflowData::STATE_REJECTED,
@@ -127,7 +150,7 @@ class MakeActionDashboard
             ],
             ActionMakerDto::DEPLOYED_WRITABLE => [
                 self::STATE =>  WorkflowData::STATE_DEPLOYED,
-                self::TITLE => '<strong>Déployé</strong>',
+                self::TITLE => 'Déployé',
             ],
             ActionMakerDto::DEPLOYED_READABLE => [
                 self::STATE =>  WorkflowData::STATE_DEPLOYED,
@@ -139,7 +162,7 @@ class MakeActionDashboard
             ],
             ActionMakerDto::MEASURED_WRITABLE => [
                 self::STATE =>  WorkflowData::STATE_MEASURED,
-                self::TITLE => '<strong>A mesurer</strong>',
+                self::TITLE => 'A mesurer',
             ],
             ActionMakerDto::MEASURED_READABLE => [
                 self::STATE =>  WorkflowData::STATE_MEASURED,
@@ -177,9 +200,11 @@ class MakeActionDashboard
 
     public function __construct(
         ActionDtoRepository $actionDtoRepository,
-        CurrentUser $currentUser
+        CurrentUser $currentUser,
+        ParamsInServices $paramsInServices
     ) {
         $this->counter = new ActionCounter($actionDtoRepository, $currentUser);
+        $this->paramsInServices = $paramsInServices;
     }
 
     private function getArray($datas, $filter)

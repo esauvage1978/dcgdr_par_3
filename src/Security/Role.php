@@ -21,6 +21,7 @@ final class Role
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_GESTIONNAIRE = 'ROLE_GESTIONNAIRE';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_GESTIONNAIRE_LOCAL = 'ROLE_GES_LOCAL';
 
     public static function hasData(string $data): bool
     {
@@ -28,6 +29,7 @@ final class Role
             self::ROLE_USER,
             self::ROLE_GESTIONNAIRE,
             self::ROLE_ADMIN,
+            self::ROLE_GESTIONNAIRE_LOCAL
         ];
 
         if (in_array($data, $datas)) {
@@ -50,6 +52,7 @@ final class Role
             'Utilisateur' => self::ROLE_USER,
             'Gestionnaire' => self::ROLE_GESTIONNAIRE,
             'Administrateur' => self::ROLE_ADMIN,
+            'Gestionnaire local' => self::ROLE_GESTIONNAIRE_LOCAL
         ];
     }
 
@@ -87,11 +90,27 @@ final class Role
     }
 
     /**
+     * Défini si l'utilisateur est gestionnaire
+     */
+    public static function isGestionnaireLocal(?User $user): bool
+    {
+        return $user !== null  and (self::hasGestionnaireLocal($user) or self::isGestionnaire($user) or self::isAdmin($user));
+    }
+
+    /**
+     * Défini si l'utilisateur est gestionnaire dans la liste de ses rôles
+     */
+    public static function hasGestionnaireLocal(?User $user): bool
+    {
+        return $user !== null  and in_array(self::ROLE_GESTIONNAIRE_LOCAL, $user->getRoles());
+    }
+
+    /**
      * Défini si l'utilisateur a l'habilitation utilisateur
      */
     public static function isUser(?User $user): bool
     {
-        return $user !== null  and (self::hasUser($user) or self::isGestionnaire($user) or self::isAdmin($user));
+        return $user !== null  and (self::hasUser($user) or self::isGestionnaireLocal($user) or self::isGestionnaire($user) or self::isAdmin($user));
     }
 
 
