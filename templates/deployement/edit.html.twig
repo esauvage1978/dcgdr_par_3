@@ -31,6 +31,7 @@
 			</div>
 			<div class="col-sm-12  col-md-12 col-lg-12  col-xl-6  bg-white h-100">
 				{{ include(domaine ~ '/_edit/_intervenant.html.twig') }}
+				{{ include(domaine ~ '/_edit/_deployementFile.html.twig') }}
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-4  ">
 				<div class=" h-100 bg-white card-body">
@@ -53,6 +54,19 @@
 	<script src="{{ absolute_url( asset('/vendor/axios/dist/axios.min.js')) }}"></script>
 	<script src="{{ absolute_url( asset('/js/es_widget.js')) }}"></script>
 	<script src="{{ absolute_url( asset('/js/indicator/es_toggle.js')) }}"></script>
+	<script src="{{ absolute_url( asset('/js/file/deployement_file.js')) }}"></script>
+	<script type="text/javascript">
+
+		$(document).on('change', '.custom-file-input', function () {
+			let fileName = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
+			$(this).parent('.custom-file').find('.custom-file-label').text(fileName);
+		});
+		$('#deployement_updatedAt_date_month').val(new Date().getMonth() + 1);
+		$('#deployement_updatedAt_date_day').val(new Date().getDate());
+		$('#deployement_updatedAt_date_year').val(new Date().getFullYear());
+		$('#deployement_updatedAt_time_hour').val(new Date().getHours());
+		$('#deployement_updatedAt_time_minute').val(new Date().getMinutes());
+	</script>
 {% endblock %}
 
 

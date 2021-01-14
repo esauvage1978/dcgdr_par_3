@@ -3,12 +3,16 @@
 {% if nbrL>0 or nbrF>0 %}
 
 <article id="file" class="bg-white">
-    <h5 class="text-p-dark p-1 pt-3 text-center ">
-        documents joints
-    </h5>
+	<h3 id="anchor_cadrage" class="text-p-dark2 pt-5">
+		<small>
+			<i class="fas fa-crop-alt"></i>
+		</small>
+		Fichiers de l'actions
+	</h3>
+
 
 	{% import "macros/file.html.twig" as file %}
-	<div class=" list-blk">
+	<div class=" list-blk mt-4">
 		<table class="table table-hover bg-white">
 			<colgroup>
 				<col class="col-lg-1">

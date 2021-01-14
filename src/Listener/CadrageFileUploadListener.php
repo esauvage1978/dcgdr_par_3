@@ -29,7 +29,6 @@ class CadrageFileUploadListener
      */
     private $pathTarget;
 
-
     public function __construct(Uploader $uploader, string $path)
     {
         $this->uploader = $uploader;
@@ -72,11 +71,11 @@ class CadrageFileUploadListener
 
         $directoryTargetLast = 'cadrage';
 
-        if (!$DirectoryTools->exist($this->directory . '/' . $directoryTarget, $directoryTargetLast)) {
-            $DirectoryTools->create($this->directory . '/' . $directoryTarget, $directoryTargetLast);
+        if (!$DirectoryTools->exist($this->path . '/' . $directoryTarget, $directoryTargetLast)) {
+            $DirectoryTools->create($this->path . '/' . $directoryTarget, $directoryTargetLast);
         }
 
-        $this->pathTarget = $this->directory . '/' . $directoryTarget;
+        $this->pathTarget = $this->path . '/' . $directoryTarget . '/' . $directoryTargetLast;
     }
 
     /**

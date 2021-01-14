@@ -1,37 +1,36 @@
-<article id="file" class="bg-white">
-	<h5 class="text-p-dark2 p-1 pt-3 text-center ">
-		documents joints
-	</h5>
-	<div class="card-body">
+{% embed 'widgets/card-widget.html.twig' %}
+	{% import "macros/file.html.twig" as file %}
+	{% import "macros/widgets.html.twig" as widgets %}
 
-
+	{% block card_class %}{% endblock %}
+	{% block card_body_class %}p-1
+	{% endblock %}
+	{% block card_body %}
 		<input type="hidden" id="action_filecount" value="{{ item.actionFiles | length }}"/>
 		<input type="hidden" id="action_linkcount" value="{{ item.actionLinks | length }}"/>
 
-		<table id="file-media" class="table table-striped table-condensed " style="width:100%">
+		<table id="action_file-media" class="table table-striped table-condensed " style="width:100%">
+
 			{% for actionFile in item.actionFiles %}
-				<tr id="action_media-{{ actionFile.fileName }}">
+				<tr id="action_media-{{ actionFile.id }}">
 					<td>
-						<a type="button" class="text-p-dark" target="_blank" href="{{ absolute_url( asset(item.actionFile.href)) }}">
-							{{ file.icon(item.actionFile.fileExtension) }}
+						<a type="button" class="text-p-dark" target="_blank" href="{{ absolute_url( asset(actionFile.href)) }}">
+							{{ file.icon(actionFile.fileExtension) }}
 
-							{{ item.actionFile.title }}
-						</a>
-					</td>
-					<td>
-						{{ item.actionFile.content  | raw }}
-					</td>
-					<small>
-						{{ widgets.showLongDate(item.actionFile.modifyAt) }}
-					</small>
-
-					<td>
-						<a type="button" class="text-primary" target="_blank" href="{{ absolute_url( asset(actionFile.href)) }}">
 							{{ actionFile.title }}
 						</a>
 					</td>
+					<td>
+						{{ actionFile.content  | raw }}
+					</td>
+					<td>
+						<small>
+							{{ widgets.showLongDate(actionFile.updatedAt) }}
+						</small>
+					</td>
 					<td class="float-right" style="width: 100px">
-						<button class="actionmedia-delete btn btn-danger btn-sm " data-msg="actionFile_{{ loop.index0 }}" data-media="{{ actionFile.fileName }}">
+						<button class="media-delete btn btn-danger btn-sm " data-msg="action_actionFile_{{ loop.index0 }}" data-media="{{ actionFile.id }}">
+
 							<i class="fas fa-trash"></i>
 						</button>
 						<span class="media-edit btn btn-info  btn-sm" onclick="action_showOtherFile({{ loop.index0 }})">
@@ -39,8 +38,8 @@
 						</span>
 					</td>
 				</tr>
-				<tr id="actionFile_{{ loop.index0 }}" class="d-none">
-					<td colspan="3">
+				<tr id="action_actionFile_{{ loop.index0 }}" class="d-none">
+					<td colspan="4">
 						{{ form_widget(form.actionFiles[loop.index0]) }}
 					</td>
 				</tr>
@@ -48,24 +47,23 @@
 			{% for actionLink in item.actionLinks %}
 				<tr id="action_media-{{ actionLink.id }}">
 					<td>
-						<a type="button" class="text-p-dark" target="_blank" href="{{ item.actionLink.link }}">
+						<a type="button" class="text-p-dark" target="_blank" href="{{ actionLink.link }}">
 							<i class="fas fa-globe"></i>
-							{{ item.actionLink.title }}
+							{{ actionLink.title }}
 						</a>
 						<br/>
 						<span class="text-muted">
-							{{ item.actionLink.link }}
+							{{ actionLink.link }}
 						</span>
 					</td>
 					<td>
-						{{ item.actionLink.content | raw }}
+						{{ actionLink.content | raw }}
 					</td>
 					<td>
 						<small>
-							{{ widgets.showLongDate(item.actionLink.modifyAt) }}
+							{{ widgets.showLongDate(actionLink.updatedAt) }}
 						</small>
 					</td>
-
 					<td class="float-right" style="width: 100px">
 						<button class="media-delete btn btn-danger btn-sm " data-msg="actionLink_{{ loop.index0 }}" data-media="{{ actionLink.id }}">
 							<i class="fas fa-trash"></i>
@@ -75,21 +73,33 @@
 						</span>
 					</td>
 				</tr>
-				<tr id="actionLink_{{ loop.index0 }}" class="d-none">
-					<td colspan="3">
-						{{ form_widget(form.actionLinks[loop.index0]) }}
+				<tr id="action_actionLink_{{ loop.index0 }}" class="d-none">
+					<td colspan="4 ">
+						<div class="card-body shadow">
+							{{ form_widget(form.actionLinks[loop.index0]) }}
+						</div>
 					</td>
 				</tr>
 			{% endfor %}
 		</table>
+	{% endblock %}
+{% endembed %}
+{% embed 'widgets/card-widget.html.twig' %}
+	{% block card_class %}flat
+	{% endblock %}
+	{% block card_body %}
+
 
 		<div class="row justify-content-around js-createTip-wrapper">
 
-			<a href="#file" id="add-file" class="btn btn-p-dark mt-1">
+			<a href="#action_file" id="action_add-file" class="btn btn-p-dark mt-1">
+
 				<i class="fas fa-plus"></i>
 				ajouter un fichier
 			</a>
-			<a href="#link" id="add-link" class="btn btn-p-dark mt-1">
+			<a href="#action_link" id="action_add-link" class="btn btn-p-dark mt-1">
+
+
 				<i class="fas fa-plus"></i>
 				ajouter un lien
 			</a>
@@ -101,7 +111,7 @@
 				<p>
 					Vous devez aller sélectionner le fichier à ajouter et renseigner obligatoirement le
 					<strong>le titre</strong>.
-																												                    Le titre doit être explicite.
+																																													                    Le titre doit être explicite.
 				</p>
 				<div class="createTip__title">
 					Ajouter un lien
@@ -112,7 +122,7 @@
 						<li>
 							<strong>le titre</strong>
 							:
-																																															il doit être explicite</li>
+																																																																			il doit être explicite</li>
 						<li>
 							<strong>l'adresse</strong>
 							mettre une URL. exemple : http://google.fr</li>
@@ -127,12 +137,13 @@
 
 		<div id="media-new">
 			<div class="row">
-				<div class="col-12 media-add" id="media-add-file" data-prototype="{{ form_row(form.actionFiles.vars.prototype) | e('html_attr') }}"></div>
-				<div class="col-12 media-add" id="media-add-link" data-prototype="{{ form_row(form.actionLinks.vars.prototype) | e('html_attr') }}"></div>
+				<div class="col-12 media-add" id="action_media-add-file" data-prototype="{{ form_row(form.actionFiles.vars.prototype) | e('html_attr') }}"></div>
+
+				<div class="col-12 media-add" id="action_media-add-link" data-prototype="{{ form_row(form.actionLinks.vars.prototype) | e('html_attr') }}"></div>
+
 			</div>
 		</div>
 
 
-	</div>
-</article>
-
+	{% endblock %}
+{% endembed %}

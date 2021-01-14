@@ -153,9 +153,13 @@
 	<script src="{{ absolute_url( asset('js/findAction.js')) }}"></script>
 	<script src="{{ absolute_url( asset('/vendor/axios/dist/axios.min.js')) }}"></script>
 	<script src="{{ absolute_url( asset('/js/es_widget.js')) }}"></script>
+	<script src="{{ absolute_url( asset('/js/file/cadrage_file.js')) }}"></script>
+	<script src="{{ absolute_url( asset('/js/file/action_file.js')) }}"></script>
 
 
-	<script type="text/javascript">
+
+
+	<script type="text/javascript"> 
 		$(function () {
 
 fillCombobox('#cmb_axe', "{{ path('ajax_combo_axes_isenable') }}", true, {{ item.category.thematique.pole.axe.id }}, 'all');
@@ -208,6 +212,23 @@ html(showData, response.data.value);
 console.log(error);
 });
 }
+
+$(document).on('change', '.custom-file-input', function () {
+let fileName = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
+$(this).parent('.custom-file').find('.custom-file-label').text(fileName);
+});
+$('#cadrage_updatedAt_date_month').val(new Date().getMonth() + 1);
+$('#cadrage_updatedAt_date_day').val(new Date().getDate());
+$('#cadrage_updatedAt_date_year').val(new Date().getFullYear());
+$('#cadrage_updatedAt_time_hour').val(new Date().getHours());
+$('#cadrage_updatedAt_time_minute').val(new Date().getMinutes());
+
+$('#action_updatedAt_date_month').val(new Date().getMonth() + 1);
+$('#action_updatedAt_date_day').val(new Date().getDate());
+$('#action_updatedAt_date_year').val(new Date().getFullYear());
+$('#action_updatedAt_time_hour').val(new Date().getHours());
+$('#action_updatedAt_time_minute').val(new Date().getMinutes());
+
 	</script>
 
 {% endblock %}

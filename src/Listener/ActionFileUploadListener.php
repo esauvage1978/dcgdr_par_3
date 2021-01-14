@@ -100,6 +100,6 @@ class ActionFileUploadListener
             $DirectoryTools->create($this->path, $directoryTarget);
         }
 
-        $this->pathTarget = $this->directory . '/' . $directoryTarget;
+        $this->pathTarget = $this->path . '/' . $directoryTarget;
     }
 }

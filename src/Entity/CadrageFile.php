@@ -52,7 +52,7 @@ class CadrageFile implements EntityInterface
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $content;
 
@@ -81,7 +81,7 @@ class CadrageFile implements EntityInterface
      */
     public function getUploadDir(): string
     {
-        return 'uploads/actions/' . $this->getAction()->getId() .'/cadrage/';
+        return 'uploads/action/' . $this->getAction()->getId() .'/cadrage';
     }
 
     public function getHref(): string

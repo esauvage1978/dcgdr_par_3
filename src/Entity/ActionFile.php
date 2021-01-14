@@ -52,7 +52,7 @@ class ActionFile implements EntityInterface
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $content;
 
@@ -81,7 +81,7 @@ class ActionFile implements EntityInterface
      */
     public function getUploadDir(): string
     {
-        return 'uploads/actions/' . $this->getAction()->getId();
+        return 'uploads/action/' . $this->getAction()->getId();
     }
 
     public function getHref(): string

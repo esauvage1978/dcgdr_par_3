@@ -90,11 +90,11 @@ class MakeActionDashboard
             ],
             ActionMakerDto::STARTED_WRITABLE => [
                 self::STATE =>  WorkflowData::STATE_STARTED,
-                self::TITLE => 'Brouillons modifiable',
+                self::TITLE => 'Brouillons modifiables',
             ],
             ActionMakerDto::STARTED_READABLE => [
                 self::STATE =>  WorkflowData::STATE_STARTED,
-                self::TITLE => 'Les brouillons consultable',
+                self::TITLE => 'Les brouillons consultables',
             ],
             ActionMakerDto::COTECH => [
                 self::STATE =>  WorkflowData::STATE_COTECH,

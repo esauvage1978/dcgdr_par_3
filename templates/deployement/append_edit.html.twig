@@ -18,7 +18,7 @@
 
 
 {% block page_content %}
-{{ form_start(form) }}
+	{{ form_start(form) }}
 
 	<div class="row justify-content-start pb-5">
 		{{ include('deployement/_show/_name.html.twig') }}
@@ -34,13 +34,13 @@
 			<div id="col2" class="col-sm-12  order-sm-first  col-md-12 order-md-first col-lg-12  order-lg-first col-xl-7 order-xl-second  bg-white  p-5">
 				{{ include('deployement/_show/_classement.html.twig') }}
 				{{ include('deployement/_show/_cadrage.html.twig') }}
-{{ save.btn()}}
+				{{ save.btn()}}
+				{{ include('deployement/_edit/_deployementAppendFile.html.twig') }}
 
 			</div>
 			<div id="col3" class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
 				<div class="bg-white  card-body">
 					{{ include('deployement/_edit/_intervenant.html.twig') }}
-					{{ include('deployement/_edit/_deployementFile.html.twig') }}
 				</div>
 			</div>
 		</div>
@@ -48,15 +48,30 @@
 			{{ include('deployement/_edit/_indicator.html.twig') }}
 		</div>
 	</div>
-<div class="d-none">{{ sub.btn() }}</div>
-{{form_rest(form)}}
+	<div class="d-none">{{ sub.btn() }}</div>
+	{{form_rest(form)}}
 
-{{ form_end(form) }}
+	{{ form_end(form) }}
 
 {% endblock %}
 
 {%  block javascripts %}
-{{ parent() }}
-{{ include('deployement/_edit/_indicator_js.html.twig') }}</div>
+	{{ parent() }}
+	<script src="{{ absolute_url( asset('/vendor/axios/dist/axios.min.js')) }}"></script>
+	<script src="{{ absolute_url( asset('/js/es_widget.js')) }}"></script>
 
+	{{ include('deployement/_edit/_indicator_js.html.twig') }}
+	<script src="{{ absolute_url( asset('/js/file/deployement_append_file.js')) }}"></script>
+	<script type="text/javascript">
+
+		$(document).on('change', '.custom-file-input', function () {
+let fileName = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
+$(this).parent('.custom-file').find('.custom-file-label').text(fileName);
+});
+$('#deployement_append_updatedAt_date_month').val(new Date().getMonth() + 1);
+$('#deployement_append_updatedAt_date_day').val(new Date().getDate());
+$('#deployement_append_updatedAt_date_year').val(new Date().getFullYear());
+$('#deployement_append_updatedAt_time_hour').val(new Date().getHours());
+$('#deployement_append_updatedAt_time_minute').val(new Date().getMinutes());
+	</script>
 {% endblock %}

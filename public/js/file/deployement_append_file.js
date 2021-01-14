@@ -40,7 +40,7 @@ $(document).ready(function () {
         $container.append($prototype);
 
         if (type === 'link') {
-            pattern = '#deployement_edit_deployementLinks_' + index + '_updatedAt';
+            pattern = '#deployement_append_deployementLinks_' + index + '_updatedAt';
             $(pattern + '_date_month').val(new Date().getMonth() + 1);
             $(pattern + '_date_day').val(new Date().getDate());
             $(pattern + '_date_year').val(new Date().getFullYear());
@@ -49,7 +49,7 @@ $(document).ready(function () {
             $(pattern).addClass('d-none');
         }
         if (type === 'file') {
-            pattern = '#deployement_edit_deployementFiles_' + index + '_updatedAt';
+            pattern = '#deployement_append_deployementFiles_' + index + '_updatedAt';
             $(pattern + '_date_month').val(new Date().getMonth() + 1);
             $(pattern + '_date_day').val(new Date().getDate());
             $(pattern + '_date_year').val(new Date().getFullYear());
@@ -89,7 +89,7 @@ $(document).ready(function () {
 function deployement_showOtherFile($index) {
     $('#deployement_deployementFile_' + $index).removeClass('d-none');
 
-    pattern = '#deployement_edit_deployementFiles_' + $index + '_updatedAt';
+    pattern = '#deployement_append_deployementFiles_' + $index + '_updatedAt';
     console.log(pattern);
     $(pattern + '_date_month').val(new Date().getMonth() + 1);
     $(pattern + '_date_day').val(new Date().getDate());
@@ -98,13 +98,13 @@ function deployement_showOtherFile($index) {
     $(pattern + '_time_minute').val(new Date().getMinutes());
     $(pattern).addClass('d-none');
 
-    $('#deployement_edit_deployementFiles_' + $index + '_tempoDate').val(new Date());
+    $('#deployement_append_deployementFiles_' + $index + '_tempoDate').val(new Date());
 
 }
 
 function deployement_showOtherLink($index) {
 
-    pattern = '#deployement_edit_deployementLinks_' + $index + '_updatedAt';
+    pattern = '#deployement_append_deployementLinks_' + $index + '_updatedAt';
     $(pattern + '_date_month').val(new Date().getMonth() + 1);
     $(pattern + '_date_day').val(new Date().getDate());
     $(pattern + '_date_year').val(new Date().getFullYear());

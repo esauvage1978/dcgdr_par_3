@@ -39,7 +39,7 @@
 				</a>
 			</td>
 			<td class="align-middle">
-<a target="_blank" href="{{ path(route,{'id':item.id, 'fileId':file.id}) }}" class="text-p-dark">
+				<a target="_blank" href="{{ path(route,{'id':item.id, 'fileId':file.id}) }}" class="text-p-dark">
 
 					{{ file.title }}.{{ file.fileExtension }}
 					<br/>
@@ -75,7 +75,7 @@
 				<i class="fas fa-globe  fa-3x align-self-start mr-3 {{ color }} mt-2"></i>
 			</td>
 			<td class="align-middle">
-<a target="_blank" href="{{ link.link }}" class="text-p-dark">{{ link.title }}
+				<a target="_blank" href="{{ link.link }}" class="text-p-dark">{{ link.title }}
 
 					<span class="small">(
 						{{ link.link }}
@@ -100,13 +100,10 @@
 			1 ko
 		{% elseif data < 1048576 %}
 			{% set nbr=data / 1024 %}
-			{{ nbr|number_format }}
-			Ko
+			{{ nbr|number_format }}&nbsp;Ko
 		{% else %}
 			{% set nbr=data / 1048576 %}
-			{{ nbr|number_format }}
-			Mo
+			{{ nbr|number_format }}&nbsp;Mo
 		{% endif %}
 	{% endif %}
 {% endmacro %}
-
