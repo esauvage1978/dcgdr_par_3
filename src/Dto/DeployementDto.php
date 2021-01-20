@@ -11,6 +11,10 @@ class DeployementDto extends AbstractDto
     use TraitWriter;
     use TraitRole;
 
+    private $search;
+
+    private $searchDate;
+
     /**
      * @var ?string
      */
@@ -25,6 +29,69 @@ class DeployementDto extends AbstractDto
      * @var ?UserDto
      */
     private $userDto;
+
+    /**
+     * @return mixed
+     */
+    public function getSearch()
+    {
+        return $this->search;
+    }
+
+    /**
+     * @param mixed $search
+     * @return ActionSearchDto
+     */
+    public function setSearch($search)
+    {
+        $this->search = $search;
+
+        $this->searchDate();
+
+        return $this;
+    }
+
+
+    private function searchDate()
+    {
+        if (!empty($this->search)) {
+            $d = $this->validateDate($this->search);
+            if (!empty($d)) {
+                $this->setSearchDate($d);
+                $this->search = null;
+            }
+        }
+    }
+
+    function validateDate($date)
+    {
+        if (mb_substr_count($this->search, '/') == 2) {
+            $d = explode('/', $date);
+            return (strlen($d[2]) == 2 ? '20' . $d[2] : $d[2])
+                . '-' .
+                (strlen($d[1]) == 2 ? $d[1] : '0' . $d[1])
+                . '-' .
+                (strlen($d[0]) == 2 ? $d[0] : '0' . $d[0]);
+        }
+        return null;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getSearchDate()
+    {
+        return $this->searchDate;
+    }
+
+    /**
+     * @param mixed $searchDate
+     */
+    public function setSearchDate($searchDate)
+    {
+        $this->searchDate = $searchDate;
+        return $this;
+    }
 
     /**
      * @return mixed

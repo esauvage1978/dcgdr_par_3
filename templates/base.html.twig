@@ -7,8 +7,10 @@
 
 {% block navbar_search %}
 	{% block sidebar_search %}
+		{{ render(controller('App\\Controller\\HomeController::searchFormAction')) }}
 	{% endblock %}
 {% endblock %}
+
 
 {% block stylesheets %}
 	<!-- add category -->

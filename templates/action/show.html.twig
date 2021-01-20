@@ -23,7 +23,9 @@
 			</div>
 			<div id="col2" class="col-sm-12  order-sm-first  col-md-12 order-md-first col-lg-12  order-lg-first col-xl-7 order-xl-second  bg-white  p-5">
 				{{ include('action/_show/_classement.html.twig') }}
-				{{ include('action/_show/_measure.html.twig') }}
+				{% if item.stateCurrent in ['measured','clotured'] %}
+					{{ include('action/_show/_measure.html.twig') }}
+				{% endif %}
 				{{ include('action/_show/_cadrage.html.twig') }}
 				{{ include('action/_show/_info_part.html.twig') }}
 				{{ include('action/_show/_actionFile.html.twig') }}

@@ -30,6 +30,9 @@ class DeployementDtoRepository extends ServiceEntityRepository implements DtoRep
 
     const ALIAS = 'd';
 
+    const FILTRE_DTO_INIT_HOME = 'home';
+    const FILTRE_DTO_INIT_SEARCH = 'search';
+
     public function __construct(ManagerRegistry $registry, ParamsInServices $paramsInServices)
     {
         parent::__construct($registry, Deployement::class);
@@ -95,14 +98,21 @@ class DeployementDtoRepository extends ServiceEntityRepository implements DtoRep
             ->getResult();
     }
 
-    public function findAllForDto(DtoInterface $dto, $filtre = '')
+    public function findAllForDto(DtoInterface $dto, $filtre = self::FILTRE_DTO_INIT_HOME)
     {
         /**
          * var ContactDto
          */
         $this->dto = $dto;
 
-        $this->initialise_select();
+        switch ($filtre) {
+            case self::FILTRE_DTO_INIT_HOME:
+                $this->initialise_select_home();
+                break;
+            case self::FILTRE_DTO_INIT_SEARCH:
+                $this->initialise_select_search();
+                break;
+        }
 
         $this->initialise_where();
 
@@ -114,6 +124,33 @@ class DeployementDtoRepository extends ServiceEntityRepository implements DtoRep
     }
 
     private function initialise_select()
+    {
+        $this->builder = $this->createQueryBuilder(self::ALIAS)
+            ->select(
+                self::ALIAS,
+                ActionRepository::ALIAS,
+                OrganismeRepository::ALIAS,
+
+                CategoryRepository::ALIAS,
+                ThematiqueRepository::ALIAS,
+                PoleRepository::ALIAS,
+                AxeRepository::ALIAS,
+
+                IndicatorValueRepository::ALIAS,
+                IndicatorRepository::ALIAS,
+            )
+            ->innerJoin(self::ALIAS . '.action', ActionRepository::ALIAS)
+            ->innerJoin(self::ALIAS . '.organisme', OrganismeRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.indicatorValues', IndicatorValueRepository::ALIAS)
+            ->leftJoin(IndicatorValueRepository::ALIAS . '.indicator', IndicatorRepository::ALIAS)
+            ->innerJoin(ActionRepository::ALIAS . '.category', CategoryRepository::ALIAS)
+            ->innerJoin(CategoryRepository::ALIAS . '.thematique', ThematiqueRepository::ALIAS)
+            ->innerJoin(ThematiqueRepository::ALIAS . '.pole', PoleRepository::ALIAS)
+            ->innerJoin(PoleRepository::ALIAS . '.axe', AxeRepository::ALIAS);
+    }
+
+
+    private function initialise_select_search()
     {
         $this->builder = $this->createQueryBuilder(self::ALIAS)
             ->select(
@@ -188,8 +225,35 @@ class DeployementDtoRepository extends ServiceEntityRepository implements DtoRep
 
         $this->initialise_where_states();
 
+        $this->initialise_where_search();
+
         if (count($this->params) > 0) {
             $this->builder->setParameters($this->params);
+        }
+    }
+
+    private function initialise_where_search()
+    {
+        $dto = $this->dto;
+        $builder = $this->builder;
+        if (!empty($dto->getSearch())) {
+            $builder
+                ->andwhere(
+                    IndicatorValueRepository::ALIAS . '.content like :search' .
+                    ' OR ' . IndicatorValueRepository::ALIAS . '.goal like :search' .
+                    ' OR ' . IndicatorValueRepository::ALIAS . '.value like :search'
+                );
+
+            $this->addParams('search', '%' . $dto->getSearch() . '%');
+        }
+
+        if (!empty($dto->getSearchDate())) {
+            $builder
+                ->andWhere(
+                    self::ALIAS . '.showAt = :search' .
+                    ' OR ' . self::ALIAS . '.endAt = :search'
+                );
+            $this->addParams('search',  $dto->getSearchDate());
         }
     }
 

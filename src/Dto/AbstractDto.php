@@ -13,8 +13,6 @@ abstract class AbstractDto implements DtoInterface
     public const FALSE = 'false';
     public const TRUE = 'true';
 
-    /** @var ?string */
-    protected $wordSearch;
 
     /** @var ?String */
     protected $page;
@@ -31,17 +29,7 @@ abstract class AbstractDto implements DtoInterface
     /** @var ?string */
     protected $hide;
 
-    public function getWordSearch(): ?string
-    {
-        return $this->wordSearch;
-    }
 
-    public function setWordSearch($wordSearch)
-    {
-        $this->wordSearch = $wordSearch;
-
-        return $this;
-    }
 
     /**
      * @return mixed

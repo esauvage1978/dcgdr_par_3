@@ -135,12 +135,12 @@ class Action implements EntityInterface
     private $actionFiles;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ActionLink", mappedBy="action",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\ActionLink", mappedBy="action", orphanRemoval=true,cascade={"persist"})
      */
     private $actionLinks;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CadrageLink", mappedBy="action",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\CadrageLink", mappedBy="action", orphanRemoval=true,cascade={"persist"})
      */
     private $cadrageLinks;
 
@@ -166,7 +166,7 @@ class Action implements EntityInterface
     private $stateContent;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ActionState", mappedBy="action")
+     * @ORM\OneToMany(targetEntity="App\Entity\ActionState", mappedBy="action", orphanRemoval=true)
      */
     private $actionStates;
 
@@ -176,7 +176,7 @@ class Action implements EntityInterface
     private $showAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Mailer", mappedBy="action")
+     * @ORM\OneToMany(targetEntity="App\Entity\Mailer", mappedBy="action", orphanRemoval=true)
      */
     private $mailers;
 

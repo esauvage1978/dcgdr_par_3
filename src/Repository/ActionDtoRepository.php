@@ -111,7 +111,7 @@ class ActionDtoRepository extends ServiceEntityRepository implements DtoReposito
                 $this->initialise_select_home();
                 break;
             case self::FILTRE_DTO_INIT_SEARCH:
-                $this->initialise_select();
+                $this->initialise_select_search();
                 break;
         }
 
@@ -151,15 +151,39 @@ class ActionDtoRepository extends ServiceEntityRepository implements DtoReposito
                 AxeRepository::ALIAS,
                 UserRepository::ALIAS,
                 ActionFileRepository::ALIAS,
-                ActionLinkRepository::ALIAS,
-                UserRepository::ALIAS
+                ActionLinkRepository::ALIAS
             )
             ->innerJoin(self::ALIAS . '.category', CategoryRepository::ALIAS)
             ->innerJoin(CategoryRepository::ALIAS . '.thematique', ThematiqueRepository::ALIAS)
             ->innerJoin(ThematiqueRepository::ALIAS . '.pole', PoleRepository::ALIAS)
             ->innerJoin(PoleRepository::ALIAS . '.axe', AxeRepository::ALIAS)
-            ->leftJoin(self::ALIAS . '.backpackFiles', ActionFileRepository::ALIAS)
-            ->leftJoin(self::ALIAS . '.backpackLinks', ActionLinkRepository::ALIAS);
+            ->leftJoin(self::ALIAS . '.actionFiles', ActionFileRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.actionLinks', ActionLinkRepository::ALIAS);
+    }
+
+    private function initialise_select_search()
+    {
+        $this->builder = $this->createQueryBuilder(self::ALIAS)
+            ->select(
+                self::ALIAS,
+                CategoryRepository::ALIAS,
+                ThematiqueRepository::ALIAS,
+                PoleRepository::ALIAS,
+                AxeRepository::ALIAS,
+                ActionFileRepository::ALIAS,
+                ActionLinkRepository::ALIAS,
+                DeployementRepository::ALIAS,
+                IndicatorRepository::ALIAS
+            )
+            ->innerJoin(self::ALIAS . '.category', CategoryRepository::ALIAS)
+            ->innerJoin(CategoryRepository::ALIAS . '.thematique', ThematiqueRepository::ALIAS)
+            ->innerJoin(ThematiqueRepository::ALIAS . '.pole', PoleRepository::ALIAS)
+            ->innerJoin(PoleRepository::ALIAS . '.axe', AxeRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.actionFiles', ActionFileRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.actionLinks', ActionLinkRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.deployements', DeployementRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.indicators', IndicatorRepository::ALIAS);;
+
     }
 
     private function initialise_select()
@@ -515,22 +539,50 @@ class ActionDtoRepository extends ServiceEntityRepository implements DtoReposito
     private function initialise_where_search()
     {
         $dto = $this->dto;
+
         $builder = $this->builder;
-        if (!empty($dto->getWordSearch())) {
+        if (!empty($dto->getRef())) {
+            if ('*' != $dto->getRef()) {
+                $builder->andwhere(self::ALIAS . '.ref = :actionref');
+                $this->addParams('actionref', $dto->getRef());
+            }
+            if ('*' != $dto->getCategoryDto()->getRef()) {
+                $builder->andwhere(CategoryRepository::ALIAS . '.ref = :categoryref');
+                $this->addParams('categoryref', $dto->getCategoryDto()->getRef());
+            }
+            if ('*' != $dto->getThematiqueDto()->getRef()) {
+                $builder->andwhere(ThematiqueRepository::ALIAS . '.ref = :thematiqueref');
+                $this->addParams('thematiqueref', $dto->getThematiqueDto()->getRef());
+            }
+        }
+        if (!empty($dto->getSearch())) {
             $builder
                 ->andwhere(
-                    self::ALIAS . '.content like :search' .
-                        ' OR ' . self::ALIAS . '.name like :search' .
-                        ' OR ' . self::ALIAS . '.stateContent like :search' .
-                        ' OR ' . ActionLinkRepository::ALIAS . '.title like :search' .
-                        ' OR ' . ActionLinkRepository::ALIAS . '.link like :search' .
-                        ' OR ' . ActionLinkRepository::ALIAS . '.content like :search' .
-                        ' OR ' . ActionFileRepository::ALIAS . '.title like :search' .
-                        ' OR ' . ActionFileRepository::ALIAS . '.fileName like :search' .
-                        ' OR ' . ActionFileRepository::ALIAS . '.content like :search'
+                    self::ALIAS . '.name like :search' .
+                    ' OR ' . self::ALIAS . '.content like :search' .
+                    ' OR ' . self::ALIAS . '.stateContent like :search' .
+                    ' OR ' . self::ALIAS . '.cadrage like :search' .
+                    ' OR ' . self::ALIAS . '.measureContent like :search' .
+                    ' OR ' . IndicatorRepository::ALIAS . '.name like :search' .
+                    ' OR ' . IndicatorRepository::ALIAS . '.content like :search' .
+                    ' OR ' . CategoryRepository::ALIAS . '.name like :search' .
+                    ' OR ' . ThematiqueRepository::ALIAS . '.name like :search' .
+                    ' OR ' . PoleRepository::ALIAS . '.name like :search' .
+                    ' OR ' . AxeRepository::ALIAS . '.name like :search'
                 );
 
-            $this->addParams('search', '%' . $dto->getWordSearch() . '%');
+            $this->addParams('search', '%' . $dto->getSearch() . '%');
+        }
+
+        if (!empty($dto->getSearchDate())) {
+            $builder
+                ->andWhere(
+                    self::ALIAS . '.showAt = :search ' .
+                    ' OR ' . self::ALIAS . '.stateAt = :search' .
+                    ' OR ' . self::ALIAS . '.regionStartAt = :search' .
+                    ' OR ' . self::ALIAS . '.regionEndAt = :search'
+                );
+            $this->addParams('search', $dto->getSearchDate());
         }
     }
 

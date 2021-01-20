@@ -5,7 +5,6 @@ namespace App\Manager;
 use App\Entity\EntityInterface;
 use App\Entity\Mailer;
 use App\Entity\User;
-use App\Helper\SendMail;
 use App\Security\CurrentUser;
 use App\Validator\MailerValidator;
 use Doctrine\ORM\EntityManagerInterface;

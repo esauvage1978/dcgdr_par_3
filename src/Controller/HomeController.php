@@ -119,4 +119,12 @@ class HomeController extends AbstractController
             'actions_supervision_for_pilote' => $actions_supervision_for_pilote,
         ]);
     }
+
+    /**
+     * @return Response
+     */
+    public function searchFormAction(): Response
+    {
+        return $this->render('home/search-form.html.twig', []);
+    }
 }

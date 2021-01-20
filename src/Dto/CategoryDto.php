@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoryDto extends AbstractDto
 {
 
+    private $ref;
     /**
      * @var ThematiqueDto;
      */
@@ -40,5 +41,22 @@ class CategoryDto extends AbstractDto
     {
         null !== $datas->get('wordSearch') && $this->wordSearch = $datas->get('wordSearch');
         null !== $datas->get('visible') && $this->visible = $datas->get('visible');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRef()
+    {
+        return $this->ref;
+    }
+
+    /**
+     * @param mixed $ref
+     */
+    public function setRef($ref)
+    {
+        $this->ref = $ref;
+        return $this;
     }
 }

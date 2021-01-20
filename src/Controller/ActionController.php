@@ -58,7 +58,12 @@ class ActionController extends AbstractGController
      */
     public function delete(Request $request, Action $item)
     {
-        return $this->deleteAction($request, $item);
+        if ($this->isCsrfTokenValid('delete' . $item->getId(), $request->request->get('_token'))) {
+            $this->addFlash(self::SUCCESS, self::MSG_DELETE);
+            $this->manager->remove($item);
+        }
+
+        return $this->redirectToRoute('home');
     }
 
     /**
@@ -161,4 +166,7 @@ class ActionController extends AbstractGController
             'data' => $historyShow->getParams()
         ]);
     }
+
+
+
 }

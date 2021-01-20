@@ -99,6 +99,12 @@ class ActionMakerDto
     {
         $dto = new ActionDto();
         switch ($type) {
+            case self::SEARCH:
+                $this->addUser($dto);
+                $dto
+                    ->setSearch($param)
+                    ->setVisible(ActionDto::TRUE);
+                break;
             case self::ACTION_WITHOUT_JALON_WRITERS:
                 $this->addUser($dto);
                 $dto

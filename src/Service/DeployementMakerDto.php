@@ -47,6 +47,14 @@ class DeployementMakerDto
     {
         $dto = new DeployementDto();
         switch ($type) {
+            case self::SEARCH:
+                $dtoA = new ActionDto();
+                $this->addUser($dto);
+                $dto
+                    ->setSearch($param)
+                    ->setActionDto($dtoA)
+                    ->setVisible(DeployementDto::TRUE);
+                break;
             case self::DEPLOYEMENT_WITHOUT_JALON_WRITERS:
                 $this->addUser($dto);
                 $dtoA = new ActionDto();

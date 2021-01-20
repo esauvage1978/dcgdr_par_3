@@ -1,0 +1,208 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}
+	{{ app_name }}
+	- Recherche
+{% endblock %}
+{% block page_title %}
+	<i class="fas fa-home"></i>
+	Recherche
+{% endblock %}
+
+
+{% block page_content %}
+
+	{% set nbrAction = actions|length %}
+	{% set nbrDeployement = deployements|length %}
+
+
+	{% if nbrAction==0 and nbrDeployement ==0  %}
+
+		<div class="row bg-white shadow ">
+			<div class="col-sm-4 ">
+				<img src="{{ absolute_url( asset('img/nothing.jpg')) }}" style="min-width:100%;
+																				                        min-height:100%;
+																				                        width:auto;
+																				                        height:auto;" alt="nothing"/>
+			</div>
+			<div class="col-sm-8 pr-4 pt-5">
+				<div class="row justify-content-center ">
+					<h1 class="font-weight-bold  bg-white rounded">
+						<b>DCGDR</b>
+						PAR
+					</h1>
+				</div>
+				<div class="row justify-content-center ">
+
+					<span class="text-muted  bg-white rounded">Gestion des plans d'actions</span>
+				</div>
+				<br/>
+
+				<div class="row justify-content-center">
+					<div class="col-6 m-5 bg-white rounded">
+						<h3>
+							<i class="fas fa-info-circle text-info"></i>
+							Oops! rien trouvé pour cette recherche.</h3>
+						<p>
+							Rien dans les actions ou déploiements.
+							<br><br>
+							Cependant, vous pouvez
+							<a href="{{ path('home') }}">retourner sur la page d'accueil</a>
+							ou
+																												                            relancer une recherche.
+						</p>
+						<form class="search-form" method="POST" action="{{ path('search') }}">
+							<div class="input-group ">
+								<input class="form-control " name="search" id="search" type="search" placeholder="Recherche" aria-label="Recherche">
+								<div class="input-group-append">
+									<button class="btn btn-info" type="submit">
+										<i class="fas fa-search"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+	{% if nbrAction>0 or nbrDeployement >0  %}
+
+		<div class="row">
+			<div class="col-12">
+				<div class="card card-primary">
+					<div class="card-header p-0 pt-1">
+						<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+							{%  if nbrAction >0 %}
+
+								<li class="nav-item">
+									<a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">
+										Actions
+										<span class="badge badge-info">{{ actions | length }}</span>
+									</a>
+								</li>
+							{% endif %}
+							{%  if nbrDeployement >0 %}
+								<li class="nav-item">
+<a class="nav-link  {{nbrAction ==0?'active':''}}" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="{{nbrAction ==0?'true':'false'}}">
+
+
+										Deploiements
+										<span class="badge badge-info">{{ deployements | length }}</span>
+									</a>
+								</li>
+							{% endif %}
+						</ul>
+					</div>
+					<div class="card-body">
+						<div class="tab-content" id="custom-tabs-one-tabContent">
+							<div class="tab-pane fade active show" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+								{%  if nbrAction >0 %}
+									{% set domaine = 'action' %}
+									{% set domaineTitle = 'Action' %}
+									{% set tableName = domaine %}
+									{% set route_add = domaine ~ '_add' %}
+									{% set route_show = domaine ~ '_show' %}
+									{% set route_edit = domaine ~ '_edit' %}
+
+									<div class="col-xl-12 col-xxl-2">
+										<div class="d-none d-lg-block">
+											{% include "action/_view/_datatable.html.twig" with {items:actions} %}
+
+										</div>
+										<div class="d-lg-none">
+											{% include "action/_view/_datatable_small.html.twig" with {items:actions} %}
+
+										</div>
+									</div>
+								{%  endif %}
+							</div>
+<div class="tab-pane  {{nbrAction ==0?'active show':''}} fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+
+
+								{%  if deployements | length >0 %}
+									{% set domaine = 'deployement' %}
+									{% set domaineTitle = 'Deployement' %}
+									{% set tableName = domaine %}
+									{% set route_add = domaine ~ '_add' %}
+									{% set route_show = domaine ~ '_show' %}
+									{% set route_edit = domaine ~ '_edit' %}
+
+									<div class="col-xl-12 col-xxl-2">
+										<div class="d-none d-lg-block">
+{% include "deployement/_view/_datatable.html.twig" with {items:deployements} %}
+
+
+
+										</div>
+										<div class="d-lg-none">
+{% include "deployement/_view/_datatable_small.html.twig" with {items:deployements} %}
+
+
+
+										</div>
+									</div>
+
+								{%  endif %}
+							</div>
+						</div>
+					</div>
+					<!-- /.card -->
+				</div>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	{% import "macros/datatables.html.twig" as tables %}
+	{% set columns = {
+	'Référence ': {'class': 'all', 'orderBy': true},
+	'Action ': {'class': 'all', 'orderBy': true},
+	'Classement ': {'class': 'desktop', 'orderBy': true},
+    'Fin de déploiement': {'class': 'alwaysVisible', 'orderBy': true},
+	'Jalon': {'class': 'alwaysVisible', 'orderBy': true},
+	'Etat': {'class': 'alwaysVisible', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+	{{ tables.datatable_javascript('action',1,columns) }}
+
+	{% set columns = {
+	'Action ': {'class': 'all', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+	{{ tables.datatable_javascript('actionsmall',1,columns) }}
+
+{% set columns = {
+	'Référence ': {'class': 'all', 'orderBy': true},
+	'Déployement ': {'class': 'all', 'orderBy': true},
+	'Classement ': {'class': 'desktop', 'orderBy': true},
+    'Fin de déploiement': {'class': 'alwaysVisible', 'orderBy': true},
+	'Jalon': {'class': 'alwaysVisible', 'orderBy': true},
+	'Indicateurs': {'class': 'alwaysVisible', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+{{ tables.datatable_javascript('deployement',1,columns) }}
+
+{% set columns = {
+	'Déployement ': {'class': 'all', 'orderBy': true},
+	'Taux': {'class': 'alwaysVisible', 'orderBy': true},
+    'actions': {'class': 'alwaysVisible', 'orderBy': false}
+} %}
+
+{{ tables.datatable_javascript('deployementsmall',1,columns) }}
+
+
+{% endblock %}
