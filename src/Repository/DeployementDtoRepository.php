@@ -148,7 +148,31 @@ class DeployementDtoRepository extends ServiceEntityRepository implements DtoRep
             ->innerJoin(ThematiqueRepository::ALIAS . '.pole', PoleRepository::ALIAS)
             ->innerJoin(PoleRepository::ALIAS . '.axe', AxeRepository::ALIAS);
     }
+    private function initialise_select_home()
+    {
+        $this->builder = $this->createQueryBuilder(self::ALIAS)
+            ->select(
+                self::ALIAS,
+                ActionRepository::ALIAS,
+                OrganismeRepository::ALIAS,
 
+                CategoryRepository::ALIAS,
+                ThematiqueRepository::ALIAS,
+                PoleRepository::ALIAS,
+                AxeRepository::ALIAS,
+
+                IndicatorValueRepository::ALIAS,
+                IndicatorRepository::ALIAS,
+            )
+            ->innerJoin(self::ALIAS . '.action', ActionRepository::ALIAS)
+            ->innerJoin(self::ALIAS . '.organisme', OrganismeRepository::ALIAS)
+            ->leftJoin(self::ALIAS . '.indicatorValues', IndicatorValueRepository::ALIAS)
+            ->leftJoin(IndicatorValueRepository::ALIAS . '.indicator', IndicatorRepository::ALIAS)
+            ->innerJoin(ActionRepository::ALIAS . '.category', CategoryRepository::ALIAS)
+            ->innerJoin(CategoryRepository::ALIAS . '.thematique', ThematiqueRepository::ALIAS)
+            ->innerJoin(ThematiqueRepository::ALIAS . '.pole', PoleRepository::ALIAS)
+            ->innerJoin(PoleRepository::ALIAS . '.axe', AxeRepository::ALIAS);
+    }
 
     private function initialise_select_search()
     {

@@ -7,9 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 class AxeDto extends AbstractDto
 {
 
-
-
-
     public function getData(): array
     {
         $d = [];

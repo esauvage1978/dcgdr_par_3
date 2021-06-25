@@ -63,8 +63,7 @@ fillCombobox('#cmb_axe', "{{ path('ajax_combo_axes_isenable') }}", true,'','all'
 });
 
 $('#cmb_axe').change(function () {
-fillComboboxChained('#cmb_axe', '#cmb_pole', "{{ path('ajax_combo_poles_isenable') }}", true, false);
-
+	fillComboboxChained('#cmb_axe', '#cmb_pole', "{{ path('ajax_combo_poles_isenable') }}", true, false);
 });
 
 $('#cmb_pole').change(function () {
