@@ -1,0 +1,257 @@
+<div class="card card-primary card-outline ">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-5 col-sm-3">
+				<div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+					<a class="nav-link active" id="vert-tabs-1-tab" data-toggle="pill" href="#vert-tabs-1" role="tab" aria-controls="vert-tabs-1" aria-selected="true">
+						Définition
+					</a>
+					<a class="nav-link" id="vert-tabs-2-tab" data-toggle="pill" href="#vert-tabs-2" role="tab" aria-controls="vert-tabs-2" aria-selected="false">
+						Page d'accueil
+					</a>
+					<a class="nav-link " id="vert-tabs-3-tab" data-toggle="pill" href="#vert-tabs-3" role="tab" aria-controls="vert-tabs-3" aria-selected="false">
+						Plan d'actions
+					</a>
+					<a class="nav-link" id="vert-tabs-4-tab" data-toggle="pill" href="#vert-tabs-4" role="tab" aria-controls="vert-tabs-4" aria-selected="false">
+						Actions
+					</a>
+					<a class="nav-link" id="vert-tabs-5-tab" data-toggle="pill" href="#vert-tabs-5" role="tab" aria-controls="vert-tabs-5" aria-selected="false">
+						Déploiements
+					</a>
+				</div>
+			</div>
+			<div class="col-7 col-sm-9">
+				<div class="tab-content" id="vert-tabs-tabContent">
+					<div class="tab-pane text-left fade active show" id="vert-tabs-1" role="tabpanel" aria-labelledby="vert-tabs-1-tab">
+						<p>
+							Avant d'aborder les données de la page d'accueil, il est nécessaire de donner une définition des termes utilisées.
+						</p>
+						<p>
+							<a href="{{ absolute_url( asset('doc/presentation_application_par.pptx')) }}">Powerpoint de présentation des notions</a>
+						</p>
+						<p>
+							Un plan d'actions contient des actions classées suivant des pôles, des thématiques et des catégories
+						</p>
+						<p>
+							Les pôles, thématiques et catégories sont des informations obligatoires.
+						</p>
+						<p>
+							Une action doit être complétée par des organismes : dans l'application on nomme ceci un déploiement. Donc 1 action peut avoir 1 ou plusieurs déploiements. Chaque déploiement ne conserne qu'un organisme.
+						</p>
+						<p>
+							Une action est mesurée à l'aide d'indicateurs. Chaque action a au moins 1 indicateur. Les indicateurs sont associées aux déploiements. Les déploiement peuvent avoir des indicateurs différents.
+						</p>
+						<p>
+							Les indicateurs peuvent être de différentes natures, avoir un poids différents dans le calcul du taux et ne pas entrer dans le calcul du taux. Ils peuvent être quantitatifs ou qualitatifs.
+						</p>
+						<p>
+							Pour définir les agents autorisés à consulter et modifier les actions et les déploiements, l'application utilise des corbeille qui contiennent les utilisateurs.
+						</p>
+						<p>
+							Lors de la création d'un déploiement, la corbeille par défaut de l'organisme est automatiquement associée. Généralement, elle doit contenir le gestionnaire local afin de lui permettre d'ajouter d'autre corbeille au déploiement. Cette façon de faie permet à l'organisme d'éêtre autonome dans sa gestion des déploiements.
+						</p>
+						<p>
+							Une action peut avoir plusieurs états :
+							<ul>
+								<li>Brouillon : l'acion est en cours de création</li>
+								<li>COTECH : L'action est en partie terminée et est en validation au COTECH</li>
+								<li>CODIR : L'action est en partie terminée et est en validation au CODIR. Elle a été validé par le COTECH</li>
+								<li>A reprendre : L'action a été rejetée par le COTECH ou le CODIR</li>
+								<li>Méthodologie : Après validation par le COTECH et le CODIR, l'action est complétée de la méthodologie</li>
+								<li>Déployée : Le déploiement est automatique dès que la date de début de déploiement est atteinte. Les déploiement sont accessibles</li>
+								<li>A mesurer : A la date de fin de déploiement, l'action est automatiquement basculée dans cet état. Les déploiement ne sont plus accessibles</li>
+								<li>Clôturée : Dès que la mesure est faite, l'action est clôturée</li>
+							</ul>
+						</p>
+						<p>
+							Les déploiements quand à eux ne sont accessibles pour compléter les indicateurs uniquement lors de la phase de publication d'une action.
+						</p>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-2" role="tabpanel" aria-labelledby="vert-tabs-2-tab">
+						<p>
+							La page d'accueil se décompose en trois section :
+							<ul>
+								<li>La liste des plans d'actions</li>
+								<li>Les indicateurs sur les actions</li>
+								<li>Les indicateurs sur les déploiements</li>
+							</ul>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_1.png')) }}">
+						</div>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-3" role="tabpanel" aria-labelledby="vert-tabs-3-tab">
+						<blockquote>
+							Ne sont affichés que les plans d'actions valides et non archivés
+						</blockquote>
+						<p>
+							Chaque bloc de plan d'actions contient les informations suivantes
+							<ul>
+								<li>Le nom du plan d'actions</li>
+								<li>Le taux</li>
+								<li>Le nombre d'actions</li>
+							</ul>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_2.png')) }}">
+						</div>
+						<p>
+							Pour afficher le détails d'un plan d'actions, il vous suffit de cliquer sur celui-ci
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_3.png')) }}">
+						</div>
+						<p>
+							Vous pouvez cliquez sur le terme
+							<b>Les actions</b>
+							pour afficher toutes les actions du plan d'actions
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_4.png')) }}">
+						</div>
+						<p>
+							Vous pouvez soit filter par rapport aux pôles ou afficher l'action souhaitée. Suivant vos habilitations, vous pourrez également modifier une action.
+						</p>
+						<p>
+							Pour chaque action, sont affichées :
+							<ul>
+								<li>La référence de l'action</li>
+								<li>Le nom de l'action</li>
+								<li>Son classement</li>
+								<li>La date de fin de déploiement</li>
+								<li>Le jalon déclaré par un utilisateur</li>
+								<li>Le taux</li>
+								<li>Eventuellement Le bouton
+									<b>modifier</b>
+								</li>
+							</ul>
+
+						</p>
+
+						<p>
+							ou vous pouvez cliquez sur un pôle pour afficher toutes les actions du pôle
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_5.png')) }}">
+						</div>
+						<p>
+							Il vous sera alors possible de filter par rapport aux thématiques
+						</p>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-4" role="tabpanel" aria-labelledby="vert-tabs-4-tab">
+						<p>
+							Cette permet de présenter les indicateurs associés aux actions.
+						</p>
+						<blockquote>
+							Il faut avoir des droits en modification pour consulter les indicateurs
+						</blockquote>
+
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_6.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Les jalons</h2>
+						<p></p>
+						<p>
+							Un jalon est une date posée sur une action par un utilisateur. Cette date permet de reprendre l'action lorsque l'échéance arrive.
+						</p>
+						<p>
+							Suivant l'état de l'actions, l'action sera affichée dans une des 3 zones (jalon pour les pilotes, pour le cotech ou le codir)
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_7.png')) }}">
+						</div>
+						<p>
+							4 informations sont présentes
+							<ul>
+								<li>Les actions sans jalons</li>
+								<li>Les jalons dépassés</li>
+								<li>Les jalons <= à 15 jours</li>
+								<li>Les jalons > à 15 jours</li>
+							</ul>
+						</p>
+						<p>
+							En cliquant sur un indicateur, vous accédez à la liste des actions associées.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_8.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Mes actions</h2>
+						<p>
+							Cette zone permet d'afficher le nombre d'actions que vous pouvez modifier dans les états
+							<ul>
+								<li>Brouillon</li>
+								<li>A reprendre</li>
+								<li>A finaliser</li>
+								<li>A mesurer</li>
+							</ul>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_9.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Mes supervisions</h2>
+						<p>
+							Cette zone permet d'afficher le nombre d'actions que vous pouvez modifier dans les états
+							<ul>
+								<li>Au COTECH</li>
+								<li>Au CODIR</li>
+								<li>Publiées</li>
+								<li>Clôturées</li>
+							</ul>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_10.png')) }}">
+						</div>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-5" role="tabpanel" aria-labelledby="vert-tabs-5-tab">
+						<p>
+							Cette permet de présenter les indicateurs associés aux déploiements.
+						</p>
+						<blockquote>
+							Il faut avoir des droits en modification pour consulter ces indicateurs
+						</blockquote>
+
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_11.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Les jalons</h2>
+						<p></p>
+						<p>
+							Un jalon est une date posée sur un déploiement par un utilisateur. Cette date permet de reprendre le déploiement lorsque l'échéance arrive.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_12.png')) }}">
+						</div>
+						<p>
+							4 informations sont présentes
+							<ul>
+								<li>Les déploiements sans jalons</li>
+								<li>Les jalons dépassés</li>
+								<li>Les jalons <= à 15 jours</li>
+								<li>Les jalons > à 15 jours</li>
+							</ul>
+						</p>
+						<p>
+							En cliquant sur un indicateur, vous accédez à la liste des déploiements associés.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_14.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Mes déploiements</h2>
+						<p>
+							Cette zone permet d'afficher le nombre de déploiements que vous pouvez modifier dans les états
+							<ul>
+								<li>Publié</li>
+								<li>Clôturé</li>
+							</ul>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/home_13.png')) }}">
+						</div>
+
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div><!-- /.card --></div>

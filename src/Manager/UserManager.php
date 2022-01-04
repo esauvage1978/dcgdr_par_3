@@ -27,11 +27,13 @@ use App\Helper\ParamsInServices;
 use App\Validator\UserValidator;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserManager
 {
-    /** @var UserPasswordEncoderInterface */
+    /**
+     * @var UserPasswordHasherInterface
+     */
     private $passwordEncoder;
 
     /** @var EntityManagerInterface */
@@ -49,7 +51,7 @@ class UserManager
     public function __construct(
         EntityManagerInterface $manager,
         UserValidator $validator,
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordEncoder,
         UserRepository $userRepository,
         ParamsInServices $params
     ) {
@@ -81,20 +83,26 @@ class UserManager
         $this->checkAvatar($item);
     }
 
-    public function initialise(User $user, $oldUserMail = null)
+    public function initialise(User $user, $oldUserData = null)
     {
         $this->encodePassword($user);
 
         if ($user->getCreatedAt() === null) {
             $user->setCreatedAt(new DateTime());
             $user->setisEnable(true);
+            $user->setAccountValidated(false);
         } else {
             $user->setModifiedAt(new DateTime());
         }
 
+        if(!$user->getAccountValidated() && $user->getAccountValidatedToken()===null)
+        {
+            $user
+            ->setAccountValidatedToken(md5(random_bytes(50)));
+        }
         if (
-            ! $user->getEmailValidatedToken() or
-            ($user->getEmail() !== $oldUserMail and $oldUserMail !== null)
+            !$user->getEmailValidatedToken() or
+            ($oldUserData !== null and $user->getEmail() !== $oldUserData->getEmail())
         ) {
             $user
                 ->setEmailValidated(false)
@@ -105,6 +113,16 @@ class UserManager
 
         if(null == $user->getUserParam()) {
             $user->setUserParam((new UserParam()));
+        }
+
+        foreach ($user->getOrganismes() as $organisme)
+        {
+            $organisme->addUser($user);
+        }
+
+        foreach ($user->getCorbeilles() as $corbeille)
+        {
+            $corbeille->addUser($user);
         }
 
         return true;
@@ -157,7 +175,7 @@ class UserManager
 
         if ($plainPassword) {
             $user->setPassword(
-                $this->passwordEncoder->encodePassword(
+                $this->passwordEncoder->hashPassword(
                     $user,
                     $plainPassword
                 )

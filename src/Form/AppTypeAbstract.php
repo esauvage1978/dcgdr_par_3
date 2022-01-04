@@ -108,6 +108,7 @@ abstract class AppTypeAbstract extends AbstractType
             ->add('organisme', EntityType::class, [
                 'class' => Organisme::class,
                 self::CHOICE_LABEL => 'fullname',
+                self::LABEL=> 'Organisme',
                 self::MULTIPLE => false,
                 self::ATTR => ['class' => 'select2'],
                 self::REQUIRED => true,
@@ -123,7 +124,7 @@ abstract class AppTypeAbstract extends AbstractType
         $builder
             ->add('corbeilles', EntityType::class, [
                 'class' => Corbeille::class,
-                self::CHOICE_LABEL => 'name',
+                self::CHOICE_LABEL => 'fullname',
                 self::MULTIPLE => true,
                 self::ATTR => ['class' => 'select2'],
                 self::REQUIRED => false,

@@ -36,6 +36,7 @@ class Cible implements EntityInterface
     public function __construct()
     {
         $this->actions = new ArrayCollection();
+        $this->setIsEnable(true);
     }
 
     public function getId(): ?int

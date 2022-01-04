@@ -1,0 +1,1001 @@
+<div class="card card-primary card-outline ">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-5 col-sm-3">
+				<div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+					<a class="nav-link active" id="vert-tabs-1-tab" data-toggle="pill" href="#vert-tabs-1" role="tab" aria-controls="vert-tabs-1" aria-selected="true">
+						Ajout d'une action
+					</a>
+					<a class="nav-link" id="vert-tabs-2-tab" data-toggle="pill" href="#vert-tabs-2" role="tab" aria-controls="vert-tabs-2" aria-selected="false">
+						Modifier une action
+					</a>
+					<a class="nav-link" id="vert-tabs-3-tab" data-toggle="pill" href="#vert-tabs-3" role="tab" aria-controls="vert-tabs-3" aria-selected="false">
+						Les états d'une action
+					</a>
+					<a class="nav-link" id="vert-tabs-4-tab" data-toggle="pill" href="#vert-tabs-4" role="tab" aria-controls="vert-tabs-4" aria-selected="false">
+						Les indicateurs
+					</a>
+					<a class="nav-link" id="vert-tabs-5-tab" data-toggle="pill" href="#vert-tabs-5" role="tab" aria-controls="vert-tabs-5" aria-selected="false">
+						Les organismes
+					</a>
+					<a class="nav-link" id="vert-tabs-6-tab" data-toggle="pill" href="#vert-tabs-6" role="tab" aria-controls="vert-tabs-6" aria-selected="false">
+						Associer les indicateurs aux organismes
+					</a>
+					<a class="nav-link" id="vert-tabs-7-tab" data-toggle="pill" href="#vert-tabs-7" role="tab" aria-controls="vert-tabs-7" aria-selected="false">
+						Notification
+					</a>
+					<a class="nav-link" id="vert-tabs-8-tab" data-toggle="pill" href="#vert-tabs-8" role="tab" aria-controls="vert-tabs-8" aria-selected="false">
+						Les traces
+					</a>
+				</div>
+			</div>
+			<div class="col-7 col-sm-9">
+				<div class="tab-content" id="vert-tabs-tabContent">
+					<div class="tab-pane text-left fade active show" id="vert-tabs-1" role="tabpanel" aria-labelledby="vert-tabs-1-tab">
+						<p>A partir du menu principal, appuyez sur
+							<b>Action</b>
+							puis
+							<b>création</b>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/action_1.png')) }}">
+						</div>
+						<p>
+							Le formulaire de création d'une action s'affiche.
+						</p>
+						<blockquote>
+							Il faut être à minima
+							<b>gestionnaire</b>
+							pour créer des actions. Si ce n'est pas le cas le menu n'est pas présent. Si vous allez directement sur l'adresse de création des actions, un message d'accès interdit sera affiché.<br/>
+							Vous pouvez vérifier vos droits sur votre profil
+						</blockquote>
+						<p class="mt-5">
+							<div class="alert alert-info ">
+								<h5>
+									<i class="icon fas fa-info"></i>Info bulle
+								</h5>
+
+								<p>Lors du survol avec la souris de chaque zone, une aide succinte est affichée</p>
+							</div>
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Le classement</h2>
+						<p>
+							cette zone concerne les informations suivantes :
+							<ul>
+								<li>Plan d'actions</li>
+								<li>Pôle</li>
+								<li>Thématique</li>
+								<li>Catégorie</li>
+							</ul>
+							Les données sont obligatoires.
+
+						</p>
+						<p>Il faut donc créer l'arborescence de classement avant de créer l'action.
+						</p>
+						<p>
+							<div class="doc-image mt-4 mb-4">
+								<img src="{{ absolute_url( asset('doc/action_2.png')) }}"></div>
+						</p>
+						<p>
+							Lorsqu'une catégorie est sélectionnée, l'application affiche automatiquement les actions déjà présentes. Le but étant de consulter les références utilisées.
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Les informations générales</h2>
+						<p>
+							La référence finale est composée de :
+							<ul>
+								<li>la référence de la thématique</li>
+								<li>la référence de la catégorie</li>
+								<li>la référence de l'action</li>
+							</ul>
+						</p>
+						<p>
+							Si nous prenons l'exemple de la capture d'écran, il faudra saisir
+							<b>02</b>
+							pour cette nouvelle action.
+						</p>
+						<p>
+							Le nom de l'action est obligatoire. Cette information doit être succinte mais précise.
+						</p>
+						<p>
+							L'information complémentaire n'est pas obligatoire mais conseillé pour aider les utilisateurs. Cette zone est concernée par la recherche, ce qui n'est pas le cas du contenu des documents joints.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/action_3.png')) }}">
+						</div>
+						<p>
+							Finalisez la création en appuyant sur le bouton
+							<b>Sauvegarder</b>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/btn_save_large.png')) }}">
+						</div>
+						<p>
+							Vous pouvez maintenant modifier l'action.
+						</p>
+						<blockquote>
+							L'action est dans l'état
+							<b>brouillon</b>
+						</blockquote>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-2" role="tabpanel" aria-labelledby="vert-tabs-2-tab">
+						<p>
+							Si le message ci-dessous s'affiche, cela veut simplement signifier que vous n'avez aucun droit de contributeur pour ajouter des porte-documents.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/action_4.png')) }}">
+						</div>
+						<p>
+							Vous pouvez vous rapprocher d'un administrateur pour mettre à jour vos droits si vous devez modifier une action.
+						</p>
+						<p>
+							Le gestionnaire à la possibilité de motifier une action. Suivant l'état de celle ci, les personnes dans les différentes corbeilles (pilotage, COTECH ou CODIR) peuvent modifier tout ou partie des données.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/action_5.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">L'action est dans l'état
+							<b>brouillon</b>
+						</h2>
+						<blockquote>
+							Les gestionnaires et toutes personnes dans le corbeille de pilotage associée à l'action peuvent modifier une action.
+						</blockquote>
+						<p>
+							Comme pour la création, vous pouvez modifier les informations :
+							<ul>
+								<li>Nom de l'action</li>
+								<li>Référence</li>
+								<li>Classement (plan d'actions, pôle, thématique et catégorie</li>
+								<li>Informations complémentaires</li>
+							</ul>
+						</p>
+						<p>
+							Lors de la modification, vous pouvez également modifier les champs suivants :
+							<ul>
+								<li>Les dates du déploiement (début et fin)</li>
+								<li>Le jalon</li>
+								<li>Les données de cadrage : en saisissant du texte mais également en ajoutant des liens et des fichiers</li>
+								<li>Les corbeilles pour modifier: pilotage, cotech, codir
+								</li>
+								<li>Les corbeilles de consultation, il est également possible de choisir de rendre l'action consultable par tous</li>
+								<li>Les cibles de l'action</li>
+								<li>Les vecteurs de communication</li>
+								<li>Et enfin les fichiers et liens associés à l'action</li>
+							</ul>
+
+						</p>
+						<p>
+							Une fois ces informations complétées, il faudra les enregistrer en appuyant sur le bouton
+							<img src="{{ absolute_url( asset('doc/btn_save_large.png')) }}">
+						</p>
+						<p>
+							<div class="alert alert-danger ">
+								<h5>
+									<i class="icon fas fa-danger"></i>Ajout des indicateurs et organismes
+								</h5>
+
+								<p>Il faut sauvegarder les données avant d'ajouter les indicateurs et les organismes</p>
+								<p>Une section spécifique traite ces sujets</p>
+							</div>
+						</p>
+						<p>
+							Tant que les informations minimales ne sont pas présentes, il ne sera pas possible d'envoyer l'action au COTECH
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/action_6.png')) }}">
+						</div>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-3" role="tabpanel" aria-labelledby="vert-tabs-3-tab">
+						<p>
+							L’application DCGDR PAR est basé sur un workflow.
+						</p>
+						<p>
+							Une action à un cycle de vie correspondant au schéma ci-dessous. L’action commence à l’état « ACTION PROPOSEE » pour finir à l’état « ACTION CLOTUREE ». Le passage d’un état à un autre s’appelle une transition. La transition peut être automatique ou manuelle. Dans le cas d’une transition manuelle, elle est déclenché par des utilisateurs (pilotes, valideurs…). Un commentaire est systématiquement ajouté lors d’une transition.
+
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/workflow_1.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Etat
+							<b>brouillon</b>
+							ou
+							<b>0. action proposée</b>
+						</h2>
+						<p>
+							<table class="table table-striped table-bordered table-hover table-sm">
+								<tr>
+									<td class="bg-p-dark text-white">Description</td>
+									<td>Etat initial de toute action.
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Intervenant</td>
+									<td>Gestionnaire ou personne dans les corbeilles de pilotage</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) précédent(s)</td>
+									<td>
+										<ul>
+											<li>A reprendre : envoi manuel. Cette état est une possibilité
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) suivant(s)</td>
+									<td>
+										<ul>
+											<li>COTECH : envoi manuel sous réserve de la complétude de l'action</li>
+											<li>Abandonné : envoi manuel</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Données modifiables</td>
+									<td>
+										<ul>
+											<li>Action
+												<ul>
+													<li>Nom de l’action</li>
+													<li>Référence de l’action</li>
+													<li>Classement de l’action</li>
+													<li>Date de début de déploiement</li>
+													<li>Date de fin de déploiement</li>
+													<li>Jalon</li>
+													<li>Si l'acion est expérimentale</li>
+													<li>Cadrage et les liens et fichiers associées</li>
+													<li>Les liens et fichiers de l'action</li>
+													<li>Informations complémentaires</li>
+													<li>Corbeilles des pilotes</li>
+													<li>Corbeilles des COTECH et CODIR</li>
+													<li>Corbeille des consultants</li>
+												</ul>
+											</li>
+											<li>>Indicateur(s)
+												<ul>
+													<li>Libellé de l’indicateur</li>
+													<li>Prise en compte du taux dans le calcul</li>
+													<li>Pondération de l'indicateur</li>
+													<li>Type d’indicateur</li>
+													<li>Affichage</li>
+													<li>Description</li>
+													<li>Objectif éventuel</li>
+													<li>Valeur initiale éventuelle</li>
+												</ul>
+											</li>
+											<li>Organisme(s)</li>
+
+											<lI>Association Indicateur / organisme : un déploiement</li>
+										</ul>
+									</td>
+								</tr>
+							</table>
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Etat
+							<b>COTECH</b>
+						</h2>
+						<p>
+							<table class="table table-striped table-bordered table-hover table-sm">
+								<tr>
+									<td class="bg-p-dark text-white">Description</td>
+									<td>En attende de validation par le COTECH.
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Intervenant</td>
+									<td>Gestionnaire ou personne dans les corbeilles du COTECH</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) précédent(s)</td>
+									<td>
+										<ul>
+											<li>Action proposée : envoi manuel
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) suivant(s)</td>
+									<td>
+										<ul>
+											<li>CODIR : envoi manuel
+											</li>
+											<li>A REPRENDRE : envoi manuel
+											</li>
+											<li>Abandonné : envoi manuel</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Données modifiables</td>
+									<td>
+										<ul>
+											<li>Action
+												<ul>
+													<li>Jalon</li>
+													<li>Informations complémentaires</li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+								</tr>
+							</table>
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Etat
+							<b>CODIR</b>
+						</h2>
+						<p>
+							<table class="table table-striped table-bordered table-hover table-sm">
+								<tr>
+									<td class="bg-p-dark text-white">Description</td>
+									<td>En attende de validation par le CODIR.
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Intervenant</td>
+									<td>Gestionnaire ou personne dans les corbeilles du CODIR</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) précédent(s)</td>
+									<td>
+										<ul>
+											<li>COTECH : envoi manuel
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) suivant(s)</td>
+									<td>
+										<ul>
+											<li>rédaction de la méthodologie : envoi manuel
+											</li>
+											<li>A REPRENDRE : envoi manuel
+											</li>
+											<li>Abandonné : envoi manuel</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Données modifiables</td>
+									<td>
+										<ul>
+											<li>Action
+												<ul>
+													<li>Jalon</li>
+													<li>Informations complémentaires</li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+								</tr>
+							</table>
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Etat
+							<b>A reprendre</b>
+						</h2>
+						<p>
+							<table class="table table-striped table-bordered table-hover table-sm">
+								<tr>
+									<td class="bg-p-dark text-white">Description</td>
+									<td>Action rejetée en COTECH ou CODIR.
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Intervenant</td>
+									<td>Gestionnaire ou personne dans les corbeilles de pilotage</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) précédent(s)</td>
+									<td>
+										<ul>
+											<li>COTECH : envoi manuel
+											</li>
+											<li>CODIR : envoi manuel
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) suivant(s)</td>
+									<td>
+										<ul>
+											<li>Brouillon : envoi manuel</li>
+											<li>Abandonné : envoi manuel</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Données modifiables</td>
+									<td>
+										Aucunes
+									</td>
+								</tr>
+							</table>
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Etat
+							<b>Méthodologie</b>
+						</h2>
+						<p>
+							<table class="table table-striped table-bordered table-hover table-sm">
+								<tr>
+									<td class="bg-p-dark text-white">Description</td>
+									<td>Permet de compléter l'action des données méthodologique
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Intervenant</td>
+									<td>Gestionnaire ou personne dans les corbeilles de pilotage</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) précédent(s)</td>
+									<td>
+										<ul>
+											<li>CODIR : envoi manuel
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) suivant(s)</td>
+									<td>
+										<ul>
+											<li>Déploiement : envoi manuel si forçage sinon automatique à la date du début de déploiement
+											</li>
+											<li>Abandonné : envoi manuel</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Données modifiables</td>
+									<td>
+										<ul>
+											<li>Action
+												<ul>
+													<li>Nom de l’action</li>
+													<li>Référence de l’action</li>
+													<li>Classement de l’action</li>
+													<li>Date de début de déploiement</li>
+													<li>Date de fin de déploiement</li>
+													<li>Jalon</li>
+													<li>Si l'acion est expérimentale</li>
+													<li>Cadrage et les liens et fichiers associées</li>
+													<li>Les liens et fichiers de l'action</li>
+													<li>Informations complémentaires</li>
+													<li>Corbeilles des pilotes</li>
+													<li>Corbeilles des COTECH et CODIR</li>
+													<li>Corbeille des consultants</li>
+												</ul>
+											</li>
+											<li>>Indicateur(s)
+												<ul>
+													<li>Libellé de l’indicateur</li>
+													<li>Prise en compte du taux dans le calcul</li>
+													<li>Pondération de l'indicateur</li>
+													<li>Type d’indicateur</li>
+													<li>Affichage</li>
+													<li>Description</li>
+													<li>Objectif éventuel</li>
+													<li>Valeur initiale éventuelle</li>
+												</ul>
+											</li>
+											<li>Organisme(s)</li>
+
+											<lI>Association Indicateur / organisme : un déploiement</li>
+										</ul>
+									</td>
+								</tr>
+							</table>
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Etat
+							<b>Déployé</b>
+						</h2>
+						<p>
+							<table class="table table-striped table-bordered table-hover table-sm">
+								<tr>
+									<td class="bg-p-dark text-white">Description</td>
+									<td>L'action est déployée, les organismes peuvent compléter les indicateurs.
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Intervenant</td>
+									<td>Gestionnaire ou personne dans les corbeilles de pilotage pour les données de l'action (jalon)<br>
+										Agent présent dans la corbeille de pilotage du déploiement
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) précédent(s)</td>
+									<td>
+										<ul>
+											<li>Méthodologie : envoi manuel si forçage sinon automatique à la date du début de déploiement
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) suivant(s)</td>
+									<td>
+										<ul>
+											<li>A mesurer : envoi manuel si forçage sinon automatique à la date de fin de déploiement</li>
+											<li>Abandonné : envoi manuel</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Données modifiables</td>
+									<td>
+										<ul>
+											<li>Pour les pilotes de l'action
+												<ul>
+													<li>Le jalon de l'action</li>
+												</ul>
+											</li>
+											<li>Pour les pilote du déploiement
+												<ul>
+													<li>Le jalon du déploiement</li>
+													<li>La date de fin de déploiement</li>
+													<li>Les fichiers joints au déploiement</li>
+													<li>Les résultats des indicateurs</li>
+													<li>Les corbeilles de pilotage et de consultation</li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+								</tr>
+							</table>
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Etat
+							<b>A mesurer</b>
+						</h2>
+						<p>
+							<table class="table table-striped table-bordered table-hover table-sm">
+								<tr>
+									<td class="bg-p-dark text-white">Description</td>
+									<td>Permet de mesurer l'efficacité de l'action
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Intervenant</td>
+									<td>Gestionnaire ou personne dans les corbeilles de pilotage</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) précédent(s)</td>
+									<td>
+										<ul>
+											<li>Publié : envoi manuel si forçage sinon automatique à la date de fin de déploiement
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) suivant(s)</td>
+									<td>
+										<ul>
+											<li>Clôturée : envoi manuel si la mesure est effectuée
+											</li>
+											<li>Abandonné : envoi manuel</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Données modifiables</td>
+									<td>
+										<ul>
+											<li>Action
+												<ul>
+													<li>Jalon</li>
+													<li>Date de début de déploiement</li>
+													<li>Date de fin de déploiement</li>
+													<li>Score d'efficacité</li>
+													<li>Argumentaire</li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+								</tr>
+							</table>
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Etat
+							<b>Clôturée</b>
+						</h2>
+						<p>
+							<table class="table table-striped table-bordered table-hover table-sm">
+								<tr>
+									<td class="bg-p-dark text-white">Description</td>
+									<td>Permet de clôturer l'action
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Intervenant</td>
+									<td>Gestionnaire ou personne dans les corbeilles de pilotage</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) précédent(s)</td>
+									<td>
+										<ul>
+											<li>A mesurer : envoi manuel
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) suivant(s)</td>
+									<td>
+										<ul>
+											<li>Abandonné : envoi manuel</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Données modifiables</td>
+									<td>
+										aucunes
+									</td>
+								</tr>
+							</table>
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Etat
+							<b>Abandonnée</b>
+						</h2>
+						<p>
+							<table class="table table-striped table-bordered table-hover table-sm">
+								<tr>
+									<td class="bg-p-dark text-white">Description</td>
+									<td>Permet d'abandonner une action. Par rapport à la suppression pure et simple, cela permet de conserver une trace
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Intervenant</td>
+									<td>Gestionnaire ou personne dans les corbeilles de pilotage, cotech et codir suivant les états</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) précédent(s)</td>
+									<td>
+										<ul>
+											<li>L'ensemble des états
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Etat(s) suivant(s)</td>
+									<td>
+										<ul>
+											<li>Brouillon : envoi manuel</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td class="bg-p-dark text-white">Données modifiables</td>
+									<td>
+										aucunes
+									</td>
+								</tr>
+							</table>
+						</p>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-4" role="tabpanel" aria-labelledby="vert-tabs-4-tab">
+						<p>
+							A partir de la fenêtre de modification d'une action et dans les état
+							<b>Brouillon</b>
+							et
+							<b>méthodologie</b>, vous avez accès à ce bouton
+							<img src="{{ absolute_url( asset('doc/btn_indicateur_add.png')) }}">
+							qui vous permettra d'ajouter un indicateur
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_1.png')) }}">
+						</div>
+						<p>
+							Cette fenêtre vous permet de créer un indicateur pour l'action.
+						</p>
+						<p>
+							Les champs disponibles sont :
+							<ul>
+								<li>Afficher : permet de masquer un indicateur et de ne pas l'utiliser dans les déploiements</li>
+								<li>Taux pris en compte dans le calcul : Si décoché, les données de l'indicateur n'auront pas d'impact sur le calcul du taux</li>
+								<li>Poids de l'indicateur : valeur par défaut :1. Permet de pondéré le calcul du taux. Ne fonctionne que s'il y a au moins 2 indicateurs</li>
+								<li>Type d'indicateur : Voir section ci-dessous</li>
+								<li>Nom : permet de donner un libellé à l'indicateur</li>
+								<li>Description : La description permet d'orienter les organismes pour la complétude de l'indicateur</li>
+							</ul>
+						</p>
+						<p>
+							<div class="alert alert-info ">
+								<h5>
+									<i class="icon fas fa-info"></i>association avec les organismes
+								</h5>
+
+								<p>L'association sera vue dans une autre section</p>
+							</div>
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Type d'indicateur : Indicateur binaire</h2>
+						<p>
+							Cet indicateur peut avoir 2 réponses : oui et non. dans les 2 cas le taux sera de 100%
+						</p>
+						<p>
+							Pour l'exemple, le nom de l'indicateur correspond à son type
+						</p>
+						<p>Sur l'action et en consultation, il se présentera ainsi. Dans l'exemple, il n'y a qu'un organisme d'associé
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_2.png')) }}">
+						</div>
+						<p>Sur l'action et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_3.png')) }}">
+						</div>
+						<p>Sur le déploiement et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_4.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Type d'indicateur : Indicateur binaire (Oui)</h2>
+						<p>
+							Cet indicateur peut avoir 2 réponses : oui et non. Pour une réponse
+							<b>Oui</b>
+							le taux sera de 100% sinon 0%
+						</p>
+						<p>
+							Pour l'exemple, le nom de l'indicateur correspond à son type
+						</p>
+						<p>Sur l'action et en consultation, il se présentera ainsi. Dans l'exemple, il n'y a qu'un organisme d'associé
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_5.png')) }}">
+						</div>
+						<p>Sur l'action et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_6.png')) }}">
+						</div>
+						<p>Sur le déploiement et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_7.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Type d'indicateur : Indicateur binaire (Non)</h2>
+						<p>
+							Cet indicateur peut avoir 2 réponses : oui et non. Pour une réponse
+							<b>Non</b>
+							le taux sera de 100% sinon 0%
+						</p>
+						<p>
+							Pour l'exemple, le nom de l'indicateur correspond à son type
+						</p>
+						<p>Sur l'action et en consultation, il se présentera ainsi. Dans l'exemple, il n'y a qu'un organisme d'associé
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_8.png')) }}">
+						</div>
+						<p>Sur l'action et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_9.png')) }}">
+						</div>
+						<p>Sur le déploiement et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_10.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Type d'indicateur : Indicateur qualitatif (palier 5)</h2>
+						<p>
+							Cet indicateur peut avoir 21 réponses : de 0 à 100% par palier de 5. la réponse est strictement égale au taux hors pondération.
+						</p>
+						<p>
+							Pour l'exemple, le nom de l'indicateur correspond à son type
+						</p>
+						<p>Sur l'action et en consultation, il se présentera ainsi. Dans l'exemple, il n'y a qu'un organisme d'associé
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_11.png')) }}">
+						</div>
+						<p>Sur l'action et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_12.png')) }}">
+						</div>
+						<p>Sur le déploiement et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_13.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Type d'indicateur : Indicateur qualitatif (palier 10)</h2>
+						<p>
+							Cet indicateur peut avoir 11 réponses : de 0 à 100% par palier de 10. la réponse est strictement égale au taux hors pondération.
+						</p>
+						<p>
+							Pour l'exemple, le nom de l'indicateur correspond à son type
+						</p>
+						<p>Sur l'action et en consultation, il se présentera ainsi. Dans l'exemple, il n'y a qu'un organisme d'associé
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_14.png')) }}">
+						</div>
+						<p>Sur l'action et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_15.png')) }}">
+						</div>
+						<p>Sur le déploiement et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_16.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Type d'indicateur : Indicateur qualitatif (palier 25)</h2>
+						<p>
+							Cet indicateur peut avoir 5 réponses : de 0 à 100% par palier de 25. la réponse est strictement égale au taux hors pondération.
+						</p>
+						<p>
+							Pour l'exemple, le nom de l'indicateur correspond à son type
+						</p>
+						<p>Sur l'action et en consultation, il se présentera ainsi. Dans l'exemple, il n'y a qu'un organisme d'associé
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_17.png')) }}">
+						</div>
+						<p>Sur l'action et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_18.png')) }}">
+						</div>
+						<p>Sur le déploiement et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_19.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Type d'indicateur : Indicateur quantitatif
+						</h2>
+						<p>
+							Cet indicateur est le produit d'un résultat par rapport à un objectif. Le résultat peut donc être supérieur à 100%, aussi appelé sur-performance.
+						</p>
+						<p>
+							Lors de la création d'un indicateur de ce type, il vous est possible de définir l'objectif et la valeur initiale.<br>
+							Par défaut, l'objectif est de 100. Les pilotes du déploiement pourront modifier ces informations.
+						</p>
+						<p>
+							Pour l'exemple, le nom de l'indicateur correspond à son type
+						</p>
+						<p>Sur l'action et en consultation, il se présentera ainsi. Dans l'exemple, il n'y a qu'un organisme d'associé
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_20.png')) }}">
+						</div>
+						<p>Sur l'action et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_21.png')) }}">
+						</div>
+						<p>Sur le déploiement et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_22.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Type d'indicateur : Indicateur quantitatif (objectif figé)
+						</h2>
+						<p>
+							Cet indicateur est le produit d'un résultat par rapport à un objectif. Le résultat peut donc être supérieur à 100%, aussi appelé sur-performance.
+						</p>
+						<p>
+							Lors de la création d'un indicateur de ce type, il vous est possible de définir l'objectif et la valeur initiale.<br>
+							Par défaut, l'objectif est de 100. Les pilotes du déploiement pourront uniquement modifié leur valeur, l'objectif étant figé.
+						</p>
+						<p>
+							Pour l'exemple, le nom de l'indicateur correspond à son type
+						</p>
+						<p>Sur l'action et en consultation, il se présentera ainsi. Dans l'exemple, il n'y a qu'un organisme d'associé
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_23.png')) }}">
+						</div>
+						<p>Sur l'action et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_24.png')) }}">
+						</div>
+						<p>Sur le déploiement et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_25.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Type d'indicateur : Indicateur contributif régional
+						</h2>
+						<p>
+							Cet indicateur est le produit d'un résultat par rapport à un objectif. Le résultat peut donc être supérieur à 100%, aussi appelé sur-performance.
+						</p>
+						<p>
+							Lors de la création d'un indicateur de ce type, il vous faut définir l'objectif .<br>
+						</p>
+						<p>
+							L'atteinte de cet indicateur est la somme des résultats de l'ensemble des déploiements
+						</p>
+						<p>
+							Pour l'exemple, le nom de l'indicateur correspond à son type
+						</p>
+						<p>Sur l'action et en consultation, il se présentera ainsi. Dans l'exemple, il n'y a qu'un organisme d'associé
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_26.png')) }}">
+						</div>
+						<p>Sur l'action et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_27.png')) }}">
+						</div>
+						<p>Sur le déploiement et en modification, il se présentera ainsi.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_28.png')) }}">
+						</div>
+						<p>
+							Les résultats des indicateurs contributifs régionaux sont accessibles de façon centralisée sur la page d'accueil
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/indicateur_29.png')) }}">
+						</div>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-5" role="tabpanel" aria-labelledby="vert-tabs-5-tab">
+						<p>
+							Lors de la modificaion d'une action et uniquement pour les états
+							<b>Brouillon</b>
+							et
+							<b>Méthodologie</b>, vous pouvez ajouter des organismes à une action en appuyant sur
+							<img src="{{ absolute_url( asset('doc/btn_organisme_add.png')) }}">
+						</p>
+						<p>
+							Si l'organisme ajouté n'a pas d'indicateur, il ne sera pas possible de le compléter lors du déploiement.
+						</p>
+						<p>
+							Après avoir appuyer sur le bouton, l'interface suivant s'affiche
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/organisme_5.png')) }}">
+						</div>
+						<p>
+							Pour ajouter un organisme à l'action, il faut appuyer sur le bouton
+							<img src="{{ absolute_url( asset('doc/btn_deployement_add.png')) }}">
+						</p>
+						<p>
+							Lors de l'association entre un organisme et une action, la (ou les) corbeille par défaut de l'oragnisme est ajoutée.
+						</p>
+						<p>
+							Vous pouvez également ajouter des liens et des fichiers à l'organisme.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/deployement_1.png')) }}">
+						</div>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-6" role="tabpanel" aria-labelledby="vert-tabs-6-tab">
+						<p>
+							Il n'y a pas de limite au nombre d'indicateur associé à une action
+						</p>
+						<p>
+							De même qu'une action peut être associée avec 1 ou tous les organismes
+						</p>
+						<p>
+							Enfin vous pouvez ajouter à un organisme, 1 ou tous les indicateurs associés à l'action
+						</p>
+						<p>
+							Cette association indicateur / organisme peut se faire soit à partir des organismes, soit à partir des indicateurs
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/deployement_1.png')) }}">
+						</div>
+						<p>
+							A partir de la page de gestion d'un organisme, la liste des indicateurs est affichée à droite. Lorsque l'indicateur est vert, il est associé, en orange, il ne l'est pas.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/deployement_2.png')) }}">
+						</div>
+						<p>
+							Ou à partir de la page de gestion d'un indicateur, vous pouvez associer les organismes sur le même principe.
+						</p>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-7" role="tabpanel" aria-labelledby="vert-tabs-7-tab"></div>
+					<div class="tab-pane fade" id="vert-tabs-8" role="tabpanel" aria-labelledby="vert-tabs-8-tab"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.card -->
+</div>

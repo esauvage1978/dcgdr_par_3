@@ -10,13 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 use function array_unique;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- */
-class User implements UserInterface, EntityInterface
+ */class User implements UserInterface, EntityInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id()
@@ -109,6 +109,16 @@ class User implements UserInterface, EntityInterface
      */
     private $histories;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $accountValidated;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $accountValidatedToken;
+
 
     public function __construct()
     {
@@ -119,6 +129,7 @@ class User implements UserInterface, EntityInterface
         $this->indicatorValueHistories = new ArrayCollection();
         $this->actionStates = new ArrayCollection();
         $this->histories = new ArrayCollection();
+        $this->setAccountValidated(false);
     }
 
     public function getId(): ?int
@@ -512,4 +523,38 @@ class User implements UserInterface, EntityInterface
 
         return $this;
     }
+        /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function getAccountValidated(): ?bool
+    {
+        return $this->accountValidated;
+    }
+
+    public function setAccountValidated(bool $accountValidated): self
+    {
+        $this->accountValidated = $accountValidated;
+
+        return $this;
+    }
+
+    public function getAccountValidatedToken(): ?string
+    {
+        return $this->accountValidatedToken;
+    }
+
+    public function setAccountValidatedToken(?string $accountValidatedToken): self
+    {
+        $this->accountValidatedToken = $accountValidatedToken;
+
+        return $this;
+    }
+
 }

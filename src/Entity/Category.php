@@ -64,6 +64,7 @@ class Category implements EntityInterface
         $this->setTaux1(0);
         $this->setTaux2(0);
         $this->actions = new ArrayCollection();
+        $this->setIsEnable(true);
     }
 
     public function getId(): ?int

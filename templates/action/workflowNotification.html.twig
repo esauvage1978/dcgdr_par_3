@@ -31,7 +31,7 @@
 						</tr>
 						{% for data in item.actionMailHistories %}
 							<tr>
-								<td>{{ widgets.showLongDate(data.sendAt) }}</td>
+								<td>{{ widgets.showFullDateShortTime(data.sendAt) }}</td>
 								<td>{{ data.content |raw }}</td>
 							</tr>
 						{% endfor %}

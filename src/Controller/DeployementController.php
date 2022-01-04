@@ -8,8 +8,8 @@ use App\Dto\CorbeilleDto;
 use App\Dto\OrganismeDto;
 use App\Dto\DeployementDto;
 use App\Entity\Deployement;
+use App\History\HistoryShow;
 use App\Security\DeployementVoter;
-use App\Form\Admin\DeployementType;
 use App\Manager\DeployementManager;
 use App\Repository\OrganismeRepository;
 use App\Repository\CadrageFileRepository;
@@ -115,21 +115,26 @@ class DeployementController extends AbstractGController
      */
     public function edit(
         Request $request,
-        Deployement $entity,
+        Deployement $item,
         DeployementManager $manager,
         string $message = self::MSG_MODIFY
     ) {
-        $form = $this->createForm(DeployementEditType::class, $entity);
-
+        $this->denyAccessUnlessGranted(DeployementVoter::UPDATE, $item);
+        $form = $this->createForm(DeployementEditType::class, $item);
+        $itemOld = clone ($item);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $manager->save($entity);
-            $this->addFlash(self::SUCCESS, $message);
+            if ($this->manager->save($item)) {
+                $this->addFlash(self::SUCCESS, self::MSG_MODIFY);
+                $this->manager->historize($item, $itemOld);
+            } else {
+                $this->addFlash(self::DANGER, self::MSG_MODIFY_ERROR . $this->manager->getErrors($item));
+            }
         }
 
         return $this->render('deployement/edit.html.twig', [
-            'item' => $entity,
+            'item' => $item,
             self::FORM => $form->createView(),
         ]);
     }
@@ -244,4 +249,24 @@ class DeployementController extends AbstractGController
         ]);
     }
 
+        /**
+     * @Route("/deployement/{id}/history", name="deployement_history", methods={"GET","POST"})
+     * @return Response
+     * @IsGranted("ROLE_USER")
+     */
+    public function historyDeployement(Request $request, Deployement $item)
+    {
+        $this->denyAccessUnlessGranted(DeployementVoter::READ, $item);
+        $historyShow = new HistoryShow(
+            $this->generateUrl('deployement_edit', ['id' => $item->getId()]),
+            "Porte-document : " . $item->getOrganisme()->getFullName(),
+            "Historiques des modifications du déploiement"
+        );
+
+        return $this->render('deployement/history.html.twig', [
+            'item' => $item,
+            'histories' => $item->getHistories(),
+            'data' => $historyShow->getParams()
+        ]);
+    }
 }

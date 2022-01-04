@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DeployementLinkRepository")
  */
-class DeployementLink
+class DeployementLink implements EntityInterface
 {
     /**
      * @ORM\Id()
@@ -27,21 +27,22 @@ class DeployementLink
     private $link;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $content;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Deployement", inversedBy="deployementLinks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $deployement;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $content;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private $modifyAt;
+
+
 
     public function getId(): ?int
     {
@@ -72,18 +73,6 @@ class DeployementLink
         return $this;
     }
 
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function setContent(?string $content): self
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
     public function getDeployement(): ?Deployement
     {
         return $this->deployement;
@@ -96,14 +85,26 @@ class DeployementLink
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getContent(): ?string
     {
-        return $this->updatedAt;
+        return $this->content;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setContent(?string $content): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function getModifyAt(): ?\DateTimeInterface
+    {
+        return $this->modifyAt;
+    }
+
+    public function setModifyAt(?\DateTimeInterface $modifyAt): self
+    {
+        $this->modifyAt = $modifyAt;
 
         return $this;
     }

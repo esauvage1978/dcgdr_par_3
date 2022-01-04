@@ -24,7 +24,7 @@ class GPI implements EntityInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private $modifyAt;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -76,14 +76,14 @@ class GPI implements EntityInterface
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getModifyAt(): ?\DateTimeInterface
     {
-        return $this->updatedAt;
+        return $this->modifyAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setModifyAt(?\DateTimeInterface $modifyAt): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->modifyAt = $modifyAt;
 
         return $this;
     }

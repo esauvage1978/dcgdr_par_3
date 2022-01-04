@@ -82,6 +82,11 @@ class Deployement implements EntityInterface
      */
     private $mailers;
 
+    /**
+     * @ORM\OneToMany(targetEntity=History::class, mappedBy="deployement")
+     */
+    private $histories;
+
     public function __construct()
     {
         $this->setTaux1('0');
@@ -92,6 +97,7 @@ class Deployement implements EntityInterface
         $this->deployementLinks = new ArrayCollection();
         $this->deployementFiles = new ArrayCollection();
         $this->mailers = new ArrayCollection();
+        $this->histories = new ArrayCollection();
 
     }
 
@@ -355,6 +361,36 @@ class Deployement implements EntityInterface
             // set the owning side to null (unless already changed)
             if ($mailer->getDeployement() === $this) {
                 $mailer->setDeployement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|History[]
+     */
+    public function getHistories(): Collection
+    {
+        return $this->histories;
+    }
+
+    public function addHistory(History $history): self
+    {
+        if (!$this->histories->contains($history)) {
+            $this->histories[] = $history;
+            $history->setDeployement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistory(History $history): self
+    {
+        if ($this->histories->removeElement($history)) {
+            // set the owning side to null (unless already changed)
+            if ($history->getDeployement() === $this) {
+                $history->setDeployement(null);
             }
         }
 

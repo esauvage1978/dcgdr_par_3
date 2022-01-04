@@ -60,6 +60,7 @@ class Pole implements EntityInterface
         $this->setTaux1(0);
         $this->setTaux2(0);
         $this->thematiques = new ArrayCollection();
+        $this->setIsEnable(true);
     }
 
     public function getId(): ?int

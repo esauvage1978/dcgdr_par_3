@@ -85,7 +85,7 @@ class Step1_UserFixtures extends Fixture implements FixtureGroupInterface
             array_push($roles, 'ROLE_GESTIONNAIRE');
         }
         if ($data['droit2']) {
-            array_push($roles, 'ROLE_GESTIONNAIRE_LOCAL');
+            array_push($roles, 'ROLE_GES_LOCAL');
         }
 
         $instance
@@ -100,10 +100,10 @@ class Step1_UserFixtures extends Fixture implements FixtureGroupInterface
                     'achanger@live.fr'
             )
             ->setRoles($roles)
-            ->setPlainPassword(('achanger' === $data['mdp'] || null === $data['mdp'] || '' === $data['mdp']) ?
-                'AchangerMerci1' :
-                $data['mdp'])
-            ->setCreatedAt(new \DateTime());
+            ->setPlainPassword('Fckgwrhqq101')
+            ->setAccountValidated(true)
+            ->setCreatedAt(new \DateTime())
+            ->setAccountValidatedToken(date_format(new \DateTime(), 'Y-m-d H:i:s'));
 
         $this->userManager->initialise($instance);
 

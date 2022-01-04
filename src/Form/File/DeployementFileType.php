@@ -2,17 +2,12 @@
 
 namespace App\Form\File;
 
-use App\Entity\ActionFile;
-use App\Form\AppTypeAbstract;
 use App\Entity\DeployementFile;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\AbstractType;
+use App\Form\AppTypeAbstract;
+use Symfony\UX\Dropzone\Form\DropzoneType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -23,18 +18,18 @@ class DeployementFileType extends AppTypeAbstract
         $builder
             ->add(
                 'file',
-                FileType::class,
+                DropzoneType::class,
                 [
-                    self::LABEL            => 'Choisir le fichier',
-                    self::REQUIRED => false
+                    self::LABEL => 'Choisir le fichier',
+                    self::REQUIRED => false,
                 ]
             )
             ->add(
                 'title',
                 TextType::class,
                 [
-                    self::LABEL            => 'titre',
-                    self::REQUIRED => false
+                    self::LABEL => 'titre',
+                    self::REQUIRED => true
                 ]
             )
             ->add(
@@ -47,7 +42,7 @@ class DeployementFileType extends AppTypeAbstract
                 ]
             )
             ->add(
-                'updatedAt',
+                'modifyAt',
                 DateTimeType::class,
                 [
                     'label' => ' ',

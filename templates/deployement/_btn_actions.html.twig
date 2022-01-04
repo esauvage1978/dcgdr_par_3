@@ -5,12 +5,14 @@
 	{% set _save = { 'save': {onclick: 'document.getElementById(\'submit_1\').click();', class:'btn-success',attr:{title:'Sauvegarder'}}} %}
 	{% set _home = { 'home': {url: path('home'),class:'btn-p-dark',attr:{title:'Accueil'}}}  %}
 	{% set _action = { 'action': {url: path('action_show',{id:action.id}),class:'btn-p-dark',attr:{title:'consulter l\'action'}}}  %}
+	{% set _history = { 'history': {url: path('deployement_history',{id:item.id}),class:'btn-p-dark',attr:{title:'historique des modifications'}}} %}
 
 
     {% set actions = {} %}
 
     {% set actions = actions|merge(_home) %}
     {% set actions = actions|merge(_action) %}
+    {% set actions = actions|merge(_history) %}
     {% set actions = actions|merge(_save) %}
 
     {{ widgets.page_actions(actions) }}

@@ -3,20 +3,28 @@
 namespace App\Manager;
 
 use App\Entity\Action;
-use App\Entity\Corbeille;
 use App\Entity\Organisme;
 use App\Entity\Deployement;
 use App\Entity\EntityInterface;
-use App\Repository\CorbeilleRepository;
-use App\Repository\OrganismeRepository;
+use App\History\DeployementHistory;
 use App\Validator\DeployementValidator;
 use Doctrine\ORM\EntityManagerInterface;
 
 class DeployementManager extends AbstractManager
 {
-    public function __construct(EntityManagerInterface $manager, DeployementValidator $validator)
-    {
+    /**
+     * @var DeployementHistory
+     */
+    private $deployementHistory;
+
+
+    public function __construct(
+        EntityManagerInterface $manager,
+        DeployementValidator $validator,
+        DeployementHistory $deployementHistory
+    ) {
         parent::__construct($manager, $validator);
+        $this->deployementHistory = $deployementHistory;
     }
 
     public function initialise(EntityInterface $entity): void
@@ -24,14 +32,12 @@ class DeployementManager extends AbstractManager
         /**
          * @var Deployement
          */
-        $entity=$entity;
-        foreach ($entity->getDeployementFiles() as $deployementFile)
-        {
+        $entity = $entity;
+        foreach ($entity->getDeployementFiles() as $deployementFile) {
             $deployementFile->setDeployement($entity);
         }
 
-        foreach ($entity->getDeployementLinks() as $deployementLink)
-        {
+        foreach ($entity->getDeployementLinks() as $deployementLink) {
             $deployementLink->setDeployement($entity);
         }
     }
@@ -41,7 +47,7 @@ class DeployementManager extends AbstractManager
         Action $action,
         Organisme $organisme,
         array $corbeilles
-    ){
+    ) {
         /** @var Organisme $organisme */
         $deployement
             ->setAction($action)
@@ -54,5 +60,13 @@ class DeployementManager extends AbstractManager
         $this->save($deployement);
 
         return $deployement;
+    }
+
+    public function historize(Deployement $entity, ?Deployement $entityOld = null)
+    {
+        if (null !== $entityOld) {
+            $this->deployementHistory->setHistoryRelation($entity, 'Déploiement');
+            $this->deployementHistory->compare($entityOld, $entity);
+        }
     }
 }

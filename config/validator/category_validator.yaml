@@ -3,7 +3,7 @@ App\Entity\Category:
     - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
         fields: [thematique, name, ref]
         errorPath: name
-        message: 'Le nom de la catégorie "{{ value }}" est déjà déclaré pour cette thématique.'
+        message: 'Le nom de la catégorie et la référence "{{ value }}" est déjà déclaré pour cette thématique.'
     - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
         fields: [thematique, name]
         errorPath: name

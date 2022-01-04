@@ -13,13 +13,14 @@ class PoleType extends AppTypeAbstract
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->buildFormName($builder);
+        $this->buildFormName($builder,'Nom du pôle');
         $this->buildFormIsEnable($builder);
         $this->buildFormContent($builder);
         $builder
             ->add('axe', EntityType::class, [
                 self::CSS_CLASS => Axe::class,
                 self::CHOICE_LABEL => 'name',
+                self::LABEL => 'Plan d\'action',
                 self::MULTIPLE => false,
                 self::ATTR => [self::CSS_CLASS => 'select2'],
                 self::REQUIRED => true,

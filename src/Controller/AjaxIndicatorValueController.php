@@ -41,7 +41,6 @@ class AjaxIndicatorValueController extends AbstractGController
         $indicatorValue = $manager->initialiseEntity($indicator, $deployement, $indicatorValue);
 
         $manager->save($indicatorValue);
-        dump($indicatorValue);
         return $this->json([
             'code' => 200,
             'value' => $indicatorValue->getIsEnable(),

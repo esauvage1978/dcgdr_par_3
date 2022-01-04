@@ -21,10 +21,9 @@
 {% block page_subtitle %}Liste{% endblock %}
 
 {% block breadcrumb %}
-    {% import "default/actions.html.twig" as actions %}
+    {% import "corbeille/actions.html.twig" as actions %}
     {{ actions.admin(
         'list',
-        is_granted('ROLE_GESTIONNAIRE'),
         null,
         domaine
     ) }}
@@ -37,12 +36,20 @@
 
     {{ tables.datatable_header(tableName, columns,  {'striped': true}) }}
     {% for item in items %}
+        {% set hasOrga = false %}
+        {% for orga in app.user.organismes %}
+            {% if orga == item.organisme %}
+                {% set hasOrga = true %}
+            {% endif %}
+        {% endfor %}
+
         <tr>
             <td class="align-middle text-lg">
                 <a href="{{ path(route_show,{id:item.id}) }}"
                    class="text-{{ item.isEnable ? 'p-dark' : 'danger text-bold' }}">
                     {{ item.name }}
                 </a>
+                    
             </td>
 
             <td class="align-middle text-xs ">
@@ -93,7 +100,7 @@
             </td>
 
             <td class=" align-middle text-right">
-                {% if is_granted('ROLE_GESTIONNAIRE') %}
+                {% if item | corbeilleCanUpdate   %}
                     {{ btn.link_button(
                         'Modifier',
                         path(route_edit,{id:item.id}),

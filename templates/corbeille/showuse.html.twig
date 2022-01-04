@@ -5,10 +5,9 @@
 {% endblock %}
 
 {% block breadcrumb %}
-	{% import "default/actions.html.twig" as actions %}
+	{% import "corbeille/actions.html.twig" as actions %}
 	{{ actions.admin(
          'show',
-         is_granted('ROLE_GESTIONNAIRE'),
          item,
          domaine
      ) }}

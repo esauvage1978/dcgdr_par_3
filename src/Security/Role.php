@@ -21,7 +21,7 @@ final class Role
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_GESTIONNAIRE = 'ROLE_GESTIONNAIRE';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
-    public const ROLE_GESTIONNAIRE_LOCAL = 'ROLE_GES_LOCAL';
+    public const ROLE_GES_LOCAL = 'ROLE_GES_LOCAL';
 
     public static function hasData(string $data): bool
     {
@@ -29,7 +29,7 @@ final class Role
             self::ROLE_USER,
             self::ROLE_GESTIONNAIRE,
             self::ROLE_ADMIN,
-            self::ROLE_GESTIONNAIRE_LOCAL
+            self::ROLE_GES_LOCAL
         ];
 
         if (in_array($data, $datas)) {
@@ -52,7 +52,7 @@ final class Role
             'Utilisateur' => self::ROLE_USER,
             'Gestionnaire' => self::ROLE_GESTIONNAIRE,
             'Administrateur' => self::ROLE_ADMIN,
-            'Gestionnaire local' => self::ROLE_GESTIONNAIRE_LOCAL
+            'Gestionnaire local' => self::ROLE_GES_LOCAL
         ];
     }
 
@@ -102,7 +102,7 @@ final class Role
      */
     public static function hasGestionnaireLocal(?User $user): bool
     {
-        return $user !== null  and in_array(self::ROLE_GESTIONNAIRE_LOCAL, $user->getRoles());
+        return $user !== null  and in_array(self::ROLE_GES_LOCAL, $user->getRoles());
     }
 
     /**

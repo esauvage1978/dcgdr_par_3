@@ -15,8 +15,8 @@
 
 
 {% block breadcrumb %}
-    {% import "default/actions.html.twig" as actions %}
-    {{ actions.admin(
+    {% import "organisme/actions.html.twig" as actions %}
+    {{ actions.menu(
         'list',
         is_granted('ROLE_GESTIONNAIRE'),
         null,

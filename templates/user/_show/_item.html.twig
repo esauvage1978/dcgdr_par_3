@@ -30,31 +30,11 @@
 				{% endblock %}
 			{% endembed %}
 
-			{% embed 'widgets/card-widget.html.twig' %}
-				{% block card_class %}
-					border border-info
-				{% endblock %}
-				{% block card_body_class %}
-					text-center
-				{% endblock %}
-				{% block card_body %}
-					{% if item.userParam.isSubscription %}
-						<span class="text-success">
-							<i class="fa fa-check-circle"></i>
-							L'utilisateur est abonné
-						</span>
-					{% else %}
-						<span class="text-danger">
-							<i class="fa fa-times-circle"></i>
-							L'utilisateur n'est pas encore abonné
-						</span>
-					{% endif %}
-				{% endblock %}
-			{% endembed %}
+
 
 			{% embed 'widgets/card-widget.html.twig' %}
-{% import "macros/user.html.twig" as usr %}
-{% import "macros/widgets.html.twig" as widgets %}
+				{% import "macros/user.html.twig" as usr %}
+				{% import "macros/widgets.html.twig" as widgets %}
 
 				{% block card_body %}
 					{% if item.phone %}
@@ -89,7 +69,7 @@
 							</div>
 							<div class="col-9">
 								{% if item.createdat %}
-									{{ widgets.showLongDate(item.createdat) }}
+									{{ widgets.showFullDateShortTime(item.createdat) }}
 								{% endif %}
 							</div>
 						</div>
@@ -102,7 +82,7 @@
 							</div>
 							<div class="col-9">
 								{% if item.modifiedat %}
-									{{ widgets.showLongDate(item.modifiedat) }}
+									{{ widgets.showFullDateShortTime(item.modifiedat) }}
 								{% endif %}
 							</div>
 						</div>
@@ -152,6 +132,18 @@
 							{% endif %}
 						</div>
 						<div class="list-group-item list-group-item-action">
+
+							{% if 'ROLE_GES_LOCAL' in item.roles %}
+								<span class="text-success">
+									<i class="fas fa-check"></i>
+									Gestionnaire local</span>
+							{% else %}
+								<span class="text-danger">
+									<i class="fas fa-times"></i>
+									Gestionnaire local</span>
+							{% endif %}
+						</div>						
+						<div class="list-group-item list-group-item-action">
 							{% if 'ROLE_USER' in item.roles %}
 								<span class="text-success">
 									<i class="fas fa-check"></i>
@@ -172,7 +164,7 @@
 				{% endblock %}
 				{% block card_body %}
 					{% import "macros/organisme.html.twig" as org %}
-					{{ org.views(item.organismes,true) }}
+					{{ org.vignettes(item.organismes,true) }}
 				{% endblock %}
 			{% endembed %}
 
@@ -181,7 +173,7 @@
 				{% endblock %}
 				{% block card_body %}
 					{% import "macros/corbeille.html.twig" as cor %}
-					{{ cor.views(item.corbeilles,true) }}
+					{{ cor.vignettes(item.corbeilles,true) }}
 				{% endblock %}
 			{% endembed %}
 

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Entity(repositoryClass="App\Repository\DeployementFileRepository")
  * @ORM\EntityListeners({"App\Listener\DeployementFileUploadListener"})
  */
-class DeployementFile
+class DeployementFile implements EntityInterface
 {
     /**
      * @ORM\Id()
@@ -17,11 +17,13 @@ class DeployementFile
      * @ORM\Column(type="integer")
      */
     private $id;
-
+ 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $fileName;
+
+    private $file;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -54,30 +56,29 @@ class DeployementFile
      */
     private $content;
 
-    private $file;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $modifyAt;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
     private $size;
 
-
     public function __construct()
     {
         $this->setNbrView(0);
+        $this->setModifyAt(new \DateTime());
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string
      */
     public function getFullName(): ?string
     {
-        return $this->fileName.'.'.$this->fileExtension;
+        return $this->fileName . '.' . $this->fileExtension;
     }
 
     /**
@@ -85,27 +86,17 @@ class DeployementFile
      */
     public function getUploadDir(): string
     {
-        return 'uploads/action/' .
-            $this->getDeployement()->getAction()->getId() . '/' .
-            $this->getDeployement()->getId();
+        return 'uploads/action/' . $this->getDeployement()->getAction()->getId() . '/' . $this->getDeployement()->getId();
     }
 
     public function getHref(): string
     {
-        return $this->getUploadDir() . '/' .
-            $this->getFileName() . '.' .  $this->getFileExtension() ;
+        return $this->getUploadDir() .  '/' . $this->getFileName() . '.' .  $this->getFileExtension();
     }
 
-    public function getFile()
+    public function getId(): ?int
     {
-        return $this->file;
-    }
-
-    public function setFile(UploadedFile $actionsFile): DeployementFile
-    {
-        $this->file = $actionsFile;
-
-        return $this;
+        return $this->id;
     }
 
     public function getFileName(): ?string
@@ -180,6 +171,18 @@ class DeployementFile
         return $this;
     }
 
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile(UploadedFile $deployementsFile): DeployementFile
+    {
+        $this->file = $deployementsFile;
+
+        return $this;
+    }
+
     public function getContent(): ?string
     {
         return $this->content;
@@ -192,6 +195,17 @@ class DeployementFile
         return $this;
     }
 
+    public function getModifyAt(): ?\DateTimeInterface
+    {
+        return $this->modifyAt;
+    }
+
+    public function setModifyAt(?\DateTimeInterface $modifyAt): self
+    {
+        $this->modifyAt = $modifyAt;
+
+        return $this;
+    }
 
     public function getSize(): ?string
     {

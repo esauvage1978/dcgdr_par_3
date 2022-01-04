@@ -1,0 +1,13 @@
+{% extends './mail/template.html.twig' %}
+
+{% block title %} Validation d'un compte {% endblock %}
+{% block title_content %} Validation d'un compte {% endblock %}
+
+{% block body %}
+        <p> Un utilisateur s'est inscrit sur la plateforme :  {{ userToValidate.name }} </p>
+        <p>
+            Merci de l'autoriser et de lui attribuer un organisme en cliquant sur le lien <a  style="color:#57a7fe;text-decoration: none"
+                    href="{{ url('user_edit', {'id': userToValidate.id}) }}">cliquez-ici</a> ou
+            collez le lien suivant dans votre navigateur <span  style="color:#57a7fe;"> {{ url('user_edit', {'id': userToValidate.id}) }} </span>
+        </p>
+{% endblock %}

@@ -3,16 +3,16 @@
 namespace App\History;
 
 use App\Entity\History;
+use App\Helper\ArrayDiff;
 use App\Helper\StackArray;
-use App\Manager\HistoryManager;
+use App\History\HistoryData;
 use App\Security\CurrentUser;
+use App\Manager\HistoryManager;
 use Symfony\Component\Security\Core\Security;
 
 abstract class HistoryAbstract
 {
-    const TYPE_STRING = 'string';
-    const TYPE_BOOL = 'bool';
-    const TYPE_DATE = 'date';
+
     /**
      * @var HistoryManager
      */
@@ -43,63 +43,152 @@ abstract class HistoryAbstract
         $this->stack = new StackArray();
     }
 
-    protected function compareField($field, $oldData, $newData, $type = self::TYPE_STRING): bool
+    protected function compareField(HistoryData $historyData): bool
     {
-        if (!isset($oldData) && !isset($newData)) {
+        if (null === $historyData->getOldData() && null === $historyData->getNewData()) {
             return false;
         }
 
-        $oldData !== $newData ? $add = true : $add = false;
+        $func = 'get' . $historyData->getField();
 
-        switch ($type) {
-            case self::TYPE_BOOL:
-                $oldData = $oldData ? 'Oui' : 'Non';
-                $newData = $newData ? 'Oui' : 'Non';
+        switch ($historyData->getTypeOfData()) {
+            case HistoryData::TYPE_BOOL:
+                $oldData = $historyData->getOldData()->$func() ? 'Oui' : 'Non';
+                $newData = $historyData->getNewData()->$func() ? 'Oui' : 'Non';
                 break;
-            case self::TYPE_DATE:
-                $oldData = $oldData === null ? null : $oldData->format('d/m/Y H:i:s');
-                $newData = $newData === null ? null : $newData->format('d/m/Y H:i:s');
+            case HistoryData::TYPE_DATE:
+                $oldData = $historyData->getOldData()->$func()===null?'':$historyData->getOldData()->$func()->format('d/m/Y H:i:s');
+                $newData = $historyData->getNewData()->$func()===null?'':$historyData->getNewData()->$func()->format('d/m/Y H:i:s');
+                break;
+            case HistoryData::TYPE_STRING:
+                $oldData = $historyData->getOldData()->$func();
+                $newData = $historyData->getNewData()->$func();
                 break;
         }
 
-        if ($add) {
-            $this->addContent($field, $oldData, $newData);
-            return true;
-        }
+        $this->initHistory($oldData,$newData,$historyData);
 
-        return false;
+        return $oldData !== $newData ;
     }
 
-
-    protected function compareFieldOneToOne(string $field, string $fieldEntity, ?object $oldData, ?object $newData): bool
+    private function initHistory($oldData,$newData, HistoryData $historyData)
     {
+        $this->history
+            ->setOldData($oldData)
+            ->setNewData($newData)
+            ->setTitle($historyData->getTitle())
+            ->setCreatedAt(new \DateTime())
+            ->setUser($this->currentUser->getUser());
+
+    }
+
+    protected function compareFieldOneToMany(HistoryData $historyData): bool
+    {
+        $trouve = false;
+        $return = false;
+
+        $func = 'get' . $historyData->getField();
+        
+        foreach ($historyData->getOldData() as $oldData) {
+            $trouve = false;
+            foreach ($historyData->getNewData() as $newData) {
+                if ($oldData->getID() === $newData->getId()) {
+                    $trouve = true;
+                    break;
+                }
+            }
+            $newHistoryData=clone $historyData;
+            $newHistoryData->setOldData($oldData);
+            
+            if ($trouve) {
+                $newHistoryData->setNewData($newData);
+                $this->compareFieldOneToOne($newHistoryData) && $return = true;
+            } else {
+                $newHistoryData
+                    ->setNewData(null)
+                    ->setTitle($historyData->getTitle() . " : supprimé [" . $oldData->getid() . "]");
+
+                $this->ObjectAddOrSupp($newHistoryData, false) && $return = true;
+            }
+        }
+        foreach ($historyData->getNewData() as $newData) {
+            $trouve = false;
+            foreach ($historyData->getOldData() as $oldData) {
+                if ($oldData->getID() === $newData->getId()) {
+                    $trouve = true;
+                    break;
+                }
+            }
+            $newHistoryData=clone $historyData;
+            $newHistoryData->setNewData($newData);
+            if ($trouve) {
+                $newHistoryData->setOldData($oldData);
+                $this->compareFieldOneToOne($newHistoryData) && $return = true;;
+            } else {
+                $newHistoryData->setOldData(null)
+                ->setTitle($historyData->getTitle() . " : ajouté [" . $newData->getid() . "]");;
+                $this->ObjectAddOrSupp($newHistoryData, true) && $return = true;
+            }
+        }
+
+        return $return;
+    }
+
+    protected function ObjectAddOrSupp(HistoryData $historyData, $add = true): bool
+    {
+        $func = 'get' . $historyData->getField();
+        $add?$data=$historyData->getNewData():$data=$historyData->getOldData();
+        switch ($historyData->getTypeOfData()) {
+            case HistoryData::TYPE_BOOL:
+                $dataValue = empty($data) ? '' : ($data->$func() ? 'Oui' : 'Non');
+                break;
+            case HistoryData::TYPE_DATE:
+                $dataValue = empty($data) ? '' : ($data->$func()->format('d/m/Y H:i:s'));
+                break;
+            case HistoryData::TYPE_STRING:
+                $dataValue = empty($data) ? '' : ($data->$func());
+                break;
+        }
+
+        $this->initHistory($add?'ajout':$dataValue,$add?$dataValue:'suppression',$historyData);
+
+        return true;
+    }
+
+    protected function compareFieldOneToOne(HistoryData $historyData): bool
+    {
+        $func = 'get' . $historyData->getField();
+
+        $oldData = null === $historyData->getOldData() ? '' : $historyData->getOldData()->$func();
+        $newData = null === $historyData->getNewData() ? '' : ($historyData->getNewData()->$func());
+
         if ($oldData !== $newData) {
-            $func = 'get' . $fieldEntity;
-            $oldDataValue = empty($oldData) ? '' : ($oldData->$func());
-            $newDataValue = empty($newData) ? '' : ($newData->$func());
-            $this->addContent($field, $oldDataValue, $newDataValue);
-            return true;
+            switch ($historyData->getTypeOfData()) {
+                case HistoryData::TYPE_BOOL:
+                    $oldData = null=== $oldData ? '' : ($oldData ? 'Oui' : 'Non');
+                    $newData = null=== $newData ? '' : ($newData ? 'Oui' : 'Non');
+                    break;
+                case HistoryData::TYPE_DATE:
+                    $oldData = null=== $oldData ? '' : ($oldData->format('d/m/Y H:i:s'));
+                    $newData = null=== $newData  ? '' : ($newData->format('d/m/Y H:i:s'));
+                    break;
+            }
+
+            $this->initHistory($oldData,$newData,$historyData);
+
+            return true ;
         }
         return false;
     }
 
 
-    protected function addContent(string $field, ?string $oldData, ?string $newData)
-    {
-        $this->stack->push([
-            'field' => $field,
-            'oldData' => (empty($oldData) ? '' : $oldData),
-            'newData' => (empty($newData) ? '' : $newData)
-        ]);
-    }
 
     protected function save()
     {
-        $this->history
-            ->setCreatedAt(new \DateTime())
-            ->setUser($this->currentUser->getUser())
-            ->setContent($this->stack->toArray());
-
-        $this->manager->save($this->history);
+        $historyToSave=clone $this->history;
+        $historyToSave->setId(null);
+        if ($historyToSave->getOldData()!=='' || $historyToSave->getNewData()!=='' ) {
+            $this->manager->save($historyToSave);
+        }
     }
 }

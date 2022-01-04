@@ -3,7 +3,8 @@
 {% import "macros/submit.html.twig" as sub %}
 {% import "macros/save.html.twig" as save %}
 {% import "macros/workflow.html.twig" as wfl %}
-
+{% import "macros/link.html.twig" as link %}
+{% import "macros/file.html.twig" as file %} 
 
 {% block page_subtitle %}Modification
 {% endblock %}
@@ -18,10 +19,10 @@
 {% endblock %}
 
 {% block page_content %}
-	{{ form_start(form) }}
 	<div class="row justify-content-center pb-5">
 		{{ include('action/_show/_name.html.twig') }}
 
+		{{ form_start(form) }}
 		<div class="row col-12">
 			<div id="col1" class="col-sm-12  order-sm-second  col-md-12 order-sm-second col-lg-6 order-lg-second col-xl-2 order-xl-first ">
 
@@ -44,7 +45,7 @@
 
 					{{ include(domaine ~ '/_show/_taux.html.twig') }}
 				</div>
-			</div>
+			</div><!-- end col1 -->
 			<div id="col2" class="col-sm-12  order-sm-first  col-md-12 order-md-first col-lg-12  order-lg-first col-xl-7 order-xl-second  bg-white  p-5">
 				{% if item.stateCurrent in ['started','finalised'] %}
 					{{ include('action/_edit/_name.html.twig') }}
@@ -70,52 +71,89 @@
 				{% else %}
 					{{ include('action/_show/_info_part.html.twig') }}
 				{% endif %}
+				<div class="row col-12 mt-5 ">
+					<div id="col4" class="col-sm-12 col-md-12 col-lg-5  ">
+						<div class="bg-white  card-body h-100">
 
-
+							{% if item.stateCurrent in ['started','finalised'] %}
+								{{ include('action/_edit/_cibles.html.twig') }}
+								{{ include('action/_edit/_vecteurs.html.twig') }}
+							{% else %}
+								{{ include('action/_show/_cibles.html.twig') }}
+								{{ include('action/_show/_vecteurs.html.twig') }}
+							{% endif %}
+						</div>
+					</div>
+					<div id="col5" class="col-sm-12 col-md-12 col-lg-7">
+						<div class="bg-white  card-body h-100">
+							{% if item.stateCurrent in ['started','finalised'] %}
+								{{ include('action/_edit/_intervenant.html.twig') }}
+							{% else %}
+								{{ include('action/_show/_intervenant.html.twig') }}
+							{% endif %}
+						</div>
+					</div>
+				</div>
 				{{ save.btn()}}
-			</div>
+			</div><!-- end col2 -->
 			<div id="col3" class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-<h4 class="text-p-dark  p-2 rounded">Etat du porte-document</h4>
-<hr/>
+				<h4 class="text-p-dark  p-2 rounded">Etat du porte-document</h4>
+				<hr/>
 
-{{ wfl.cards(item) }}
+				{{ wfl.cards(item) }}
 
-			</div>
+			</div><!-- end col3 -->
 		</div>
-<div class="row col-12 mt-5 justify-content-center">
+		<div class="d-none">{{ sub.btn() }}{{form_rest(form)}}</div>
+		{{ form_end(form) }}
+		<!-- end form -->
+		<div class="row col-12 mt-5 ">
+			<div class="col-sm-12 col-md-12 col-lg-7 offset-lg-2  bg-white  p-5">
+				{% if item.stateCurrent in ['started','finalised'] %}
+					<section class=" col-12 js-createTip-wrapper ">
+						<div class="createTip mt-5">
 
-			<div id="col4" class="col-sm-12 col-md-12 col-lg-6 col-xl-4 ">
-				<div class="bg-white  card-body h-100">
+							<div class="createTip__title">
+								Cadrage
+							</div>
+							<p>
+								Permet de déposer les fichiers correspondant au cadrage
+							</p>
+						</div>
+						<h3 class="text-p-dark2">
+							<i class="fas fa-crop-alt"></i>
+							Fichiers du cadrage
+						</h3>
+						<div class="p-3">
+							{{ link.twig('cadragelink') }}
+							{{ file.twig('cadragefile') }}
+						</div>
+					</section>
 
-					{% if item.stateCurrent in ['started','finalised'] %}
-						{{ include('action/_edit/_cibles.html.twig') }}
-						{{ include('action/_edit/_vecteurs.html.twig') }}
-					{% else %}
-						{{ include('action/_show/_cibles.html.twig') }}
-						{{ include('action/_show/_vecteurs.html.twig') }}
-					{% endif %}
-				</div>
-			</div>
-			<div id="col5" class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-				<div class="bg-white  card-body h-100">
-					{% if item.stateCurrent in ['started','finalised'] %}
-						{{ include('action/_edit/_intervenant.html.twig') }}
-					{% else %}
-						{{ include('action/_show/_intervenant.html.twig') }}
-					{% endif %}
-				</div>
-			</div>
-			<div id="col6" class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-				<div class="bg-white  card-body h-100">
-					{% if item.stateCurrent in ['started','finalised'] %}
-						{{ include('action/_edit/_actionFile.html.twig') }}
-					{% else %}
-						{{ include('action/_show/_actionFile.html.twig') }}
-					{% endif %}
-				</div>
-			</div>
-{{ save.btn()}}
+					<section class=" col-12 js-createTip-wrapper mt-5">
+						<div class="createTip mt-5">
 
+							<div class="createTip__title">
+								Action
+							</div>
+							<p>
+								Permet de déposer les fichiers correspondant à l'action
+							</p>
+						</div>
+						<h3 class="text-p-dark2">
+							<i class="fas fa-crop-alt"></i>
+							Fichiers du déploiement
+						</h3>
+						<div class="p-3">
+							{{ link.twig('actionlink') }}
+							{{ file.twig('actionfile') }}
+						</div>
+					</section>
+
+				{% else %}
+					
+				{% endif %}
+			</div>
 		</div>
 		<div class="col-12 bg-white  p-5 mt-5">
 			{% if item.stateCurrent in ['started','finalised'] %}
@@ -133,58 +171,55 @@
 			{% endif %}
 		</div>
 
-		<div class="d-none">{{ sub.btn() }}{{form_rest(form)}}</div>
-
 
 	</div>
-	
 
-	{{ form_end(form) }}
-{% for transition in workflow_transitions(item) %}
-	{{ include('workflow/_modal_transition.html.twig',{'transition':transition.name,'id':item.id}) }}
-{% endfor %}
+
+	{% for transition in workflow_transitions(item) %}
+		{{ include('workflow/_modal_transition.html.twig',{'transition':transition.name,'id':item.id}) }}
+	{% endfor %}
 
 {% endblock %}
 
 {%  block javascripts %}
 	{{ parent() }}
+	<script src="{{ absolute_url( asset('/vendor/axios/dist/axios.min.js')) }}"></script>
+	<script src="{{ absolute_url( asset('/vendor/jquery-form/dist/jquery.form.min.js')) }}"></script>
 	<!-- Select2 -->
 	<script src="{{ absolute_url( asset('js/fillCombobox/fillCombobox.js')) }}"></script>
 	<script src="{{ absolute_url( asset('js/findAction.js')) }}"></script>
-	<script src="{{ absolute_url( asset('/vendor/axios/dist/axios.min.js')) }}"></script>
 	<script src="{{ absolute_url( asset('/js/es_widget.js')) }}"></script>
-	<script src="{{ absolute_url( asset('/js/file/cadrage_file.js')) }}"></script>
-	<script src="{{ absolute_url( asset('/js/file/action_file.js')) }}"></script>
 
-
-
-
-	<script type="text/javascript"> 
-		$(function () {
+	{{ link.script('actionlink', item) }}
+	{{ file.script('actionfile', item) }}
+	{{ link.script('cadragelink', item) }}
+	{{ file.script('cadragefile', item) }}
+	<script type="text/javascript">
+		$(function() {
 
 fillCombobox('#cmb_axe', "{{ path('ajax_combo_axes_isenable') }}", true, {{ item.category.thematique.pole.axe.id }}, 'all');
 });
 
-$('#cmb_axe').change(function () {
+$('#cmb_axe').change(function() {
 fillComboboxChained('#cmb_axe', '#cmb_pole', "{{ path('ajax_combo_poles_isenable') }}", {{ item.category.thematique.pole.axe.id }}, false, {{ item.category.thematique.pole.id }});
 
 
 });
 
-$('#cmb_pole').change(function () {
+$('#cmb_pole').change(function() {
 fillComboboxChained('#cmb_pole', '#cmb_thematique', "{{ path('ajax_combo_thematiques_isenable') }}", true, false, {{ item.category.thematique.id }});
 
 
 });
 
-$('#cmb_thematique').change(function () {
+$('#cmb_thematique').change(function() {
 fillComboboxChained('#cmb_thematique', '#cmb_category', "{{ path('ajax_combo_categorys_isenable') }}", true, false, {{ item.category.id }});
 
 
 });
 
 
-$('#cmb_category').change(function () {
+$('#cmb_category').change(function() {
 
 var id = getVal($('#cmb_category'));
 if (null !== id) {
@@ -205,15 +240,15 @@ var url = '/ajax/actionsforcategory/' + id;
 let showData = $('#showdata');
 showData.fadeOut();
 
-axios.get(url).then(function (response) {
+axios.get(url).then(function(response) {
 showData.fadeIn(300);
 html(showData, response.data.value);
-}).catch(function (error) {
+}).catch(function(error) {
 console.log(error);
 });
 }
 
-$(document).on('change', '.custom-file-input', function () {
+$(document).on('change', '.custom-file-input', function() {
 let fileName = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
 $(this).parent('.custom-file').find('.custom-file-label').text(fileName);
 });
@@ -228,7 +263,6 @@ $('#action_updatedAt_date_day').val(new Date().getDate());
 $('#action_updatedAt_date_year').val(new Date().getFullYear());
 $('#action_updatedAt_time_hour').val(new Date().getHours());
 $('#action_updatedAt_time_minute').val(new Date().getMinutes());
-
 	</script>
 
 {% endblock %}

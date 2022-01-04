@@ -18,6 +18,7 @@ parameters:
     es.mailer.user.name: "%env(ES_MAILER_USER_NAME)%"
     es.mailer.user.mail: "%env(ES_MAILER_USER_MAIL)%"
     es.mailer.user.password: "%env(ES_MAILER_USER_PASSWORD)%"
+
     es.news.time: "%env(ES_NEWS_TIME)%"
     es.jalon.to.near: "%env(ES_JALON_TO_NEAR)%"
     es.directory.css: "%kernel.project_dir%/public/css"
@@ -40,12 +41,8 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class

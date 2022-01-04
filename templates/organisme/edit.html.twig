@@ -3,8 +3,8 @@
 {% block page_subtitle %}Modification{% endblock %}
 
 {% block breadcrumb %}
-    {% import "default/actions.html.twig" as actions %}
-    {{ actions.admin(
+    {% import "organisme/actions.html.twig" as actions %}
+    {{ actions.menu(
         'edit',
         is_granted('ROLE_GESTIONNAIRE'),
         item,

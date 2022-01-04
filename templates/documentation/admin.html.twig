@@ -1,0 +1,710 @@
+<div class="card card-primary card-outline ">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-5 col-sm-3">
+				<div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+					<a class="nav-link active" id="vert-tabs-2-tab" data-toggle="pill" href="#vert-tabs-2" role="tab" aria-controls="vert-tabs-2" aria-selected="true">
+						Organisme
+					</a>
+					<a class="nav-link" id="vert-tabs-3-tab" data-toggle="pill" href="#vert-tabs-3" role="tab" aria-controls="vert-tabs-3" aria-selected="false">
+						Corbeille
+					</a>
+					<a class="nav-link " id="vert-tabs-1-tab" data-toggle="pill" href="#vert-tabs-1" role="tab" aria-controls="vert-tabs-1" aria-selected="false">
+						Utilisateur
+					</a>
+					<a class="nav-link" id="vert-tabs-4-tab" data-toggle="pill" href="#vert-tabs-4" role="tab" aria-controls="vert-tabs-4" aria-selected="false">
+						Informations générales
+					</a>
+					<a class="nav-link" id="vert-tabs-5-tab" data-toggle="pill" href="#vert-tabs-5" role="tab" aria-controls="vert-tabs-5" aria-selected="false">
+						Plan d'actions
+					</a>
+					<a class="nav-link" id="vert-tabs-6-tab" data-toggle="pill" href="#vert-tabs-6" role="tab" aria-controls="vert-tabs-6" aria-selected="false">
+						Pôle
+					</a>
+					<a class="nav-link" id="vert-tabs-7-tab" data-toggle="pill" href="#vert-tabs-7" role="tab" aria-controls="vert-tabs-7" aria-selected="false">
+						Thématique
+					</a>
+					<a class="nav-link" id="vert-tabs-8-tab" data-toggle="pill" href="#vert-tabs-8" role="tab" aria-controls="vert-tabs-8" aria-selected="false">
+						Catégorie
+					</a>
+					<a class="nav-link" id="vert-tabs-9-tab" data-toggle="pill" href="#vert-tabs-9" role="tab" aria-controls="vert-tabs-9" aria-selected="false">
+						Cible
+					</a>
+					<a class="nav-link" id="vert-tabs-10-tab" data-toggle="pill" href="#vert-tabs-10" role="tab" aria-controls="vert-tabs-10" aria-selected="false">
+						Vecteur
+					</a>
+					<a class="nav-link" id="vert-tabs-11-tab" data-toggle="pill" href="#vert-tabs-11" role="tab" aria-controls="vert-tabs-11" aria-selected="false">
+						Calcul des taux
+					</a>
+
+				</div>
+			</div>
+			<div class="col-7 col-sm-9">
+				<div class="tab-content" id="vert-tabs-tabContent">
+					<div class="tab-pane text-left fade " id="vert-tabs-1" role="tabpanel" aria-labelledby="vert-tabs-1-tab">
+
+						<p>
+							Cette section permet de gérer les utilisateurs (ajout, modification, suppression)
+						</p>
+
+						<h2 class="mb-5 text-p-dark">Liste</h2>
+						<blockquote>
+							Les utilisateurs peuvent consulter cette rubrique. les gestionnaires et administrateurs peuvent procéder aux modifications
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/user_5.png')) }}">
+						</div>
+						<p>
+							Les utilisateurs sont ordonnés par le nom.
+						</p>
+						<p>
+							A partir de la liste, il est possible de consulter les habilitations d'un utilisateur, le nombre d'organismes et le nombre de corbeilles.
+						</p>
+						<p>
+							Un élément masqué sera écrit en
+							<span class="text-danger text-bold">rouge</span>.
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Ajout</h2>
+						<blockquote>
+							les administrateurs peuvent procéder aux créations
+						</blockquote>
+						<p>
+							La création d'un utilisateur doit être à la marge. Il est préférable de le laisser s'incrire en autonomie.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/user_6.png')) }}">
+						</div>
+						<p>
+							Le nom complet de l'utilisateur et son adresse mail professionnelle sont obligatoires. exemple : SAUVAGE Emmanuel / emmanuel.sauvage@assurance-maladie.fr
+						</p>
+						<p>
+							Pour rendre utilisable l'utilisateur, il faut cocher la case
+							<b>Afficher</b>
+						</p>
+						<p>
+							Il est possible d'associer les corbeilles et les organismes à la création de l'utilisateur.
+						</p>
+						<p>
+							Toutes les modifications doivent être sauvegardées pour être prise en compte.
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Consultation</h2>
+						<blockquote>
+							Les utilisateurs peuvent consulter cette rubrique.
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/user_7.png')) }}">
+						</div>
+
+						<h2 class="mb-5 mt-5 text-p-dark">Modification</h2>
+						<blockquote>
+							les administrateurs peuvent procéder aux modifications
+						</blockquote>
+						<p>
+							Les données sont identiques à celles de la création
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/user_8.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Suppression</h2>
+						<blockquote>
+							les administrateurs peuvent procéder aux suppressions
+						</blockquote>
+					</div>
+					<div class="tab-pane fade active show" id="vert-tabs-2" role="tabpanel" aria-labelledby="vert-tabs-2-tab">
+
+						<p>
+							Cette section permet de gérer les organismes (ajout, modification, suppression)
+						</p>
+
+						<h2 class="mb-5 text-p-dark">Liste</h2>
+						<blockquote>
+							Les utilisateurs peuvent consulter cette rubrique. les gestionnaires et administrateurs peuvent procéder aux modifications
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/organisme_1.png')) }}">
+						</div>
+						<p>
+							Les organismes sont ordonnés par référence.
+						</p>
+						<p>
+							A partir de la liste, il est possible de consulter
+							<ul>
+								<li>Si l'organisme est administrable par un gestionnaire local</li>
+								<li>le nombre de corbeilles</li>
+								<li>le nombre d'utilisateurs</li>
+
+							</ul>
+
+						</p>
+						<p>
+							Un élément masqué sera écrit en
+							<span class="text-danger text-bold">rouge</span>.
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Ajout</h2>
+						<blockquote>
+							les gestionnaires et administrateurs peuvent procéder aux créations
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/organisme_2.png')) }}">
+						</div>
+						<p>
+							Le nom de l'organisme et sa référence sont obligatoires. exemple : CPAM des Flandres / 594
+						</p>
+						<p>
+							Pour rendre utilisable l'organisme, il faut cocher la case
+							<b>Afficher</b>
+						</p>
+						<p>
+							Pour rendre administrable par un gestionnaire local, il faut cocher la case
+							<b>Administrable</b>
+						</p>
+						<p>
+							Il est possible d'associer les utilisateurs à la création de l'organisme. Saisir les premières lettres du nom permet de filter la liste, il suffit ensuite de cliquer sur le résultat pour ajouter l'utilisateur. Une fois l'utilisateur ajouté, il est possible de le retirer en appuyant sur la croix située à droite du nom.
+						</p>
+						<p>
+							Toutes les modifications doivent être sauvegardées pour être prise en compte.
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Consultation</h2>
+						<blockquote>
+							Les utilisateurs peuvent consulter cette rubrique.
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/organisme_3.png')) }}">
+						</div>
+						<p>
+							Les listes concernant les utilisateurs et les corbeilles sont présentes.
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Modification</h2>
+						<blockquote>
+							les gestionnaires et administrateurs peuvent procéder aux modifications
+						</blockquote>
+						<p>
+							Les données sont identiques à celles de la création
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/organisme_4.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Suppression</h2>
+						<blockquote>
+							les gestionnaires et administrateurs peuvent procéder aux suppressions
+						</blockquote>
+						<p>
+							Il n'est pas possible de supprimer un organisme ayant des corbeilles
+						</p>
+
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-3" role="tabpanel" aria-labelledby="vert-tabs-3-tab">
+
+						<p>
+							Cette section permet de gérer les corbeilles (ajout, modification, suppression)
+						</p>
+
+						<h2 class="mb-5 text-p-dark">Liste</h2>
+						<blockquote>
+							Les utilisateurs peuvent consulter cette rubrique.<br/>
+							les gestionnaires et administrateurs peuvent procéder aux modifications de toutes les corbeilles.
+							<br/>
+							Les gestionnaires locaux peuvent modifier les corbeilles de leur organisme.
+						</blockquote>
+						<blockquote>
+							Chaque organisme doit obligatoirement avoir au minimum une corbeille par défaut.
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/corbeille_1.png')) }}">
+						</div>
+						<p>
+							Les corbeilles sont ordonnées par nom.
+						</p>
+						<p>
+							A partir de la liste, il est possible de consulter le nombre d'utilisateurs ainsi que les droits sur la corbeilles (consultation et modification) ainsi que le nombre de rubriques et sous-rubriques concernées.
+						</p>
+						<p>
+							Un élément masqué sera écrit en
+							<span class="text-danger text-bold">rouge</span>.
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Ajout</h2>
+						<blockquote>
+							les gestionnaires et administrateurs peuvent procéder aux créations pour l'ensemble des organismes<br>
+							Les gestionnaires locaux peuvent créer des corbeilles pour leur organisme.
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/corbeille_2.png')) }}">
+						</div>
+						<p>
+							L'organisme et le nom de la corbeille sont obligatoires. exemple : 594 - Flandres / Agents de la CPAM
+						</p>
+						<p>
+							Pour rendre utilisable la corbeille, il faut cocher la case
+							<b>Afficher</b>
+						</p>
+						<p>
+							Il est possible d'associer les utilisateurs à la création de la corbeille. Saisir les premières lettres du nom permet de filter la liste, il suffit ensuite de cliquer sur le résultat pour ajouter l'utilisateur. Une fois l'utilisateur ajouté, il est possible de le retirer en appuyant sur la croix située à droite du nom.
+						</p>
+						<p>
+							Toutes les modifications doivent être sauvegardées pour être prise en compte.
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Consultation</h2>
+						<blockquote>
+							Les utilisateurs peuvent consulter cette rubrique.
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/corbeille_3.png')) }}">
+						</div>
+						<p>
+							Seront affichés :
+							<ul>
+								<li>Les habilitations</li>
+								<li>La liste des utilisateur présent dans la corbeille</li>
+							</ul>
+						</p>
+						<p>
+							Un lien est présent pour consulter l'utilisation de la corbeille.
+						</p>
+						<h2 class="mb-5 mt-5 text-p-dark">Modification</h2>
+						<blockquote>
+							les gestionnaires et administrateurs peuvent procéder aux modifications.<br>
+							Les gestionnaires locaux peuvent modifier les corbeilles de leur organisme.
+						</blockquote>
+						<p>
+							Les données sont identiques à celles de la création
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/corbeille_4.png')) }}">
+						</div>
+						<h2 class="mb-5 mt-5 text-p-dark">Suppression</h2>
+						<blockquote>
+							les gestionnaires et administrateurs peuvent procéder aux suppressions<br>
+							Les gestionnaires locaux peuvent supprimer les corbeilles de leur organisme.
+						</blockquote>
+
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-4" role="tabpanel" aria-labelledby="vert-tabs-4-tab">
+
+						<p>
+							Cette section permet de gérer les informations affichées sur les pages.
+						</p>
+						<h2 class="mb-5 text-p-dark">Liste</h2>
+						<blockquote>
+							Cette section est réservée aux administrateurs et aux gestionnaires pour la gestion, les utilisateurs peuvent cependant la consulter
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/gpi_1.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Ajout</h2>
+						<blockquote>
+							Cette section est réservée aux administrateurs et aux gestionnaires
+						</blockquote>
+						<p>
+							Il est possible de sélectionner la page de destination de l'information dans la liste déroulante.
+						</p>
+						<p>
+							Le visuel vous permet de choisir la couleur d'affichage de l'information
+						</p>
+						<p>
+							Le nom permet de donner un titre à cette information
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/gpi_2.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Consultation</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/gpi_3.png')) }}">
+						</div>
+
+						<h2 class="mb-5 text-p-dark">Modification</h2>
+						<blockquote>
+							Cette section est réservée aux administrateurs et aux gestionnaires
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/gpi_4.png')) }}">
+						</div>
+						<p>
+							Les informations sont identiques à la création
+						</p>
+
+						<h2 class="mb-5 text-p-dark">Affichage</h2>
+						<blockquote>
+							L'ensemble des utilisateurs auront cette information affichée
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/gpi_5.png')) }}">
+						</div>
+						<p>
+							Dans cet exemple, l'affichage s'effectue sur la page d'accueil
+						</p>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-5" role="tabpanel" aria-labelledby="vert-tabs-5-tab">
+						<blockquote>
+							Cette section est réservée aux administrateurs et aux gestionnaires
+						</blockquote>
+						<p>
+							Cette section permet de gérer les plans d'actions.
+						</p>
+						<p>
+							Un plan d'actions contient de une à plusieurs actions. Une action est obligatoirement regroupée par pôle > thématique > catégorie
+						</p>
+
+						<h2 class="mb-5 text-p-dark">Liste</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/pa_1.png')) }}">
+						</div>
+						<p></p>
+						<h2 class="mb-5 text-p-dark">Consultation</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/pa_2.png')) }}">
+						</div>
+						<p>
+							Lors de la consultation d'une action, les pôles associés sont affichés. Ils sont cliquables et permettent donc de consulter les thématiques associées.
+						</p>
+
+						<h2 class="mb-5 text-p-dark">Ajout</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/pa_3.png')) }}">
+						</div>
+						<p>
+							Pour qu'un plan d'action soit utilisable, il faut que la case
+							<b>afficher</b>
+							soit cochée.
+						</p>
+						<h2 class="mb-5 text-p-dark">Modification</h2>
+						<p>
+							Pour archiver un plan d'action, il faut cocher la case correspondante. Toutes les actions seront automatiquement archivées.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/pa_4.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Suppression</h2>
+						<blockquote>
+							La suppression d'un plan d'action supprime toutes les actions et déploiements associés !
+						</blockquote>
+
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-6" role="tabpanel" aria-labelledby="vert-tabs-6-tab">
+						<p>
+							Les pôles permettent de regrouper les actions pour en faciliter la consulation. A savoir que les actions sont également regroupées par thématique et catégorie.
+						</P>
+						<p>
+							Chaque pôle doit être unique dans le plan d'actions
+						</p>
+						<h2 class="mb-5 text-p-dark">Liste</h2>
+						<p>
+							Sur la liste sont affichées les informations :
+							<ul>
+								<li>Le nom du pôle</li>
+								<li>Le plan d'actions associé</li>
+								<li>Son éventuelle description</li>
+								<li>Le taux</li>
+								<li>Le nombre de thématiques associées</li>
+								<li>Le nombre de catégories associées</li>
+								<li>Le nombre d'actions associées</li>
+								<li>Le bouton permettant de modifier le pôle</li>
+							</ul>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/pole_1.png')) }}">
+						</div>
+
+
+						<h2 class="mb-5 text-p-dark">Consultation</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/pole_2.png')) }}">
+						</div>
+						<p>
+							Les thématiques associées sont affichées et sont cliquables.
+						</p>
+
+						<h2 class="mb-5 text-p-dark">Ajout</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/pole_3.png')) }}">
+						</div>
+						<blockquote>
+							L'ajout est restreint aux administrateurs et gestionnaires
+						</blockquote>
+						<p>
+							La description n'est affichée que sur la liste des pôles
+						</p>
+
+
+						<h2 class="mb-5 text-p-dark">Modification</h2>
+						<p>
+							Si vous décochez la case
+							<b>Afficher</b>
+							le pôle ne sera pas affiché.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/pole_4.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Suppression</h2>
+						<p>
+							La suppression d'un pôle supprime toutes les actions associées ainsi que les déploiements
+						</p>
+
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-7" role="tabpanel" aria-labelledby="vert-tabs-7-tab">
+						<p>
+							Les thématiques permettent de regrouper les actions pour en faciliter la consulation. A savoir que les actions sont également regroupées catégorie.
+						</P>
+						<p>
+							Chaque thématique doit être unique dans le pôle
+						</p>
+						<h2 class="mb-5 text-p-dark">Liste</h2>
+						<p>
+							Sur la liste sont affichées les informations :
+							<ul>
+								<li>Le nom de la thématique</li>
+								<li>La référence</li>
+								<li>Le classement (plan d'actions et pôle)</li>
+								<li>Son éventuelle description</li>
+								<li>Le taux</li>
+								<li>Le nombre de catégories associées</li>
+								<li>Le nombre d'actions associées</li>
+								<li>Le bouton permettant de modifier la thématique</li>
+							</ul>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/thematique_1.png')) }}">
+						</div>
+
+
+						<h2 class="mb-5 text-p-dark">Consultation</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/thematique_2.png')) }}">
+						</div>
+						<p>
+							Les catégories associées sont affichées et sont cliquables.
+						</p>
+
+						<h2 class="mb-5 text-p-dark">Ajout</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/thematique_3.png')) }}">
+						</div>
+						<blockquote>
+							L'ajout est restreint aux administrateurs et gestionnaires
+						</blockquote>
+						<p>
+							La description n'est affichée que sur la liste des thématiques
+						</p>
+
+
+						<h2 class="mb-5 text-p-dark">Modification</h2>
+						<p>
+							Si vous décochez la case
+							<b>Afficher</b>
+							la thématique ne sera pas affichée.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/thematique_4.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Suppression</h2>
+						<p>
+							La suppression d'une thématique supprime toutes les actions associées ainsi que les déploiements
+						</p>
+
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-8" role="tabpanel" aria-labelledby="vert-tabs-8-tab">
+						<p>
+							Les catégories permettent de regrouper les actions pour en faciliter la consulation.
+						</P>
+						<p>
+							Chaque catégorie doit être unique dans la thématique
+						</p>
+						<h2 class="mb-5 text-p-dark">Liste</h2>
+						<p>
+							Sur la liste sont affichées les informations :
+							<ul>
+								<li>Le nom de la thématique</li>
+								<li>La référence</li>
+								<li>Le classement (plan d'actions, pôle et thématique)</li>
+								<li>Son éventuelle description</li>
+								<li>Le taux</li>
+								<li>Le nombre d'actions associées</li>
+								<li>Le bouton permettant de modifier la thématique</li>
+							</ul>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/cat_1.png')) }}">
+						</div>
+
+
+						<h2 class="mb-5 text-p-dark">Consultation</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/cat_2.png')) }}">
+						</div>
+						<p>
+							Les actions associées sont affichées et sont cliquables.
+						</p>
+
+						<h2 class="mb-5 text-p-dark">Ajout</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/cat_3.png')) }}">
+						</div>
+						<blockquote>
+							L'ajout est restreint aux administrateurs et gestionnaires
+						</blockquote>
+						<p>
+							La description n'est affichée que sur la liste des catégories
+						</p>
+
+
+						<h2 class="mb-5 text-p-dark">Modification</h2>
+						<p>
+							Si vous décochez la case
+							<b>Afficher</b>
+							la catégorie ne sera pas affichée.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/cat_4.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Suppression</h2>
+						<p>
+							La suppression d'une catégorie supprime toutes les actions associées ainsi que les déploiements
+						</p>
+
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-9" role="tabpanel" aria-labelledby="vert-tabs-9-tab">
+						<p>
+							Les cibles permettent de regrouper les actions pour en faciliter la consulation. Il est donc possible d'avoir des actions issues de plusieurs plans d'actions.
+						</P>
+						<p>
+							Chaque cible doit être unique
+						</p>
+						<h2 class="mb-5 text-p-dark">Liste</h2>
+						<p>
+							Sur la liste sont affichées les informations :
+							<ul>
+								<li>Le nom de la cible</li>
+								<li>Le nombre d'actions associées</li>
+								<li>Le bouton permettant de modifier la cible</li>
+							</ul>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/cible_1.png')) }}">
+						</div>
+
+
+						<h2 class="mb-5 text-p-dark">Consultation</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/cible_2.png')) }}">
+						</div>
+						<p>
+							Les actions associées sont affichées et sont cliquables.
+						</p>
+
+						<h2 class="mb-5 text-p-dark">Ajout</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/cible_3.png')) }}">
+						</div>
+						<blockquote>
+							L'ajout est restreint aux administrateurs et gestionnaires
+						</blockquote>
+						<p>
+							La description n'est affichée que sur la liste des cibles
+						</p>
+
+
+						<h2 class="mb-5 text-p-dark">Modification</h2>
+						<p>
+							Si vous décochez la case
+							<b>Afficher</b>
+							la cible ne sera pas affichée.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/cible_4.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Suppression</h2>
+						<p>
+							La suppression d'une cible ne supprime pas les actions associées.
+						</p>
+
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-10" role="tabpanel" aria-labelledby="vert-tabs-10-tab">
+						<p>
+							Les vecteurs permettent de regrouper les actions pour en faciliter la consulation. Il est donc possible d'avoir des actions issues de plusieurs plans d'actions.
+						</P>
+						<p>
+							Chaque vecteur doit être unique
+						</p>
+						<h2 class="mb-5 text-p-dark">Liste</h2>
+						<p>
+							Sur la liste sont affichées les informations :
+							<ul>
+								<li>Le nom de le vecteur</li>
+								<li>Le nombre d'actions associées</li>
+								<li>Le bouton permettant de modifier le vecteur</li>
+							</ul>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/vecteur_1.png')) }}">
+						</div>
+
+
+						<h2 class="mb-5 text-p-dark">Consultation</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/vecteur_2.png')) }}">
+						</div>
+						<p>
+							Les actions associées sont affichées et sont cliquables.
+						</p>
+
+						<h2 class="mb-5 text-p-dark">Ajout</h2>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/vecteur_3.png')) }}">
+						</div>
+						<blockquote>
+							L'ajout est restreint aux administrateurs et gestionnaires
+						</blockquote>
+						<p>
+							La description n'est affichée que sur la liste des vecteurs
+						</p>
+
+
+						<h2 class="mb-5 text-p-dark">Modification</h2>
+						<p>
+							Si vous décochez la case
+							<b>Afficher</b>
+							le vecteur ne sera pas affiché.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/vecteur_4.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Suppression</h2>
+						<p>
+							La suppression d'un vecteur ne supprime pas les actions associées.
+						</p>
+
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-11" role="tabpanel" aria-labelledby="vert-tabs-11-tab">
+						<blockquote>
+							Cette section est ouverte à tous
+						</blockquote>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/calcul_1.png')) }}">
+						</div>
+						<p>
+							Ce bouton permet de recalculer l'ensemble des taux des
+							<ul>
+								<li>Valeurs des indicateurs</li>
+								<li>Indicateurs</li>
+								<li>Déploiements</li>
+								<li>Actions</li>
+								<li>Catégories</li>
+								<li>Thématiques</li>
+								<li>Pôle</li>
+								<li>Plans d'actions</li>
+							</ul>
+						</p>
+						<p>
+							A l'issue du calcul un message est affiché
+						</p>
+
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/calcul_2.png')) }}">
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.card -->
+</div>

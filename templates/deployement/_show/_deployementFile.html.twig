@@ -2,40 +2,33 @@
 {% set nbrF=item.deployementFiles | length %}
 {% if nbrL>0 or nbrF>0 %}
 
-	<article id="file" class="bg-white">
-		<h5 class="text-p-dark p-1 pt-3 text-center ">
-			documents joints
-		</h5>
+<article id="file" class="bg-white">
+	<h3 id="anchor_cadrage" class="text-p-dark2 pt-3">
+		<small>
+			<i class="fas fa-crop-alt"></i>
+		</small>
+		Fichiers du déploiement
+	</h3>
 
-		{% import "macros/file.html.twig" as file %}
-		<div class=" list-blk">
-			<table class="table table-hover bg-white">
-				<colgroup>
-					<col class="col-lg-1">
-					<col class="col-lg-8">
-					<col class="col-lg-2">
-					<col class="col-lg-1">
-				</colgroup>
-				<thead class="thead-default">
-					<tr>
-						<th class="bg-p-dark"></th>
-						<th class="bg-p-dark text-p-light">
-							Nom
-						</th>
-						<th class="hidden-xs text-center bg-p-dark text-p-light">
-							Date
-						</th>
-						<th class="hidden-xs bg-p-dark text-p-light">
-							Taille
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{{ file.showFiles(item.deployementFiles,item,'action_file_show') }}
-					{{ file.showLinks(item.deployementLinks) }}
-				</tbody>
-			</table>
-		</div>
 
-	</article>
+	{% import "macros/file.html.twig" as file %}
+	{% import "macros/link.html.twig" as link %}
+	<div class=" list-blk">
+		<table class="table table-hover bg-white">
+			<colgroup>
+				<col class="col-lg-1">
+				<col class="col-lg-8">
+				<col class="col-lg-2">
+				<col class="col-lg-1">
+			</colgroup>
+
+			<tbody>
+				{{ file.showFiles(item.deployementFiles,item,'deployement_file_show_secure') }}
+				{{ link.showLinks(item.deployementLinks) }}
+			</tbody>
+		</table>
+	</div>
+
+
+</article>
 {% endif %}

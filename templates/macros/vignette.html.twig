@@ -3,7 +3,7 @@
 
 
 	<a href="{{ path(route, {'id': item.id}) }}" class="card  m-0  hvr-grow-shadow">
-		<div class="card-body text-center align-middle p-1 text-p-light bg-p-dark">
+		<div class="card-body  text-center align-middle p-1 text-p-light bg-p-dark">
 
 			<span class="{% if item.isEnable is same as(false) %}text-warning text-bold{% endif %}">
 				{% if showFullName is defined %}

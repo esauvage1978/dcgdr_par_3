@@ -27,6 +27,6 @@ class GPIManager extends AbstractManager
     public function initialise(EntityInterface $entity): void
     {
         $entity->setUser($this->user);
-        $entity->setUpdatedAt(new \DateTime());
+        $entity->setModifyAt(new \DateTime());
     }
 }

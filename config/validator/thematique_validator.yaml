@@ -3,7 +3,7 @@ App\Entity\Thematique:
     - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
         fields: [pole, name]
         errorPath: name
-        message: 'Le nom de la thématique "{{ value }}" est déjà déclaré pour ce pole.'
+        message: 'Le nom de la thématique "{{ value }}" est déjà déclaré pour ce pôle.'
   properties:
     name:
       - NotBlank: ~

@@ -45,7 +45,7 @@ class ActionController extends AbstractGController
 
     /**
      * @Route("/add", name="action_add", methods={"GET","POST"})
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_GESTIONNAIRE")
      */
     public function add(Request $request)
     {
@@ -82,7 +82,7 @@ class ActionController extends AbstractGController
      * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Action $item)
-    {
+    { 
         $this->denyAccessUnlessGranted(ActionVoter::UPDATE, $item);
         $itemOld = clone ($item);
         $form = $this->createForm(ActionEditType::class, $item);

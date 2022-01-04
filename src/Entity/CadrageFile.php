@@ -17,7 +17,7 @@ class CadrageFile implements EntityInterface
      * @ORM\Column(type="integer")
      */
     private $id;
-
+ 
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -57,14 +57,19 @@ class CadrageFile implements EntityInterface
     private $content;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $modifyAt;
+
+    /**
      * @ORM\Column(type="string", length=50)
      */
     private $size;
 
-
     public function __construct()
     {
         $this->setNbrView(0);
+        $this->setModifyAt(new \DateTime());
     }
 
 
@@ -73,7 +78,7 @@ class CadrageFile implements EntityInterface
      */
     public function getFullName(): ?string
     {
-        return $this->fileName.'.'.$this->fileExtension;
+        return $this->fileName . '.' . $this->fileExtension;
     }
 
     /**
@@ -81,12 +86,12 @@ class CadrageFile implements EntityInterface
      */
     public function getUploadDir(): string
     {
-        return 'uploads/action/' . $this->getAction()->getId() .'/cadrage';
+        return 'uploads/action/' . $this->getAction()->getId() . '/cadrage';
     }
 
     public function getHref(): string
     {
-        return $this->getUploadDir() .  '/' . $this->getFileName() . '.' .  $this->getFileExtension() ;
+        return $this->getUploadDir() .  '/' . $this->getFileName() . '.' .  $this->getFileExtension();
     }
 
     public function getId(): ?int
@@ -171,9 +176,9 @@ class CadrageFile implements EntityInterface
         return $this->file;
     }
 
-    public function setFile(UploadedFile $actionsFile): self
+    public function setFile(UploadedFile $cadragesFile): CadrageFile
     {
-        $this->file = $actionsFile;
+        $this->file = $cadragesFile;
 
         return $this;
     }
@@ -190,6 +195,17 @@ class CadrageFile implements EntityInterface
         return $this;
     }
 
+    public function getModifyAt(): ?\DateTimeInterface
+    {
+        return $this->modifyAt;
+    }
+
+    public function setModifyAt(?\DateTimeInterface $modifyAt): self
+    {
+        $this->modifyAt = $modifyAt;
+
+        return $this;
+    }
 
     public function getSize(): ?string
     {
@@ -202,6 +218,4 @@ class CadrageFile implements EntityInterface
 
         return $this;
     }
-
-
 }

@@ -26,7 +26,9 @@
       {% set actions = actions|merge(_mail_sent) %}
       {% set actions = actions|merge({'divider3': null}) %}
       {% set actions = actions|merge(_showAction) %}
-      {% set actions = actions|merge(_edit) %}
+	  {% if item | deployementCanAppendUpdate %}
+      	{% set actions = actions|merge(_edit) %}
+	  {% endif %}
     {% elseif twigTemplace=='edit' %}
       {% set actions = actions|merge(_mail_sent) %}
       {% set actions = actions|merge({'divider3': null}) %}

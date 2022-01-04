@@ -3,31 +3,30 @@
 
 <tr></tr>
 
-    <td class="align-middle text-lg col-3">
-        {{ indicatorValue.deployement.organisme.fullname }}
+<td class="align-middle text-lg col-3">
+	{{ indicatorValue.deployement.organisme.fullname }}
 
-    </td>
-    <td class="text-center align-middle col-2 ">
-        {{ include('indicatorvalue/_show/_tr_' ~ indicatorValue.indicator.indicatortype ~ '.html.twig') }}
-        {{ tx.showBar(indicatorValue.taux1,indicatorValue.taux2 ) }}
-    </td>
-    <td class="align-middle text-justify">
-        <small>
-            {{ indicatorValue.content | raw }}
-        </small>
-    </td>
+</td>
+<td class="text-center align-middle col-2 ">
+	{{ include('indicatorvalue/_show/_tr_' ~ indicatorValue.indicator.indicatortype ~ '.html.twig') }}
+	{{ tx.showBar(indicatorValue.taux1,indicatorValue.taux2 ) }}
+</td>
+<td class="align-middle text-justify">
+	<small>
+		{{ indicatorValue.content | raw }}
+	</small>
+</td>
 
 
-    <td class="text-right align-middle ">
-        {% if indicatorValue.deployement | deployementCanAppendUpdate %}
-{{ btn.link_button(
+<td class="text-right align-middle ">
+	{% if (indicatorValue.deployement | deployementCanAppendUpdate) %}
+		{{ btn.link_button(
                     'Modifier',
-path('deployement_append_edit',{id:indicatorValue.deployement.id}),
+                    path('deployement_append_edit',{id:indicatorValue.deployement.id}),
                     'fa fa-edit',
                     'p-dark',
                     'p-dark btn-sm'
                 ) }}
 
-        {% endif %}
-    </td>
-</tr>
+	{% endif %}
+</td></tr>

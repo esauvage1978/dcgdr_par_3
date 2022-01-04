@@ -10,7 +10,7 @@
 {% macro alert(item) %}
     {% import "macros/widgets.html.twig" as widgets %}
     <div class="alert alert-{{ item.type }} ">
-        <small class="float-right">{{ widgets.showLongDate(item.updatedAt) }}</small>
+        <small class="float-right">{{ widgets.showFullDateNoneTime(item.modifyAt) }}</small>
         <h5>{{ item.name }}</h5>
         {{ item.content | raw }}
     </div>

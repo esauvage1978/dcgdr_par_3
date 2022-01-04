@@ -3,10 +3,9 @@
 {% block page_subtitle %}Modification{% endblock %}
 
  {% block breadcrumb %}
-     {% import "default/actions.html.twig" as actions %}
+     {% import "corbeille/actions.html.twig" as actions %}
      {{ actions.admin(
          'edit',
-         is_granted('ROLE_GESTIONNAIRE'),
          item,
          domaine
      ) }}

@@ -2,15 +2,12 @@
 
 namespace App\Form\File;
 
-use App\Entity\ActionLink;
 use App\Form\AppTypeAbstract;
-use App\Entity\DeployementFile;
 use App\Entity\DeployementLink;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -39,7 +36,7 @@ class DeployementLinkType extends AppTypeAbstract
                 ]
             )
             ->add(
-                'updatedAt',
+                'modifyAt',
                 DateTimeType::class,
                 [
                     'label' => ' ',

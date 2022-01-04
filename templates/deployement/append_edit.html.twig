@@ -1,6 +1,8 @@
 {% extends 'deployement/layout.html.twig' %}
 {% import "macros/submit.html.twig" as sub %}
 {% import "macros/save.html.twig" as save %}
+{% import "macros/link.html.twig" as link %}
+{% import "macros/file.html.twig" as file %}
 
 {% block page_subtitle %}Modification d'un déploiement
 {% endblock %}
@@ -35,7 +37,6 @@
 				{{ include('deployement/_show/_classement.html.twig') }}
 				{{ include('deployement/_show/_cadrage.html.twig') }}
 				{{ save.btn()}}
-				{{ include('deployement/_edit/_deployementAppendFile.html.twig') }}
 
 			</div>
 			<div id="col3" class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
@@ -48,30 +49,43 @@
 			{{ include('deployement/_edit/_indicator.html.twig') }}
 		</div>
 	</div>
-	<div class="d-none">{{ sub.btn() }}</div>
-	{{form_rest(form)}}
+	<div class="d-none">{{form_rest(form)}}{{ sub.btn() }}</div>
+	
 
 	{{ form_end(form) }}
+				<div class="row col-12 ">
+					<div class="col-sm-12 col-md-12 col-lg-12  bg-white h-100">
+						<section class=" col-12 js-createTip-wrapper ">
+							<div class="createTip mt-5">
 
+								<div class="createTip__title">
+									Fichiers & liens
+								</div>
+								<p>
+									Permet de déposer les fichiers correspondant au déploiements
+								</p>
+							</div>
+							<h3 class="text-p-dark2">
+								<i class="fas fa-crop-alt"></i>
+								Fichiers du déploiement
+							</h3>
+							<div class="p-3">
+								{{ link.twig('deployementlink') }}
+								{{ file.twig('deployementfile') }}
+							</div>
+						</section>
+					</div>
+				</div>
 {% endblock %}
 
 {%  block javascripts %}
 	{{ parent() }}
 	<script src="{{ absolute_url( asset('/vendor/axios/dist/axios.min.js')) }}"></script>
+	<script src="{{ absolute_url( asset('/vendor/jquery-form/dist/jquery.form.min.js')) }}"></script>
 	<script src="{{ absolute_url( asset('/js/es_widget.js')) }}"></script>
 
 	{{ include('deployement/_edit/_indicator_js.html.twig') }}
-	<script src="{{ absolute_url( asset('/js/file/deployement_append_file.js')) }}"></script>
-	<script type="text/javascript">
+		{{ link.script('deployementlink', item) }}
+	{{ file.script('deployementfile', item) }}
 
-		$(document).on('change', '.custom-file-input', function () {
-let fileName = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
-$(this).parent('.custom-file').find('.custom-file-label').text(fileName);
-});
-$('#deployement_append_updatedAt_date_month').val(new Date().getMonth() + 1);
-$('#deployement_append_updatedAt_date_day').val(new Date().getDate());
-$('#deployement_append_updatedAt_date_year').val(new Date().getFullYear());
-$('#deployement_append_updatedAt_time_hour').val(new Date().getHours());
-$('#deployement_append_updatedAt_time_minute').val(new Date().getMinutes());
-	</script>
 {% endblock %}

@@ -17,8 +17,12 @@
 
 
 <section  class="mt-4 p-3 col-12 ">
+
+
+<section  class="mt-2 ">
 {% if nbrL>0 or nbrF>0 %}
 	{% import "macros/file.html.twig" as file %}
+	{% import "macros/link.html.twig" as link %}
 	<div class=" list-blk">
 		<table class="table table-hover bg-white">
 			<colgroup>
@@ -27,26 +31,14 @@
 				<col class="col-lg-2">
 				<col class="col-lg-1">
 			</colgroup>
-			<thead class="thead-default">
-				<tr>
-					<th class="bg-p-dark"></th>
-					<th class="bg-p-dark text-p-light">
-						Nom
-					</th>
-					<th class="hidden-xs text-center bg-p-dark text-p-light">
-						Date
-					</th>
-					<th class="hidden-xs bg-p-dark text-p-light">
-						Taille
-					</th>
-				</tr>
-			</thead>
+
 			<tbody>
-                {{ file.showFiles(item.action.cadrageFiles,item,'cadrage_file_show') }}
-                {{ file.showLinks(item.action.cadrageLinks) }}
+				{{ file.showFiles(item.action.cadrageFiles,item,'cadrage_file_show_secure') }}
+				{{ link.showLinks(item.action.cadrageLinks) }}
 			</tbody>
 		</table>
 	</div>
 {% endif %}
 
 </section>
+

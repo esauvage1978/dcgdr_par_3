@@ -17,7 +17,7 @@ class NotificationController extends AbstractController
         // id =1
         switch ($id) {
             case '1':
-                return $this->redirectToRoute('user_login');
+                return $this->redirectToRoute('app_login');
 
                 break;
             case '2':

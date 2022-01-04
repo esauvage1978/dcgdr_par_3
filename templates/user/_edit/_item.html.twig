@@ -47,21 +47,16 @@
                             {{ form_widget(form.content) }}
                         </div>
                     </div>
+					{% if item.id %}
+						{% if item.accountValidated == false %}
+							<a href="{{ path('user_valide_account',{'token': item.accountvalidatedtoken }) }}" class=" btn btn-primary">Approuver l'utilisateur</a>
+						{% endif %}
+					{% endif %}                    
                 {% endblock %}
             {% endembed %}
 
         </div>
         <div class="{{ col_2_2 }}">
-{% embed 'widgets/card-widget.html.twig' %}
-	{% block card_class %}border border-info
-	{% endblock %}
-	{% block card_body_class %}text-center
-	{% endblock %}
-	{% block card_body %}
-		{{ form_row(form.userParam.iSsubscription) }}
-	{% endblock %}
-{% endembed %}
-
 
             {% embed 'widgets/card-widget.html.twig' %}
                 {% block card_title %}Habillitations{% endblock %}

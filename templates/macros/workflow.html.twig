@@ -22,12 +22,12 @@
 
 	<div class="row">
 		{{ macro.current_card(item) }}
-	</div>
+	</div><!-- end row current card -->
 	<div class="row justify-content-center mt-4">
 		{% for transition in item.stateCurrent | workflowGetTransitionsForState %}
 			{{ macro.card(item,transition) }}
 		{% endfor %}
-	</div>
+	</div><!-- end row card -->
 {% endmacro %}
 
 {% macro current_card(item) %}
@@ -43,16 +43,16 @@
 				</span>
 				<small class="text-muted">
 					depuis le
-					{{ widget.showLongDate(item.stateAt) }}
+					{{ widget.showFullDateShortTime(item.stateAt) }}
 				</small>
-			</div>
+			</div><!-- end card-header -->
 			<div class="card-body">
 				<p>
 					{% if item.stateContent  %}
 						{{ item.stateContent | raw }}
 					{% endif %}
 				</p>
-			</div>
+			</div><!-- end card-body -->
 			<div class="card-footer text-muted text-xs d-flex flex-row-reverse bd-highlight">
 				<a href="{{ path('workflow_action_history',{id:item.id}) }}" class="text-p-dark ml-2">
 					{{widget.icon('history')}}
@@ -69,8 +69,9 @@
 						Check workflow
 					</a>
 				{% endif %}
-			</div>
-		</div>
+			</div><!-- end card-footer -->
+		</div><!-- end card -->
+	</div>
 	{% endmacro %}
 
 

@@ -93,11 +93,11 @@ class ActionVoter extends Voter
         if ($action->getCategory()->getThematique()->getPole()->getAxe()->getIsArchiving()) {
             return false;
         }
-
+        
         if ($this->security->isGranted('ROLE_GESTIONNAIRE')) {
             return true;
         }
-
+        
         if (in_array($action->getStateCurrent(), WorkflowData::STATES_ACTION_UPDATE_BY_PILOTES)) {
             foreach ($action->getWriters() as $corbeille) {
                 if (in_array($user, $corbeille->getUsers()->toArray())) {
@@ -105,7 +105,7 @@ class ActionVoter extends Voter
                 }
             }
         }
-
+        
         if (in_array($action->getStateCurrent(), WorkflowData::STATES_ACTION_UPDATE_BY_COTECH)) {
             foreach ($action->getCOTECHValiders() as $corbeille) {
                 if (in_array($user, $corbeille->getUsers()->toArray())) {
@@ -121,7 +121,6 @@ class ActionVoter extends Voter
                 }
             }
         }
-
         return false;
     }
 

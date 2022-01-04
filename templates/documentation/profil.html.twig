@@ -1,0 +1,277 @@
+<div class="card card-primary card-outline ">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-5 col-sm-3">
+				<div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+					<a class="nav-link active" id="vert-tabs-1-tab" data-toggle="pill" href="#vert-tabs-1" role="tab" aria-controls="vert-tabs-1" aria-selected="true">
+						Création de votre compte
+					</a>
+					<a class="nav-link" id="vert-tabs-8-tab" data-toggle="pill" href="#vert-tabs-8" role="tab" aria-controls="vert-tabs-8" aria-selected="false">
+						Pas de réception de mail de validation de compte
+					</a>					
+					<a class="nav-link" id="vert-tabs-2-tab" data-toggle="pill" href="#vert-tabs-2" role="tab" aria-controls="vert-tabs-2" aria-selected="false">
+						Mot de passe oublié ?
+					</a>
+					<a class="nav-link" id="vert-tabs-3-tab" data-toggle="pill" href="#vert-tabs-3" role="tab" aria-controls="vert-tabs-3" aria-selected="false">
+						Votre profil
+					</a>
+					<a class="nav-link" id="vert-tabs-4-tab" data-toggle="pill" href="#vert-tabs-4" role="tab" aria-controls="vert-tabs-4" aria-selected="false">
+						Modifier l'avatar
+					</a>
+					<a class="nav-link" id="vert-tabs-5-tab" data-toggle="pill" href="#vert-tabs-5" role="tab" aria-controls="vert-tabs-5" aria-selected="false">
+						Modifier votre mot de passe
+					</a>
+				
+					<a class="nav-link" id="vert-tabs-6-tab" data-toggle="pill" href="#vert-tabs-6" role="tab" aria-controls="vert-tabs-6" aria-selected="false">
+						Approbation de votre compte
+					</a>
+				</div>
+			</div>
+			<div class="col-7 col-sm-9">
+				<div class="tab-content" id="vert-tabs-tabContent">
+					<div class="tab-pane text-left fade active show" id="vert-tabs-1" role="tabpanel" aria-labelledby="vert-tabs-1-tab">
+						<p>
+							La création de votre compte s'effectue depuis la page de connexion en cliquant sur le lien
+							<b>Créer un compte</b>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_1.png')) }}">
+						</div>
+						<p>
+							Vous devez ensuite compléter le formulaire ci-dessous avec
+							<ul>
+								<li>Votre nom complet. exemple : SAUVAGE Emmanuel</li>
+								<li>Votre adresse mail professionnelle</li>
+								<li>Un mot de passe sécurisé (minimum 8 caractères dont 1 chiffre et 1 lettre)</li>
+							</ul>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_2.png')) }}">
+						</div>
+						<p>
+							En appuyant sur le bouton
+							<b>Créer un compte</b>, un mail vous est adressé afin de valider votre compte
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_4.png')) }}">
+						</div>
+						<h2 class="mb-5 text-p-dark">Compte non validé</h2>
+						<blockquote>
+							Tant que le compte n'est pas validé, {{ app_name }} ne sera pas utilisable
+						</blockquote>
+						<p>
+							Lorsque vous vous connectez avec un compte non validé, vous aurez un message qui vous proposera de renvoyer le mail de validation
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_5.png')) }}">
+						</div>
+
+						<p>
+							Pour valider votre compte, veuillez suivre les instructions présent dans le mail
+						</p>
+						<blockquote>
+							Le compte doit ensuite être approuvé par un administrateur pour que vous puissiez utiliser l'application.
+						</blockquote>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-8" role="tabpanel" aria-labelledby="vert-tabs-8-tab">
+						<p>
+							Si vous ne recevez pas le mail de vérification, il se peut que vous ayez fait une erreur dans votre adresse mail.
+						</p>
+						<p>
+							Vous avez la possibilité de la vérifier et de la modifier au besoin à partir de la page de profil.
+						</p>
+						<p>
+							Si après vérification, celle-ci est correcte, vous pouvez contacter directement 							<b>{{ es_contact_name }}</b>
+							<ul>
+								<li>par messagerie
+									<a href="mailto://{{ es_contact_mail }}">{{ es_contact_mail }}</a>
+								</li>
+								<li>ou par téléphone
+									<b>{{ es_contact_tel }}</b>
+								</li>
+							</ul>
+						</p>
+					</div>		
+					<div class="tab-pane fade" id="vert-tabs-7" role="tabpanel" aria-labelledby="vert-tabs-7-tab">
+						<p>
+							A partir de votre profil, il vous est possible de consulter vos droits sur les rubriques et sous-rubriques.
+						</p>
+						<p>
+							Pour se faire, il vous suffit d'appuyer sur le bouton
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/droit_1.png')) }}">
+						</div>
+						<p>
+							La liste complète des rubriques et sous-rubriques s'affichent en vous indiquant celles où vous pouvez consulter les porte-documents et en modifier.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/droit_2.png')) }}">
+						</div>						
+					</div>								
+					<div class="tab-pane fade" id="vert-tabs-2" role="tabpanel" aria-labelledby="vert-tabs-2-tab">
+						<p>
+							La récupération du mot de passe s'effectue depuis la page de connexion en cliquant sur le lien
+							<b>Mot de passe oublié ?</b>
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_1.png')) }}">
+						</div>
+						<p>
+							Il vous faudra saisir l'adresse mail professionnelle correspondant à votre profil
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_6.png')) }}">
+						</div>
+						<p>
+							Vous recevrez un mail contenant un lien pour réinitialiser votre mot de passe.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_7.png')) }}">
+						</div>
+						<p>
+							En cliquant sur le lien, le formulaire ci-dessous s'affiche et vous pouvez définir un nouveau mot de passe sécurisé (minimum 8 caractères dont 1 chiffre et 1 lettre)
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_8.png')) }}">
+						</div>
+						<p>
+							Dès modification du mot de passe, vous pouvez vous connecter
+						</p>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-3" role="tabpanel" aria-labelledby="vert-tabs-3-tab">
+						<p>
+							Une fois votre compté créé et validé, vous pouvez aller vérifier les informations à partir du menu principal
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_9.png')) }}">
+						</div>
+
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_10.png')) }}">
+						</div>
+						<p>
+							Cette page vous permet de :
+							<ul>
+								<li>Consulter votre avatar</li>
+								<li>Consulter vos habilitations</li>
+								<li>Modifier vos données personnelles</li>
+								<li>Consulter le ou les organismes de rattachement</li>
+								<li>Consulter les corbeilles</li>
+								<li>Accéder au bouton de changement d'avatar</li>
+								<li>Accéder au bouton de modification du mot de passe</li>
+							</ul>
+						</p>
+						<h2 class="mb-5 text-p-dark">Les habilitations</h2>
+						<p>
+							Il existe plusieurs habilitations qui sont :
+							<ul>
+								<li>Administrateur : Gestion des utilisateurs</li>
+								<li>Gestionnaire : gestion des tables de l'application</li>
+								<li>Gestionnaire local: Délégation pour gérer les droits de son organisme au niveau des corbeilles</li>
+								<li>utilisateur : personne ayant validé son compte et ayant été approuvé par un administrateur</li>
+							</ul>
+						</p>
+						<blockquote>
+							Seul l'administrateur peut modifier les habilitations
+						</blockquote>
+						<h2 class="mb-5 text-p-dark">Les organismes et corbeilles</h2>
+						<p>
+							Les corbeilles permettent de définir de façon groupée les droits sur les actions et déploiements (consultation / modification / pilotage)
+						</p>
+						<blockquote>
+							Les administrateurs, gestionnaires et gestionnaires locaux peuvent modifier les utilisateurs dans les corbeilles
+						</blockquote>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-4" role="tabpanel" aria-labelledby="vert-tabs-4-tab">
+						<p>
+							Lors de la création du compte, une image de profil est automatiquement associée à votre compte.
+						</p>
+						<p>
+							Vous avez la possibilité de personnaliter l'image de présentation.
+						</p>
+						<p>
+							A partir de votre page profil, cliquez sur l'icône ci-dessous
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_11.png')) }}">
+						</div>
+						<p>
+							Sélectionnez votre photo
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_12.png')) }}">
+						</div>
+						<p>
+							Vous pouvez recadrer et zoomer sur celle-ci
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_13.png')) }}">
+						</div>
+						<p>
+							Et enfin appuyez sur le bouton appliquer. Vous serez rediriger vers votre profil.
+						</p>
+						<blockquote>
+							Il peut y avoir un petit délai avant que la nouvelle photo soit présente sur le profil. Si c'est le cas, appuyez sur la touche F5 de votre clavier
+						</blockquote>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-5" role="tabpanel" aria-labelledby="vert-tabs-5-tab">
+						<p>
+							A partir de votre page profil, cliquez sur l'icône ci-dessous
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_14.png')) }}">
+						</div>
+						<p>
+							Complétez le formulaire. La première zone de saisie correspond à votre mot de passe actuel.Les deux autres sont pour le nouveau mot de passe qui doit être sécurisé.
+						</p>
+						<p>
+							Un mot de passe sécurisé doit avoir au minimum 8 caractères, dont 1 chiffre et 1 lettre
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_15.png')) }}">
+						</div>
+						<p>
+							validez ensuite en appuyant sur l'icône
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_16.png')) }}">
+						</div>
+					</div>
+					<div class="tab-pane fade" id="vert-tabs-6" role="tabpanel" aria-labelledby="vert-tabs-6-tab">
+						<blockquote>
+							Seul un administrateur peut approuver un compte
+						</blockquote>
+						<p>
+							Lors de la création d'un compte par un utilisateur, un mail est automatiquement envoyé aux administrateurs de l'application.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_18.png')) }}">
+						</div>
+						<p>
+							Le lien est uniquement accessible aux administrateurs.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_20.png')) }}">
+						</div>
+						<p>
+							Après avoir apporté les modifications comme l'organisme d'appartenance et d'avoir sauvegardé ces informations, vous pourrez appuyer sur le bouton ci-dessous.
+						</p>
+						<p>
+							L'utilisateur aura automatiquement le rôle
+							<b>Utilisateur</b>. Ce qui lui permettra d'utiliser l'application. Sans ce rôle les accès sont restreints.
+						</p>
+						<p>
+							Après connexion l'utilisateur a la possibilité de renvoyer ce mail.
+						</p>
+						<div class="doc-image mt-4 mb-4">
+							<img src="{{ absolute_url( asset('doc/profil_19.png')) }}">
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.card -->
+</div>

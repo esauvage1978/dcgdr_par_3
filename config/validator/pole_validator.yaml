@@ -3,7 +3,7 @@ App\Entity\Pole:
     - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
         fields: [axe, name]
         errorPath: name
-        message: 'Le nom du pôle "{{ value }}" est déjà déclaré pour cet axe.'
+        message: 'Le nom du pôle "{{ value }}" est déjà déclaré pour ce plan d actions.'
   properties:
     name:
       - NotBlank: ~

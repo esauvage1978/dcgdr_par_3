@@ -56,6 +56,7 @@ class IndicatorValueHistory implements EntityInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="indicatorValueHistories")
+      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 

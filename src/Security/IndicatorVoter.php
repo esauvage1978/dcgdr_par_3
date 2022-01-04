@@ -83,6 +83,7 @@ class IndicatorVoter extends Voter
 
         if (!in_array($indicator->getAction()->getStateCurrent(),$states))
         {
+            
             return false;
         }
 

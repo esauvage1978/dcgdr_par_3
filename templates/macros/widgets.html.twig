@@ -2,19 +2,22 @@
 	<i class="{{ icon|icon(icon) }} {{ addclass }}"></i>
 {% endmacro %}
 
-
-{% macro showLongDate(date) %}
-	{{ date |format_datetime('full', 'short', locale='fr') }}
+{% macro showFullDateShortTime(date) %}
+	{{ date |format_datetime('full', 'short') }}
 {% endmacro %}
 
-{% macro showShortDate(date) %}
-	{{ date |format_datetime('medium', 'short', locale='fr') }}
+{% macro showMediumDateShortTime(date) %}
+	{{ date |format_datetime('medium', 'short') }}
 {% endmacro %}
 
-{% macro showXShortDate(date) %}
-	{{ date |format_datetime('medium', 'none', locale='fr') }}
-
+{% macro showMediumDateNoneTime(date) %}
+	{{ date |format_datetime('medium', 'none') }}
 {% endmacro %}
+
+{% macro showFullDateNoneTime(date) %}
+	{{ date |format_datetime('full', 'none') }}
+{% endmacro %}
+
 
 
 {%- macro page_actions(tools) -%}

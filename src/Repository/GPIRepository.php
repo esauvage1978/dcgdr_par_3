@@ -42,7 +42,7 @@ class GPIRepository extends ServiceEntityRepository
             ->where(self::ALIAS . '.page = :page')
             ->andWhere(self::ALIAS . '.isEnable = 1')
             ->setParameter('page', $page)
-            ->orderBy(self::ALIAS . '.updatedAt', 'DESC')
+            ->orderBy(self::ALIAS . '.modifyAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

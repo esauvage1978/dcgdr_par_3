@@ -46,15 +46,24 @@ class KnpMenuBuilderSubscriber implements EventSubscriberInterface
             }
             $this->addProfil();
             $this->addAdmin();
+            $this->addDoc();
             $this->addDeconnexion();
         } elseif ($this->currentUser->isAuthenticatedRemember()) {
             $this->addHome();
-            $this->addProfil();
             $this->addConnexion();
         } else {
             $this->addHome();
             $this->addConnexion();
         }
+    }
+
+    private function addDoc()
+    {
+        $this->menu->addChild('documentation', [
+            'route' => 'documentation',
+            'label' => 'Documentation',
+            'childOptions' => $this->event->getChildOptions()
+        ])->setLabelAttribute('icon', 'fas fa-book');
     }
 
     private function addAction()
@@ -101,7 +110,7 @@ class KnpMenuBuilderSubscriber implements EventSubscriberInterface
     {
         $this->menu->addChild(
             'logout',
-            ['route' => 'user_logout', 'label' => 'Déconnexion', 'childOptions' => $this->event->getChildOptions()]
+            ['route' => 'app_logout', 'label' => 'Déconnexion', 'childOptions' => $this->event->getChildOptions()]
         )->setLabelAttribute('icon', 'fas fa-sign-out-alt');
     }
 
@@ -109,7 +118,7 @@ class KnpMenuBuilderSubscriber implements EventSubscriberInterface
     {
         $this->menu->addChild(
             'login',
-            ['route' => 'user_login', 'label' => 'Connexion', 'childOptions' => $this->event->getChildOptions()]
+            ['route' => 'app_login', 'label' => 'Connexion', 'childOptions' => $this->event->getChildOptions()]
         )->setLabelAttribute('icon', 'fas fa-sign-in-alt');
     }
 
@@ -124,7 +133,7 @@ class KnpMenuBuilderSubscriber implements EventSubscriberInterface
 
     private function addAdmin(): void
     {
-        if (!Role::isAdmin($this->currentUser->getUser())) {
+        if (!Role::isUser($this->currentUser->getUser())) {
             return;
         }
 

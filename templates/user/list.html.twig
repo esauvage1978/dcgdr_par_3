@@ -9,12 +9,12 @@
     'Nom / Email': {'class': 'alwaysVisible', 'orderBy': true},
 '<i class="fa fa-clock" data-toggle="tooltip" data-placement="top" title="dernière connexion"></i>': {'class': 'align-middle text-center', 'orderBy': true},
     'Description': {'class': 'alwaysVisible', 'orderBy': true},
+'Approuvé': {'class': 'alwaysVisible', 'orderBy': true},    
 '<i class="fa fa-user-cog" data-toggle="tooltip" data-placement="top" title="Administrateur"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
 		'<i class="fa fa-user-astronaut" data-toggle="tooltip" data-placement="top" title="Gestionnaire"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
 '<i class="fa fa-user-secret" data-toggle="tooltip" data-placement="top" title="Gestionnaire local"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
 '<i class="fa fa-user" data-toggle="tooltip" data-placement="top" title="Utilisateur"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
 '<i class="fa fa-envelope-open-text" data-toggle="tooltip" data-placement="top" title="Mail non vérifié"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
-'<i class="fa fa-rss" data-toggle="tooltip" data-placement="top" title="Abonné"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
 '<i class="fa fa-building" data-toggle="tooltip" data-placement="top" title="Nombre d\'organismes"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
 '<i class="fa fa-boxes" data-toggle="tooltip" data-placement="top" title="Nombre de corbeilles"></i>': {'class': 'pr-2 align-middle text-center p-0 m-0', 'orderBy': true},
     'actions': {'class': 'alwaysVisible', 'orderBy': false}
@@ -60,9 +60,13 @@
                     <small>{{ item.phone }}</small>
                 {% endif %}
             </td>
-<td class="align-middle text-center p-0 m-0 ">{{ usr.lastConnexion(item)  }}</td>
-
+            <td class="align-middle text-center p-0 m-0 ">{{ usr.lastConnexion(item)  }}</td>
             <td class="align-middle">{{ item.content | raw }}</td>
+            <td class="align-middle text-center">
+                <div class="p-2 {{ not item.accountvalidated ? 'badge badge-danger text-danger' : 'badge badge-success text-success' }}">
+                    {{ not item.accountvalidated ? '1' : '0' }}
+                </div>
+            </td>                
             <td class="align-middle text-center">
 <div class="p-2 {{ 'ROLE_ADMIN' in item.roles ? 'badge badge-success text-success' : 'badge badge-light text-light' }}">
 	{{ 'ROLE_ADMIN' in item.roles ? '1' : '0' }}
@@ -75,8 +79,8 @@
 
             </td>
             <td class="align-middle text-center">
-<div class="p-2 {{ 'ROLE_GESTIONNAIRE_LOCAL' in item.roles ? 'badge badge-success text-success' : 'badge badge-light text-light' }}">
-	{{ 'ROLE_GESTIONNAIRE_LOCAL' in item.roles ? '1' : '0' }}
+<div class="p-2 {{ 'ROLE_GES_LOCAL' in item.roles ? 'badge badge-success text-success' : 'badge badge-light text-light' }}">
+	{{ 'ROLE_GES_LOCAL' in item.roles ? '1' : '0' }}
 </div>
 
             </td>
@@ -89,12 +93,6 @@
             <td class="align-middle text-center">
                 <div class="p-2 {{ not item.emailvalidated ? 'badge badge-danger text-danger' : 'badge badge-success text-success' }}">
                     {{ not item.emailvalidated ? '1' : '0' }}
-                </div>
-            </td>
-            <td class="align-middle text-center">
-                <div class="p-2 {{ not item.userParam.isSubscription ? 'badge badge-light text-light' : 'badge badge-success text-success' }}">
-{{ not item.userParam.isSubscription ? '1' : '0' }}
-
                 </div>
             </td>
             <td class="align-middle text-center">

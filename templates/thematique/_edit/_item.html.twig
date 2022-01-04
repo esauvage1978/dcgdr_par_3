@@ -16,14 +16,16 @@
 				{% block card_body %}
 					<div class="row">
 						<div class=" col-12">
-							<div class="form-group row">
-								<label class="col-sm-3 col-form-label">Plan d'actions</label>
-								<div class="col">
-									<a href="{{ path('axe_show', {'id': item.pole.axe.id}) }}">
-										{{ item.pole.axe.name }}
-									</a>
+							{% if item.pole %}
+								<div class="form-group row">
+									<label class="col-sm-3 col-form-label">Plan d'actions</label>
+									<div class="col">
+										<a href="{{ path('axe_show', {'id': item.pole.axe.id}) }}">
+											{{ item.pole.axe.name }}
+										</a>
+									</div>
 								</div>
-							</div>
+							{% endif %}
 							<div class="form-group row">
 								{{ form_label(form.pole,'', { 'label_attr': {'class':'col-sm-3 col-form-label' }}) }}
 								<div class="col">

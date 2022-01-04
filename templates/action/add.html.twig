@@ -19,6 +19,7 @@
 
 
 {% block page_content %}
+	{{ render(controller('App\\Controller\\GPIController::showGPIAction', { 'page': 'action_add'})) }}
 	<div class="row justify-content-center">
 		<div class="" style="width:960px">
 			{{ form_start(form) }}
@@ -34,7 +35,7 @@
 				<p class="mt-5 mb-5"></p>
 				<p class="mt-5 mb-5"></p>
 			</div>
-            <div id="showdata" style="width:300px"></div>
+            <div id="showdata" style="width:300px" class="mt-5 ml-3"></div>
 </div>
 <div class="d-none">{{ sub.btn() }}{{form_rest(form)}}</div>
 
@@ -58,22 +59,23 @@
 
 	<script type="text/javascript">
 $(function () {
-
-fillCombobox('#cmb_axe', "{{ path('ajax_combo_axes_isenable') }}", true,'','all');
+	fillCombobox('#cmb_axe', "{{ path('ajax_combo_axes_isenable') }}", true,'','all');
 });
 
 $('#cmb_axe').change(function () {
+    $('#cmb_thematique').empty();
+    $('#cmb_category').empty();
+	$('#showdata').empty();
 	fillComboboxChained('#cmb_axe', '#cmb_pole', "{{ path('ajax_combo_poles_isenable') }}", true, false);
 });
 
 $('#cmb_pole').change(function () {
-fillComboboxChained('#cmb_pole', '#cmb_thematique', "{{ path('ajax_combo_thematiques_isenable') }}", true, false);
-
+    $('#cmb_category').empty();	
+	fillComboboxChained('#cmb_pole', '#cmb_thematique', "{{ path('ajax_combo_thematiques_isenable') }}", true, false);
 });
 
 $('#cmb_thematique').change(function () {
-fillComboboxChained('#cmb_thematique', '#cmb_category', "{{ path('ajax_combo_categorys_isenable') }}", true,false);
-
+	fillComboboxChained('#cmb_thematique', '#cmb_category', "{{ path('ajax_combo_categorys_isenable') }}", true,false);
 });
 
 

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ActionLinkRepository")
  */
-class ActionLink
+class ActionLink implements EntityInterface
 {
     /**
      * @ORM\Id()
@@ -37,11 +37,12 @@ class ActionLink
      */
     private $content;
 
-
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private $modifyAt;
+
+
 
     public function getId(): ?int
     {
@@ -96,14 +97,14 @@ class ActionLink
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getModifyAt(): ?\DateTimeInterface
     {
-        return $this->updatedAt;
+        return $this->modifyAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setModifyAt(?\DateTimeInterface $modifyAt): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->modifyAt = $modifyAt;
 
         return $this;
     }

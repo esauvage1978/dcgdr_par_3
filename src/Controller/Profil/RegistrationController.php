@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Profil;
 
-use App\Controller\AbstractGController;
 use App\Entity\User;
-use App\Event\UserRegistrationEvent;
-use App\Form\Profil\RegistrationFormType;
 use App\Mail\UserMail;
 use App\Manager\UserManager;
 use App\Repository\UserRepository;
+use App\Event\UserRegistrationEvent;
+use App\Controller\AbstractGController;
+use App\Form\Profil\RegistrationFormType;
+use App\Service\SendMailValidationAccount;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +25,8 @@ class RegistrationController extends AbstractGController
     public function registrerAction(
         Request $request,
         UserManager $userManager,
-        EventDispatcherInterface $dispatcher
+        EventDispatcherInterface $dispatcher,
+        SendMailValidationAccount $sendMailValidationAccount
     ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -37,7 +39,9 @@ class RegistrationController extends AbstractGController
                 $event = new UserRegistrationEvent($user);
                 $dispatcher->dispatch($event, UserRegistrationEvent::NAME);
 
-                return $this->redirectToRoute('user_login');
+                $sendMailValidationAccount->send($user);
+
+                return $this->redirectToRoute('app_login');
             }
 
             $this->addFlash(self::DANGER, self::MSG_CREATE_ERROR . $userManager->getErrors($user));

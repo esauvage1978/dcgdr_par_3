@@ -2,7 +2,6 @@
 
 namespace App\Helper;
 
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
@@ -83,6 +82,5 @@ class FileTools extends AbstractFsObject
 
         $this->fsObject->appendToFile($fullFile,$content);
     }
-
 
 }

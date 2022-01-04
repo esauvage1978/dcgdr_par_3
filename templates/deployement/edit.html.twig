@@ -2,7 +2,8 @@
 
 {% import "macros/submit.html.twig" as sub %}
 {% import "macros/save.html.twig" as save %}
-
+{% import "macros/link.html.twig" as link %}
+{% import "macros/file.html.twig" as file %}
 
 {% block page_subtitle %}Modification
 {% endblock %}
@@ -19,54 +20,68 @@
 {% endblock %}
 
 {% block page_content %}
-	{{ form_start(form) }}
 
 	<div class="row justify-content-center">
 		{{ include(domaine ~ '/_show/_name.html.twig') }}
 		<div class="row col-12">
-			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-2 ">
-				<div class=" h-100 bg-white card-body ">
-					{{ include(domaine ~ '/_edit/_jalon.html.twig') }}
+			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-8 ">
+				{{ form_start(form) }}
+				<div class="row col-12">
+					<div class="col-sm-12 col-md-12  col-lg-12  col-xl-4 ">
+						<div class=" h-100 bg-white card-body ">
+							{{ include(domaine ~ '/_edit/_jalon.html.twig') }}
+						</div>
+					</div>
+					<div class="col-sm-12  col-md-12 col-lg-12  col-xl-8  bg-white h-100">
+						{{ include(domaine ~ '/_edit/_intervenant.html.twig') }}
+					</div>
+				</div>
+				<div class="d-none">{{ sub.btn() }}{{form_rest(form)}}</div>
+				{{ form_end(form) }}
+				<div class="row col-12 mt-5">
+					<div class="col-sm-12 col-md-12 col-lg-12  bg-white h-100">
+						<section class=" col-12 js-createTip-wrapper ">
+							<div class="createTip mt-5">
+
+								<div class="createTip__title">
+									Fichiers & liens
+								</div>
+								<p>
+									Permet de déposer les fichiers correspondant au déploiements
+								</p>
+							</div>
+							<h3 class="text-p-dark2">
+								<i class="fas fa-crop-alt"></i>
+								Fichiers du déploiement
+							</h3>
+							<div class="p-3">
+								{{ link.twig('deployementlink') }}
+								{{ file.twig('deployementfile') }}
+							</div>
+						</section>
+					</div>
 				</div>
 			</div>
-			<div class="col-sm-12  col-md-12 col-lg-12  col-xl-6  bg-white h-100">
-				{{ include(domaine ~ '/_edit/_intervenant.html.twig') }}
-				{{ include(domaine ~ '/_edit/_deployementFile.html.twig') }}
-			</div>
+
+
 			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-4  ">
 				<div class=" h-100 bg-white card-body">
-				{{ include(domaine ~ '/_edit/_indicatorsSelection.html.twig') }}
+					{{ include(domaine ~ '/_edit/_indicatorsSelection.html.twig') }}
 				</div>
 
 			</div>
 		</div>
-		{{ save.btn()}}
-
 	</div>
-<div class="d-none">{{ sub.btn() }}{{form_rest(form)}}</div>
 
-	{{ form_end(form) }}
 {% endblock %}
-
 {%  block javascripts %}
 	{{ parent() }}
 	<!-- Select2 -->
 	<script src="{{ absolute_url( asset('/vendor/axios/dist/axios.min.js')) }}"></script>
+	<script src="{{ absolute_url( asset('/vendor/jquery-form/dist/jquery.form.min.js')) }}"></script>
 	<script src="{{ absolute_url( asset('/js/es_widget.js')) }}"></script>
 	<script src="{{ absolute_url( asset('/js/indicator/es_toggle.js')) }}"></script>
-	<script src="{{ absolute_url( asset('/js/file/deployement_file.js')) }}"></script>
-	<script type="text/javascript">
+	{{ link.script('deployementlink', item) }}
+	{{ file.script('deployementfile', item) }}
 
-		$(document).on('change', '.custom-file-input', function () {
-			let fileName = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
-			$(this).parent('.custom-file').find('.custom-file-label').text(fileName);
-		});
-		$('#deployement_updatedAt_date_month').val(new Date().getMonth() + 1);
-		$('#deployement_updatedAt_date_day').val(new Date().getDate());
-		$('#deployement_updatedAt_date_year').val(new Date().getFullYear());
-		$('#deployement_updatedAt_time_hour').val(new Date().getHours());
-		$('#deployement_updatedAt_time_minute').val(new Date().getMinutes());
-	</script>
 {% endblock %}
-
-

@@ -34,10 +34,11 @@ class WorkflowData
     const STATES_ACTION_UPDATE_BY_CODIR = ['codir'];
 
     const STATES_DEPLOYEMENT_UPDATE=['started','finalised'];
-    const STATES_DEPLOYEMENT_READ=['deployed','measured','clotured','abandonned'];
+    const STATES_DEPLOYEMENT_READ=['cotech','codir','deployed','measured','clotured','abandonned'];
     const STATES_DEPLOYEMENT_APPEND=['deployed'];
 
     private const NAME = 'name';
+    private const NAME_PERSO = 'name_persi';
     private const ICON = 'icon';
     private const TITLE_MAIL = 'title_mail';
     private const BGCOLOR = 'bgcolor';
@@ -52,6 +53,7 @@ class WorkflowData
             self::STATE_STARTED =>
             [
                 self::NAME => ' 0. Action proposée',
+                self::NAME_PERSO => 'Je reprends l\'action pour la modifier',
                 self::ICON => 'fab fa-firstdraft',
                 self::TITLE_MAIL => ' Une action est revenue à l\'état "action proposée',
                 self::BGCOLOR => '#440155',
@@ -64,6 +66,7 @@ class WorkflowData
             self::STATE_COTECH =>
             [
                 self::NAME => ' 1. COTECH',
+                self::NAME_PERSO => 'J\'envoie à la validation du COTECH',
                 self::ICON => 'fas fa-stamp',
                 self::TITLE_MAIL => ' Une action est au COTECH',
                 self::BGCOLOR => '#5b0570',
@@ -77,6 +80,7 @@ class WorkflowData
             self::STATE_CODIR =>
             [
                 self::NAME => ' 3. CODIR',
+                self::NAME_PERSO => 'Je valide et j\'envoie à la validation du CODIR',
                 self::ICON => 'fas fa-stamp',
                 self::TITLE_MAIL => ' Une action est au CODIR',
                 self::BGCOLOR => '#794A8D',
@@ -90,6 +94,7 @@ class WorkflowData
             self::STATE_REJECTED =>
             [
                 self::NAME => ' 2. A reprendre',
+                self::NAME_PERSO => 'Je rejète cette action',
                 self::ICON => 'fas fa-recycle',
                 self::TITLE_MAIL => ' Une action est au CODIR',
                 self::BGCOLOR => '#5B2971',
@@ -102,6 +107,7 @@ class WorkflowData
             self::STATE_FINALISED =>
             [
                 self::NAME => ' 4. Méthodologie',
+                self::NAME_PERSO => 'Je valide et demande la rédaction de la méthodologie',
                 self::ICON => 'far fa-edit',
                 self::TITLE_MAIL => ' Une action est en attente de rédaction de la méthodologie',
                 self::BGCOLOR => '#9974aa',
@@ -114,6 +120,7 @@ class WorkflowData
             self::STATE_DEPLOYED =>
             [
                 self::NAME => ' 5. Déployée',
+                self::NAME_PERSO => 'Je force le déploiement de l\'action',
                 self::ICON => 'fab fa-product-hunt',
                 self::TITLE_MAIL => ' Une action est déployée',
                 self::BGCOLOR => '#ff6584',
@@ -127,6 +134,7 @@ class WorkflowData
             self::STATE_MEASURED =>
             [
                 self::NAME => ' 6. A mesurer',
+                self::NAME_PERSO => 'Je force l\'arrêt du déploiement pour mesurer l\'action',                
                 self::ICON => 'fas fa-crosshairs',
                 self::TITLE_MAIL => ' Une action est en attente de la mesure d\'efficacité',
                 self::BGCOLOR => '#E851BB',
@@ -140,6 +148,7 @@ class WorkflowData
             self::STATE_CLOTURED =>
             [
                 self::NAME => ' 7. Clôturée',
+                self::NAME_PERSO => 'Je clôture cette action',
                 self::ICON => 'fas fa-copyright',
                 self::TITLE_MAIL => ' Une action est clôturée',
                 self::BGCOLOR => '#ED59FF',
@@ -152,6 +161,7 @@ class WorkflowData
             self::STATE_ABANDONNED =>
             [
                 self::NAME => ' Abandonné',
+                self::NAME_PERSO => 'J\'abandonne cette action',
                 self::ICON => 'far fa-trash-alt',
                 self::TITLE_MAIL => ' Un porte-document est abandonné',
                 self::BGCOLOR => '#AA0C0C',
@@ -247,6 +257,11 @@ class WorkflowData
         return self::getStatesValueForWorkfow($state, self::TRANSITIONS);
     }
 
+    public static function getShortNamePersoOfState(string $state)
+    {
+        return self::getStatesValue($state, self::NAME_PERSO);
+    }
+
     private static function  getStatesValueForWorkfow( $state, $data)
     {
         if (!self::hasState($state)) {
@@ -270,62 +285,62 @@ class WorkflowData
             case self::TRANSITION_TO_STARTED:
                 $data['state'] = self::STATE_STARTED;
                 $data['titre'] = 'Mettre à la validation hiérarchique';
-                $data['btn_label'] = 'A valider';
+                $data['btn_label'] = self::getStatesValue(self::STATE_STARTED, self::NAME_PERSO);
                 break;
             case self::TRANSITION_TO_COTECH:
                 $data['state'] = self::STATE_COTECH;
                 $data['titre'] = 'Mettre à la validation du COTECH';
-                $data['btn_label'] = 'COTECH';
+                $data['btn_label'] = self::getStatesValue(self::STATE_COTECH, self::NAME_PERSO);
                 break;
             case self::TRANSITION_TO_CODIR:
                 $data['state'] = self::STATE_CODIR;
                 $data['titre'] = 'Mettre à la validation du CODIR';
-                $data['btn_label'] = 'CODIR';
+                $data['btn_label'] = self::getStatesValue(self::STATE_CODIR, self::NAME_PERSO);
                 break;
             case self::TRANSITION_TO_FINALISED:
                 $data['state'] = self::STATE_FINALISED;
                 $data['titre'] = 'Rédiger la méthodolgie l\'action';
-                $data['btn_label'] = 'Redaction';
+                $data['btn_label'] = self::getStatesValue(self::STATE_FINALISED, self::NAME_PERSO);
                 break;                
             case self::TRANSITION_TO_REJECTED:
                 $data['state'] = self::STATE_REJECTED;
                 $data['titre'] = 'Rejeter l\'action';
-                $data['btn_label'] = 'Rejeter';
+                $data['btn_label'] = self::getStatesValue(self::STATE_REJECTED, self::NAME_PERSO);
                 break;
             case self::TRANSITION_TO_DEPLOYED:
                 $data['state'] = self::STATE_DEPLOYED;
                 $data['titre'] = 'Deployer l\'action';
-                $data['btn_label'] = 'Déployer';
+                $data['btn_label'] = self::getStatesValue(self::STATE_DEPLOYED, self::NAME_PERSO);
                 break;
             case self::TRANSITION_UN_DEPLOYED:
                 $data['state'] = self::STATE_FINALISED;
                 $data['titre'] = 'Modifier l\'action';
-                $data['btn_label'] = 'Modifier';
+                $data['btn_label'] = self::getStatesValue(self::STATE_FINALISED, self::NAME_PERSO);
                 break;                
             case self::TRANSITION_TO_MEASURED:
                 $data['state'] = self::STATE_MEASURED;
                 $data['titre'] = 'Mesurer l\'efficacité de l\'action';
-                $data['btn_label'] = 'Mesurer';
+                $data['btn_label'] = self::getStatesValue(self::STATE_MEASURED, self::NAME_PERSO);
                 break;
             case self::TRANSITION_UN_MEASURED:
                 $data['state'] = self::STATE_DEPLOYED;
                 $data['titre'] = 'Re-déployer de l\'action';
-                $data['btn_label'] = 'Re-déployer';
+                $data['btn_label'] = self::getStatesValue(self::STATE_DEPLOYED, self::NAME_PERSO);
                 break;                
             case self::TRANSITION_TO_CLOTURED:
                 $data['state'] = self::STATE_CLOTURED;
                 $data['titre'] = 'Clôturer de l\'action';
-                $data['btn_label'] = 'Clôturer';
+                $data['btn_label'] = self::getStatesValue(self::STATE_CLOTURED, self::NAME_PERSO);
                 break;
             case self::TRANSITION_UN_CLOTURED:
                 $data['state'] = self::STATE_MEASURED;
                 $data['titre'] = 'Réouvrir de l\'action';
-                $data['btn_label'] = 'Réouvrir';
+                $data['btn_label'] = self::getStatesValue(self::STATE_MEASURED, self::NAME_PERSO);
                 break;                                                                
             case self::TRANSITION_TO_ABANDONNED:
                 $data['state'] = self::STATE_ABANDONNED;
                 $data['titre'] = 'Abandonner le porte-document';
-                $data['btn_label'] = 'A abandonner';
+                $data['btn_label'] = self::getStatesValue(self::STATE_ABANDONNED, self::NAME_PERSO);
                 break;
         }
 

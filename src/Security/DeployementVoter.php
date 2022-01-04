@@ -72,7 +72,7 @@ class DeployementVoter extends Voter
             case self::APPEND_UPDATE:
                 return $this->canAppendUpdate($deploiement, $user);
             case self::DELETE:
-                return $this->canAppendUpdate($deploiement, $user);
+                return $this->canDelete($deploiement, $user);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -103,7 +103,6 @@ class DeployementVoter extends Voter
 
     public function canAppendRead(Deployement $deploiement, User $user)
     {
-
         if (!in_array($deploiement->getAction()->getStateCurrent(), WorkflowData::STATES_DEPLOYEMENT_READ)) {
             return false;
         }
@@ -118,7 +117,7 @@ class DeployementVoter extends Voter
             }
         }
 
-        if( $this->actionVoter->canUpdate($deploiement->getAction(), $user)) {
+        if ($this->actionVoter->canUpdate($deploiement->getAction(), $user)) {
             return true;
         }
 
@@ -128,19 +127,16 @@ class DeployementVoter extends Voter
 
     public function canAppendUpdate(Deployement $deploiement, User $user)
     {
-        if (!in_array($deploiement->getAction()->getStateCurrent(), WorkflowData::STATES_DEPLOYEMENT_UPDATE)) {
-            return true;
-        }
-
-        if (!in_array($deploiement->getAction()->getStateCurrent(), WorkflowData::STATES_DEPLOYEMENT_APPEND)) {
+        if (!in_array($deploiement->getAction()->getStateCurrent(), WorkflowData::STATES_DEPLOYEMENT_UPDATE) && 
+        !in_array($deploiement->getAction()->getStateCurrent(), WorkflowData::STATES_DEPLOYEMENT_APPEND)) {
             return false;
         }
 
-        if ($deploiement->getAction()->getCategory()->getThematique()->getPole()->getAxe()->getArchiving()) {
+        if ($deploiement->getAction()->getCategory()->getThematique()->getPole()->getAxe()->getIsArchiving()) {
             return false;
         }
 
-        if ($this->security->isGranted('ROLE_GESTIONNAIRE_LOCAL')) {
+        if ($this->security->isGranted('ROLE_GES_LOCAL')) {
             foreach ($user->getOrganismes() as $organisme) {
                 if ($organisme->getId() == $deploiement->getOrganisme()->getId()) {
                     return true;

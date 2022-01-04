@@ -6,7 +6,7 @@ final class GPIPage
 {
     const HOME = 'home';
     const DASHBOARD = 'dashboard';
-    const BACKPACK_CREATE = 'backpack_add';
+    const ACTION_CREATE = 'action_add';
     const BACKPACK_EDIT = 'backpack_edit';
     const BACKPACK_COMMENT = 'backpack_comment_add';
     const BACKPACK_HISTORY = 'backpack_history';
@@ -19,15 +19,9 @@ final class GPIPage
     public static function getDatas(): array
     {
         return [
-            'Administration' => self::ADMINISTRATION,
             'Documentation' => self::DOCUMENTATION,
             'Page d\'accueil' => self::HOME,
-            'Porte-document : Ajout d\'un commentaire' => self::BACKPACK_COMMENT,
-            'Porte-document : création' => self::BACKPACK_CREATE,
-            'Porte-document : Les commentaires' => self::BACKPACK_COMMENTS,
-            'Porte-document : historique des modifications' => self::BACKPACK_HISTORY,
-            'Porte-document : historique du workflow' => self::BACKPACK_HISTORY_WORKFLOW,
-            'Porte-document : Modification' => self::BACKPACK_EDIT,
+            'Action : création' => self::ACTION_CREATE,
             'Profil' => self::PROFIL,
             'Tableau de bord' => self::DASHBOARD,
         ];
@@ -44,7 +38,7 @@ final class GPIPage
         $datas = [
             self::HOME,
             self::DASHBOARD,
-            self::BACKPACK_CREATE,
+            self::ACTION_CREATE,
             self::BACKPACK_EDIT,
             self::BACKPACK_COMMENT,
             self::BACKPACK_HISTORY,

@@ -17,7 +17,7 @@ class ActionFile implements EntityInterface
      * @ORM\Column(type="integer")
      */
     private $id;
-
+ 
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -57,14 +57,19 @@ class ActionFile implements EntityInterface
     private $content;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $modifyAt;
+
+    /**
      * @ORM\Column(type="string", length=50)
      */
     private $size;
 
-
     public function __construct()
     {
         $this->setNbrView(0);
+        $this->setModifyAt(new \DateTime());
     }
 
 
@@ -73,7 +78,7 @@ class ActionFile implements EntityInterface
      */
     public function getFullName(): ?string
     {
-        return $this->fileName.'.'.$this->fileExtension;
+        return $this->fileName . '.' . $this->fileExtension;
     }
 
     /**
@@ -86,7 +91,7 @@ class ActionFile implements EntityInterface
 
     public function getHref(): string
     {
-        return $this->getUploadDir() .  '/' . $this->getFileName() . '.' .  $this->getFileExtension() ;
+        return $this->getUploadDir() .  '/' . $this->getFileName() . '.' .  $this->getFileExtension();
     }
 
     public function getId(): ?int
@@ -190,6 +195,17 @@ class ActionFile implements EntityInterface
         return $this;
     }
 
+    public function getModifyAt(): ?\DateTimeInterface
+    {
+        return $this->modifyAt;
+    }
+
+    public function setModifyAt(?\DateTimeInterface $modifyAt): self
+    {
+        $this->modifyAt = $modifyAt;
+
+        return $this;
+    }
 
     public function getSize(): ?string
     {

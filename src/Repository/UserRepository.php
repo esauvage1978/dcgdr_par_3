@@ -39,5 +39,19 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+        /**
+     * @return User[] Returns an array of User objects
+     */
+    public function findAllForContactAdmin()
+    {
+        return $this->createQueryBuilder(self::ALIAS)
+            ->Where(self::ALIAS.'.roles like :val1')
+            ->setParameter('val1', '%ROLE_ADMIN%')
+            ->orderBy(self::ALIAS.'.name', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
   
 }

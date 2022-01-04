@@ -12,7 +12,7 @@
 						<span class="info-box-text text-center text-muted">Du</span>
 						<span class="info-box-number text-center mb-0">
 							{% if item.regionstartat %}
-								{{ wdg.showXShortDate(item.regionStartat) }}
+								{{ wdg.showMediumDateNoneTime(item.regionStartat) }}
 							{% else %}
 								--/--/----
 							{% endif %}
@@ -27,7 +27,7 @@
 						<span class="info-box-text text-center text-muted">Au</span>
 						<span class="info-box-number text-center mb-0">
 							{% if item.regionendat %}
-								{{ wdg.showXShortDate(item.regionendat) }}
+								{{ wdg.showMediumDateNoneTime(item.regionendat) }}
 							{% else %}
 								--/--/----
 							{% endif %}

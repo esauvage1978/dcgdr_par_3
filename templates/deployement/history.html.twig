@@ -1,0 +1,36 @@
+{% extends 'deployement/layout.html.twig' %}
+{% import "macros/history.html.twig" as history %}
+
+{% block page_subtitle %}Historique des modifications
+{% endblock %}
+
+
+{% block breadcrumb %}
+	{% import "deployement/_btn_actions.html.twig" as actions %}
+	{{ actions.show(
+        'history',
+        null,
+        item,
+        domaine,
+        item.action
+    ) }}
+{% endblock %}
+
+
+{% block page_content %}
+	<div class="row justify-content-center ">
+		<div class="col-10">
+			<div class="bg-white rounded border-light p-4">
+				{{ include(domaine ~ '/_show/_name.html.twig') }}
+			</div>
+			{{ history.twig( item.histories ) }}
+		</div>
+	</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ history.script() }}
+{% endblock %}
